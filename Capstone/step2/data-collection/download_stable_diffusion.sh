@@ -17,4 +17,4 @@ kaggle competitions download \
 
 unzip -o ../data/stable_diffusion/*.zip -d ../data/stable_diffusion
 
-echo "✅ Downloaded & unpacked Stable Diffusion data into ../data/stable_diffusion/"
+echo "Downloaded & unpacked Stable Diffusion data into ../data/stable_diffusion/"
