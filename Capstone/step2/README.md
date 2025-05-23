@@ -1,2 +1,2 @@
 # step2 
-This folder will house my Step 2 sub-folders 
+This folder contains the notebooks and data used for EDA on Stable Diffusion prompts and image captions (COCO, Flickr-30k).
