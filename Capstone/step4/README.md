@@ -36,13 +36,26 @@ We’ll tackle Step 4 in five focused sub-steps. Each section below describes **
 ---
 
 ### 4.2 Document Public Implementations  
-**Objective:** Gather and vet available codebases for the selected papers.  
+**Objective:** Gather and vet available codebases for the selected papers and extra Image→Prompt resources.  
 **Actions:**  
-- Find GitHub repos, Colabs, or Docker images.  
-- Note for each: clone URL, install steps, run instructions, and any setup quirks.  
+- For each core paper (and extra repos), record:  
+  1. **Name & reference**  
+  2. **Repo URL**  
+  3. **Install steps** (e.g. `pip install -r requirements.txt`)  
+  4. **How to run a minimal demo**  
+  5. **Any quirks or notes**  
 **Deliverable:**  
-- `implementations/implementations.md`
+- `implementations/implementations.md` with entries like:
 
+| Resource                                                         | Repo URL                                                                 | Notes / Quick Start                                                                                            |
+|------------------------------------------------------------------|-------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| **CLIP** (Radford et al., 2021)                                  | https://github.com/openai/CLIP                                           | `pip install -r requirements.txt`; run `python demo.py --image … --text …`                                      |
+| **Reverse Stable Diffusion** (Croitoru et al., 2023)             | https://github.com/CroitoruAlin/Reverse-Stable-Diffusion                 | Includes pretrained weights; requires Torch 2.0+; `python invert.py --image_path sd.png`                       |
+| **X-modaler** (Ye Li et al., 2021)                                | https://github.com/YehLi/xmodaler                                         | Unified CLIP wrapper; `pip install -r requirements.txt`; see `README.md` for task-specific notebooks          |
+| **HAT** (Yi Bin et al., 2023)                                     | https://github.com/LuminosityX/HAT                                        | Transformer‐only backbone; `conda env create -f environment.yml`; `python run_retrieval.py --config …`         |
+| **DCLIP** (Csizmadia et al., 2025)                                | https://anonymous.4open.science/r/DCLIP-B772/README.md                    | Teacher–student distillation; follow link for code + checkpoints; may need diffusers 0.17+ and PyTorch 2.1      |
+| **Image-to-Prompts** (Jackson Chen)                              | https://github.com/jacksonchen1998/Image-to-Prompts?tab=readme-ov-file    | PyTorch-based inversion head; `pip install -r requirements.txt`; demo Colab link in repo overview              |
+| **Stable-Diffusion-Image-to-Prompts** (Mingyuan Ren)              | https://github.com/MingyuanRen/Stable-Diffusion-Image-to-Prompts?utm…     | Uses VAE features + LM decoding; `pip install -r requirements.txt`; run `python infer_prompt.py --img …`       |
 ---
 
 ### 4.3 Reproduce One Baseline End-to-End  
