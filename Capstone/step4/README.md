@@ -85,6 +85,6 @@ We’ll tackle Step 4 in five focused sub-steps. Each section below describes **
 - Draft a roadmap for Step 5+.  
 **Deliverable:**  
 - `roadmap/next_steps.md`  
-- 3–5 slide deck in `slides/`
+- slide deck in `slides/`
 
 ---
