@@ -7,7 +7,7 @@ We’ll tackle Step 4 in five focused sub-steps. Each section below describes **
 ### 4.1 Survey Existing Research  
 **Objective:** Build a solid understanding of prior work on CLIP-based retrieval, prompt inversion, and round-trip retrieval.  
 **Actions:**  
-- Select key papers; for each write a 1-2 paragraph summary covering problem, approach, results, and links.  
+- Select key papers.
 - **Core papers to include**:  
   - **Learning Transferable Visual Models From Natural Language Supervision**  
     Alec Radford *et al.* (2021)  
