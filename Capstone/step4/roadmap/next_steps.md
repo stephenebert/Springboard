@@ -41,5 +41,5 @@
   - `analysis/reproduction_analysis.md` (updated with full-caption & text→image results)  
   - Final Step 4 chapter in capstone write-up  
 - **Presentation**  
-  - 3–5 slide deck in `slides/step4_plan.pdf`
+  - slides in `slides/step4_plan.pdf`
 
