@@ -3,9 +3,15 @@
 In this step we collected, cleaned, and merged three datasets for cross-modal retrieval:
 
 - **Raw sources** (in Step 2):  
-  - COCO captions JSON (`captions_train2017.json` / `captions_val2017.json`)  
-  - Flickr30k captions (`results.csv`)  
-  - Stable Diffusion prompts CSV (`custom_prompts_df.csv`)  
+  1. **Stable Diffusion Prompts**  
+     - Source: [Kaggle – Stable Diffusion Image to Prompts](https://www.kaggle.com/competitions/stable-diffusion-image-to-prompts/data)  
+     - File: `custom_prompts_df.csv`  
+  2. **MS COCO 2017 Captions**  
+     - Source: [MS COCO Captions Dataset](https://cocodataset.org/#download)  
+     - Files: `captions_train2017.json` / `captions_val2017.json`  
+  3. **Flickr-30k Captions**  
+     - Source: [Kaggle – Flickr-30k](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset/data)  
+     - File: `results.csv`
 
 - **Cleaning**:  
   1. Dropped any rows missing `image_id` or `caption`.  
@@ -16,4 +22,4 @@ In this step we collected, cleaned, and merged three datasets for cross-modal re
 - **Merged dataset**:  
   - Concatenated the three cleaned tables, added a `source` column.  
   - Ensured `image_id` is string-typed.  
-  - Saved final `crossmodal_dataset.parquet` to your Desktop.
+  - Saved final `crossmodal_dataset.parquet` to the Desktop.
