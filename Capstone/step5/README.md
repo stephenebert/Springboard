@@ -17,5 +17,3 @@ In this step we collected, cleaned, and merged three datasets for cross-modal re
   - Concatenated the three cleaned tables, added a `source` column.  
   - Ensured `image_id` is string-typed.  
   - Saved final `crossmodal_dataset.parquet` to your Desktop.
-
-## Folder Structure
