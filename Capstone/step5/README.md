@@ -1,9 +1,21 @@
 # Step 5: Data Wrangling
 
-In this step, we collect and clean the datasets needed for cross-modal retrieval and prompt inversion:
+In this step we collected, cleaned, and merged three datasets for cross-modal retrieval:
 
-- **data/raw/**: source files (COCO captions JSON, Flickr30k CSV, SD prompts CSV/JSON)
-- **data/cleaned/**: cleaned, filtered, and merged dataset for downstream experiments
-- **notebooks/01_data_wrangling.ipynb**: notebook with all wrangling code and narrative
+- **Raw sources** (in Step 2):  
+  - COCO captions JSON (`captions_train2017.json` / `captions_val2017.json`)  
+  - Flickr30k captions (`results.csv`)  
+  - Stable Diffusion prompts CSV (`custom_prompts_df.csv`)  
 
-We will inspect schemas, handle missing values & outliers, apply cleaning rules, and produce a unified dataset.
+- **Cleaning**:  
+  1. Dropped any rows missing `image_id` or `caption`.  
+  2. Enforced max-token lengths (SD ≤100, COCO ≤50, F30k ≤50), dropping over-length entries.  
+  3. Lowercased, stripped whitespace, and deduplicated exact `(image_id, caption)` pairs.  
+  4. Saved cleaned tables as `sd_clean.parquet`, `coco_clean.parquet`, `f30k_clean.parquet` on Desktop.
+
+- **Merged dataset**:  
+  - Concatenated the three cleaned tables, added a `source` column.  
+  - Ensured `image_id` is string-typed.  
+  - Saved final `crossmodal_dataset.parquet` to your Desktop.
+
+## Folder Structure
