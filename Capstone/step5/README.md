@@ -3,8 +3,6 @@
 In this step we collected, cleaned, and merged three datasets for cross-modal retrieval. 
 
 **Folder structure:**
-
-```text
 step5/
 ├─ data/           # cleaned and merged Parquet outputs
 └─ notebooks/      # Jupyter notebooks with wrangling code
