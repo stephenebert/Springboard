@@ -2,7 +2,7 @@
 
 In this step we collected, cleaned, and merged three datasets for cross-modal retrieval. 
 
-- **Folder Structure**
+- **Folder structure**:  
 
 ```text
 step5/
