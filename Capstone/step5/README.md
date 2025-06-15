@@ -1,6 +1,6 @@
-```markdown
-# Step 5: Data Wrangling
 
+## Step 5: Data Wrangling
+```markdown
 In this step we collected, cleaned, and merged three datasets for cross-modal retrieval.
 
 ## Folder Structure
