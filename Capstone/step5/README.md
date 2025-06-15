@@ -5,7 +5,7 @@ In this step we collected, cleaned, and merged three datasets for cross-modal re
 
 ## Folder Structure
 
-```text
+
 step5/
 ├─ data/           # cleaned and merged Parquet outputs
 └─ notebooks/      # Jupyter notebooks with wrangling code
