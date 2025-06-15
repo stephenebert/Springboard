@@ -1,6 +1,6 @@
 # Step 5: Data Wrangling
 
-In this step we collected, cleaned, and merged three datasets for cross-modal retrieval:
+In this step we collected, cleaned, and merged three datasets for cross-modal retrieval. All code and narrative are implemented in the Jupyter notebook:
 
 - **Raw sources**:  
   1. **Stable Diffusion Prompts**  
