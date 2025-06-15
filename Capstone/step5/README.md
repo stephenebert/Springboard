@@ -2,7 +2,7 @@
 
 In this step we collected, cleaned, and merged three datasets for cross-modal retrieval:
 
-- **Raw sources** (in Step 2):  
+- **Raw sources**:  
   1. **Stable Diffusion Prompts**  
      - Source: [Kaggle – Stable Diffusion Image to Prompts](https://www.kaggle.com/competitions/stable-diffusion-image-to-prompts/data)  
      - File: `custom_prompts_df.csv`  
