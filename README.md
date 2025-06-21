@@ -18,3 +18,7 @@ This repository contains completed mini-projects and capstone work from the Spri
 | `Mini_Project_ML_Model.ipynb` | Create and test a complete ML model pipeline. |
 | `Mini_Project_More_Experience_With_Machine_Learning.ipynb` | Gain deeper experience with ML techniques and pipelines. |
 | `Mini_Project_Trees_and_Forests.ipynb` | Train decision trees and random forests, compare performance. |
+
+## Getting Started
+
+You can run these notebooks using Google Colab or a local Jupyter environment.
