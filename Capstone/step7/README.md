@@ -97,6 +97,6 @@ Generated figures (e.g., `recall_comparison.png`, `mrr_comparison.png`) will app
    python scripts/run_experiment.py --config configs/dclip.yaml --output_dir runs/dclip
    ```
 
-## Reproducibility & Tips
+## Reproducibility
 - All runs are tied to the Git commit; include config filename in logs.
 - For larger hyperparameter sweeps, integrate **Optuna** or **Ray Tune**, and log to W&B or MLflow.
