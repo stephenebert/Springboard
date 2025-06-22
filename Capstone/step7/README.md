@@ -1,12 +1,12 @@
-# Capstone Project Step 7: Cross-Modal Retrieval Experiments
+# Capstone Project — Step 7: Cross-Modal Retrieval Experiments
 
 > Automate, benchmark, and analyze multiple cross-modal retrieval models on image-caption datasets.
 
 ## Overview
-Step 7 builds on data wrangling from Step 5 and baseline reproduction Step 4 to systematically evaluate a suite of retrieval architectures:
+Step 7 builds on the data wrangling in Step 5 and baseline reproduction in Step 4 to systematically evaluate a suite of retrieval architectures:
 
 - **Benchmark**: Compare CLIP, Reverse Stable Diffusion inversion, X-Modaler, HAT, DCLIP, and any additional open-source models.
-- **Automate**: Scripted pipelines for training, evaluation, and logging—ensuring reproducibility.
+- **Automate**: Scripted pipelines for training, evaluation, and logging ensuring reproducibility.
 - **Analyze**: Quantitative metrics (Recall@K, MRR, Median Rank), plus model-size and latency trade-offs.
 
 ## Repository Structure
@@ -22,7 +22,7 @@ step7_experiments/
 │   └── plot_results.py    # Generate summary figures
 ├── notebooks/             # Exploratory notebooks
 │   └── 07_experiments.ipynb
-└── README.md              
+└── README.md              # This file
 ```
 
 ## Quickstart
@@ -85,9 +85,11 @@ python scripts/plot_results.py \
 Generated figures (e.g., `recall_comparison.png`, `mrr_comparison.png`) will appear under `figures/`.
 
 ## Evaluation Metrics
-- **Recall@K**: Portion of queries whose true match ranks in the top K (e.g., Recall@1, Recall@5).
-- **Mean Reciprocal Rank (MRR)**: Average of 1 / (rank of correct item).
-- **Median Rank**: Median position of the correct match—robust to outliers.
+- **Primary**: `recall@1` – proportion of queries whose correct match ranks in the top 1.
+- **Secondary**:
+  - `recall@5`: proportion within top 5.
+  - `mrr` (Mean Reciprocal Rank): average of 1 / (rank of correct item).
+  - `median_rank`: median rank position of the correct match.
 
 ## Adding New Models
 1. Add a new YAML under `configs/` (e.g., `dclip.yaml`).
