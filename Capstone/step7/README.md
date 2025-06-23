@@ -1,6 +1,6 @@
 # Capstone Project Step 7: Cross-Modal Retrieval Experiments
 
-> Automate, benchmark, and analyze multiple cross-modal retrieval models on image–caption datasets—linking real-world photos (MS-COCO, Flickr-30k) with Stable-Diffusion renders and their prompts.
+> Automate, benchmark, and analyze multiple cross-modal retrieval models on image-caption datasets linking real-world photos (MS-COCO, Flickr-30k) with Stable-Diffusion renders and their prompts.
 
 ## Overview
 This repository systematically evaluates a suite of retrieval architectures, inversion models, and traditional baselines. Our objectives are to
