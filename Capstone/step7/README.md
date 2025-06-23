@@ -1,6 +1,6 @@
 # Capstone Project Step 7: Cross-Modal Retrieval Experiments
 
-> Automate, benchmark, and analyze cross-modal retrieval models that link real-world photos (MS-COCO, Flickr-30k) with Stable-Diffusion renders and their prompts—all from Jupyter notebooks.
+> Automate, benchmark, and analyze cross-modal retrieval models that link real-world photos (MS-COCO, Flickr-30k) with Stable-Diffusion renders and their prompts all from Jupyter notebooks.
 
 ---
 
