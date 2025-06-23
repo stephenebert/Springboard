@@ -1,9 +1,9 @@
 # Capstone Project Step 7: Cross-Modal Retrieval Experiments
 
-> Automate, benchmark, and analyze multiple cross-modal retrieval models on image-caption datasets.
+> Automate, benchmark, and analyze multiple cross-modal retrieval models on image-caption datasets using Jupyter notebooks.
 
 ## Overview
-This step builds on data wrangling and baseline reproduction to systematically evaluate a suite of retrieval architectures, inversion models, and traditional baselines. Our goals are to:
+This project systematically evaluates a suite of retrieval architectures, inversion models, and traditional baselines. Our goals are to:
 
 - **Bridge real vs. AI domains** by comparing embeddings from COCO and Flickr-30k against Stable Diffusion outputs.  
 - **Support four retrieval modes**: image↔image, text↔image, image→text, and dataset↔dataset.  
@@ -15,17 +15,17 @@ This step builds on data wrangling and baseline reproduction to systematically e
 ## Project Structure
 ```bash
 project/
-├── data/                  # Raw & processed datasets
-│   ├── coco/              # COCO images & captions
-│   ├── flickr30k/         # Flickr-30k images & captions
-│   └── sd_prompts/        # Stable Diffusion prompt-image pairs
-├── src/                   # Source code
-│   ├── data/              # Download, preprocessing, splits
+├── notebooks/             # Jupyter workflows
+│   ├── 01_data_preprocessing.ipynb
+│   ├── 02_embedding_extraction.ipynb
+│   ├── 03_retrieval_baselines.ipynb
+│   ├── 04_prompt_inversion.ipynb
+│   ├── 05_advanced_models.ipynb
+│   └── 06_evaluation_visualization.ipynb
+├── src/                   # Helper modules (loaders, models, metrics)
+│   ├── data/              # Parsing & splitting logic
 │   ├── features/          # Embedding extraction scripts
-│   ├── models/            # Baseline & DL model definitions
-│   ├── train.py           # Train & validation entry point
-│   └── evaluate.py        # Retrieval & inversion evaluation scripts
-├── configs/               # YAML configs for each experiment (Hydra)
-├── experiments/           # Logs, checkpoints, metrics outputs
-├── notebooks/             # EDA & result visualization notebooks
-└── README.md              # Project overview and instructions
+│   └── models/            # Model definitions
+├── configs/               # Hydra/YAML experiment configs
+├── experiments/           # Logs & checkpoints (optional)
+└── README.md              # This file
