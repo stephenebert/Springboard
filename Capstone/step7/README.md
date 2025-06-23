@@ -3,102 +3,29 @@
 > Automate, benchmark, and analyze multiple cross-modal retrieval models on image-caption datasets.
 
 ## Overview
-Step 7 builds on the data wrangling in Step 5 and baseline reproduction in Step 4 to systematically evaluate a suite of retrieval architectures:
+This step builds on data wrangling and baseline reproduction to systematically evaluate a suite of retrieval architectures, inversion models, and traditional baselines. Our goals are to:
 
-- **Benchmark**: Compare CLIP, Reverse Stable Diffusion inversion, X-Modaler, HAT, DCLIP, and any additional open-source models.
-- **Automate**: Scripted pipelines for training, evaluation, and logging ensuring reproducibility.
-- **Analyze**: Quantitative metrics (Recall@K, MRR, Median Rank), plus model-size and latency trade-offs.
+- **Bridge real vs. AI domains** by comparing embeddings from COCO and Flickr-30k against Stable Diffusion outputs.  
+- **Support four retrieval modes**: image↔image, text↔image, image→text, and dataset↔dataset.  
+- **Assess prompt quality** via a closed-loop image→prompt→image pipeline.  
+- **Benchmark diverse approaches**: CLIP, TF-IDF baselines, Reverse Diffusion inversion, X-Modaler, HAT, DCLIP distillation, plus any new open-source models.  
+- **Automate** reproducible pipelines for training, evaluation, and logging.  
+- **Analyze** quantitative metrics (Recall@K, MRR, Median Rank), plus model-size, latency, and cost trade-offs.
 
-## Repository Structure
-```
-step7_experiments/
-├── configs/               # YAML configs for each experiment
-│   ├── clip.yaml
-│   ├── xmodaler.yaml
-│   └── hat.yaml
-├── scripts/               # Core Python scripts
-│   ├── run_experiment.py  # Train + eval one config
-│   ├── collect_results.py # Gather metrics into a CSV
-│   └── plot_results.py    # Generate summary figures
-├── notebooks/             # Exploratory notebooks
-│   └── 07_experiments.ipynb
-└── README.md              # This file
-```
-
-## Quickstart
-
-### 1. Install Dependencies
+## Project Structure
 ```bash
-pip install -r requirements.txt
-```  
-Requirements include PyTorch (≥1.10), Transformers, pandas, matplotlib, and tqdm.
-
-### 2. Configure an Experiment
-Each YAML in `configs/` defines:
-- `model` & `backbone` (e.g., `openai/clip-vit-base-patch32`)
-- Data paths (`train` & `val` parquet files)
-- Training hyperparameters (`batch_size`, `lr`, `epochs`)
-- Similarity (`pooling`, `metric`) and ranking `metrics` (e.g., `recall@1`, `mrr`)
-
-```yaml
-# example: configs/clip.yaml
-model: clip
-backbone: openai/clip-vit-base-patch32
-
-data:
-  train: /data/coco_train.parquet
-  val:   /data/coco_val.parquet
-
-training:
-  batch_size: 64
-  lr: 1e-4
-  epochs: 5
-
-similarity:
-  pooling: mean
-  metric: cosine
-
-metrics:
-  - recall@1
-  - recall@5
-  - mrr
-```
-
-### 3. Run an Experiment
-```bash
-python scripts/run_experiment.py \
-  --config configs/clip.yaml \
-  --output_dir runs/clip_baseline
-```
-This will train for the specified epochs, evaluate on validation data each epoch, and save per-epoch metrics to `runs/clip_baseline/metrics_epoch{n}.json`.
-
-### 4. Aggregate & Visualize Results
-```bash
-# 4.1 Collect all metrics
-python scripts/collect_results.py --runs_dir runs --out metrics_summary.csv
-
-# 4.2 Plot comparison charts
-python scripts/plot_results.py \
-  --metrics metrics_summary.csv \
-  --out figures/
-```
-Generated figures (e.g., `recall_comparison.png`, `mrr_comparison.png`) will appear under `figures/`.
-
-## Evaluation Metrics
-- **Primary**: `recall@1` – proportion of queries whose correct match ranks in the top 1.
-- **Secondary**:
-  - `recall@5`: proportion within top 5.
-  - `mrr` (Mean Reciprocal Rank): average of 1 / (rank of correct item).
-  - `median_rank`: median rank position of the correct match.
-
-## Adding New Models
-1. Add a new YAML under `configs/` (e.g., `dclip.yaml`).
-2. Ensure any extra dependencies are in `requirements.txt`.
-3. Run with:
-   ```bash
-   python scripts/run_experiment.py --config configs/dclip.yaml --output_dir runs/dclip
-   ```
-
-## Reproducibility
-- All runs are tied to the Git commit; include config filename in logs.
-- For larger hyperparameter sweeps, integrate **Optuna** or **Ray Tune**, and log to W&B or MLflow.
+project/
+├── data/                  # Raw & processed datasets
+│   ├── coco/              # COCO images & captions
+│   ├── flickr30k/         # Flickr-30k images & captions
+│   └── sd_prompts/        # Stable Diffusion prompt-image pairs
+├── src/                   # Source code
+│   ├── data/              # Download, preprocessing, splits
+│   ├── features/          # Embedding extraction scripts
+│   ├── models/            # Baseline & DL model definitions
+│   ├── train.py           # Train & validation entry point
+│   └── evaluate.py        # Retrieval & inversion evaluation scripts
+├── configs/               # YAML configs for each experiment (Hydra)
+├── experiments/           # Logs, checkpoints, metrics outputs
+├── notebooks/             # EDA & result visualization notebooks
+└── README.md              # Project overview and instructions
