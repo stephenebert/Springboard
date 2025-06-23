@@ -1,4 +1,4 @@
-# Capstone Project — Step 7: Cross-Modal Retrieval Experiments
+# Capstone Project Step 7: Cross-Modal Retrieval Experiments
 
 > Automate, benchmark, and analyze multiple cross-modal retrieval models on image-caption datasets.
 
