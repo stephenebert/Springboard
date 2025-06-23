@@ -10,7 +10,7 @@ This repository systematically evaluates a suite of retrieval architectures, inv
 - **Assess prompt quality** through a closed-loop *image→prompt→image* cycle.  
 - **Benchmark diverse approaches**: TF-IDF + ResNet, OpenAI CLIP, OpenCLIP, Reverse-SD inversion, X-Modaler, Hierarchical Alignment Transformer (HAT), and DCLIP distillation.  
 - **Automate** reproducible pipelines for training, evaluation, and logging with Hydra / PyTorch Lightning.  
-- **Analyze** quantitative metrics—Recall@K, MRR, Median Rank, CLIPScore-Δ—alongside model-size, latency, and cost trade-offs.
+- **Analyze** quantitative metrics: Recall@K, MRR, Median Rank, CLIPScore-Δ alongside model-size, latency, and cost trade-offs.
 
 ## Project Structure
 ```bash
