@@ -98,6 +98,11 @@ This command will create a new folder under `experiments/` containing:
 -   **Cross-domain recall@1 (image→image):** ~24%
 -   **Prompt inversion R@1:** ~45%
 -   **Cross-val std < 1.5%** across 5 seeds
+-   Note that R@1, R@5, and R@10 are common metrics used in information retrieval and ML, particularly for tasks like image retrieval or recommendation systems. They stand for "Recall at K," where K is 1, 5, or 10 respectively.
+-   R@1 (Recall at 1): This metric tells the percentage of queries for which the correct item was found at the very top position (rank 1) of the retrieved results. A higher R@1 means the system is very good at putting the most relevant item as the first result.
+-   R@5 (Recall at 5): This metric tells the percentage of queries for which the correct item was found within the top 5 positions (rank 1 through 5) of the retrieved results. It's less strict than R@1, as it allows for the correct item to be slightly lower in the ranking but still within a small, easily viewable set.
+-   R@10 (Recall at 10): This metric tells the percentage of queries for which the correct item was found within the top 10 positions (rank 1 through 10) of the retrieved results. This is even less strict than R@5, indicating if the system can generally retrieve the correct item within a broader set of initial results.
+-   Looking at the progression from R@1 to R@5 to R@10 can tell one how quickly the system "recovers" from a near-miss. For instance, if R@1 is low but R@5 is significantly higher, it suggests the correct item is often close, just not at the very top.
 
 ---
 ## Model Performance Overview
