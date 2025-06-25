@@ -200,7 +200,7 @@ step7/
 
 ---
 
-## ▶️ Quickstart
+## Quickstart
 
 ### Notebook Workflow
 
@@ -230,7 +230,7 @@ This command will create a new folder under `experiments/` containing:
 
 ---
 
-## 📊 Key Results
+## Key Results
 
 | Model    | Params (M) | Embed Time (min) | R\@1  | R\@5  | R\@10 |
 | -------- | ---------- | ---------------- | ----- | ----- | ----- |
