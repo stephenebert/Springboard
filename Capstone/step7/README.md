@@ -67,7 +67,7 @@ C:/Users/steph/OneDrive/Desktop/data/coco/train2017
 C:/Users/steph/OneDrive/Desktop/data/flickr30k/flickr30k_images
 ```
 
-## 🚀 Running Experiments
+## Running Experiments
 
 #### 1. Build Metadata
 Run `00_paths_build_metadata.ipynb` to generate `metadata.parquet`.
@@ -96,7 +96,7 @@ Run `00_paths_build_metadata.ipynb` to generate `metadata.parquet`.
 python run_experiment.py --model ViT-B-32 --preset cpu-fast --max 10000
 ```
 
-## 📊 Results & Findings
+## Results & Findings
 
 -   **Recall@K:**
     -   `ViT-B-32`: **~67%/90%/96%** on 10k samples
@@ -111,7 +111,3 @@ python run_experiment.py --model ViT-B-32 --preset cpu-fast --max 10000
     -   `RN101` (~100M) → ~5 min
 
 -   **Prompt Inversion:** **~45% R@1** when recovering Stable Diffusion prompts.
-
-## 📞 License & Contact
--   **Author:** Your Name (`your.email@example.com`)
--   **License:** This project is licensed under the **MIT License**.
