@@ -218,7 +218,7 @@ To assess the stability of our retrieval metrics, we ran "cross-validation" over
 
 Figure 1 shows how Recall@K (for K = 1, 5, 10) varies across five random‐seed subsamples of size 10 000 on ViT-B-32:
 
-Rising curve: As you’d expect, recall improves as you allow more candidates (K increases). R@1 is ~43 %, R@5 ~66 %, and R@10 ~75 % on average.
+Rising curve: As one would expect, recall improves as one allow more candidates (K increases). R@1 is ~43 %, R@5 ~66 %, and R@10 ~75 % on average.
 
 Small error bars: The standard deviation across seeds is under 1 % for all K (≈ 0.38 % at K=1, 0.52 % at K=5, 0.66 % at K=10). That tells us our results are robust to which subset of 10 000 examples we pick.
 
