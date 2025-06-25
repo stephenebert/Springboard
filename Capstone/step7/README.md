@@ -174,7 +174,7 @@ Together, these four modes give a complete picture of the model’s cross-modal 
 
   ## Cross-Validation Results
 
-To assess the stability of our retrieval metrics, we ran "cross-validation" over different random 10,000-sample subsets of the training split for the ViT-B-32 model. Below is a summary of the per-seed Recall@K and the mean $ \pm $ std across seeds. Here are the detailed per-seed results from the cross-validation:
+To assess the stability of our retrieval metrics, we ran "cross-validation" over different random 10,000-sample subsets of the training split for the ViT-B-32 model. Below is a summary of the per-seed Recall@K and the mean ± std across seeds. Here are the detailed per-seed results from the cross-validation:
 
 | Seed | R@1   | R@5   | R@10  |
 |------|-------|-------|-------|
