@@ -36,7 +36,7 @@ step7/
 │   └── retrieval.py               # Dataset class
 ├── run_experiment.py              # CLI wrapper for full pipeline
 ├── experiments/                   # Output: embeddings, metrics, configs, etc
-├── Figure_1.png #ViT-B-32 achieves robust recall performance with R@1 at ~43%, R@5 at ~66%, and R@10 at ~75%, showing predictable scaling with K and tight standard deviations under 1% across random seeds, confirming statistical reliability
+├── Figure_1.png                   #ViT-B-32 achieves robust recall performance
 └── README.md             
 ```
 
