@@ -66,7 +66,7 @@ jupyter nbconvert --to notebook --execute notebooks/00_build_metadata.ipynb
 #### Notebook Workflow
 1.  **`02_clip_baseline.ipynb`**: Single-model retrieval with CLIP; set `BACKBONE` and run.
 2.  **`03_multiple_backbones.ipynb`**: Batch-run RN50, ViT-B-32, RN101; embeds & metrics.
-3.  **`04`–`07`**: Explore each retrieval mode (image↔image, text→image, image→text, dataset↔dataset).
+3.  **`04`-`07`**: Explore each retrieval mode (image↔image, text→image, image→text, dataset↔dataset).
 4.  **`08_cost_performance.ipynb`**: Plot parameter count vs. embedding time.
 5.  **`09_cross_validation.ipynb`**: Cross-validation error bars.
 6.  **`10_visual_demo.ipynb`**: Qualitative nearest-neighbor grids.
