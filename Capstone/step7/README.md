@@ -98,32 +98,20 @@ This command will create a new folder under `experiments/` containing:
 -   **Prompt inversion R@1:** ~45%
 -   **Cross-val std < 1.5%** across 5 seeds
   ## Cross-Validation Results
+Here are the detailed per-seed results from the cross-validation:
 
-  
-import pandas as pd
+| Seed | R@1   | R@5   | R@10  |
+|------|-------|-------|-------|
+| 0    | 43.10 | 66.53 | 75.31 |
+| 1    | 42.29 | 66.25 | 74.88 |
+| 2    | 43.04 | 66.62 | 74.84 |
+| 3    | 42.34 | 65.47 | 74.11 |
+| 4    | 42.63 | 66.80 | 75.90 |
 
-# Data provided by the user
-data = {
-    'seed': [0, 1, 2, 3, 4],
-    'R@1': [43.10, 42.29, 43.04, 42.34, 42.63],
-    'R@5': [66.53, 66.25, 66.62, 65.47, 66.80],
-    'R@10': [75.31, 74.88, 74.84, 74.11, 75.90]
-}
+### Summary Statistics
 
-# Create a DataFrame for better organization and calculation
-df = pd.DataFrame(data)
-
-print("Per-seed results:")
-print(df.to_string(index=False)) # Use to_string() and index=False for cleaner output
-
-# Calculate mean and standard deviation
-mean_results = df.mean().to_dict()
-std_results = df.std().to_dict()
-
-# Print mean and std, rounding for display
-print("\nMean:")
-print({k: round(v, 3) for k, v in mean_results.items()})
-
-print("\nStd:")
-print({k: round(v, 5) for k, v in std_results.items()})
-
+| Metric | Mean  | Std   |
+|--------|-------|-------|
+| R@1    | 42.68 | 0.38  |
+| R@5    | 66.33 | 0.52  |
+| R@10   | 75.01 | 0.66  |
