@@ -98,6 +98,32 @@ This command will create a new folder under `experiments/` containing:
 -   **Cross-domain recall@1 (image→image):** ~24%
 -   **Prompt inversion R@1:** ~45%
 -   **Cross-val std < 1.5%** across 5 seeds
+
+---
+## Model Performance Overview
+
+This table summarizes the trade-offs between model size, embedding speed, and retrieval accuracy for different models, along with insights into cross-domain retrieval, prompt-inversion capabilities, and result consistency.
+
+### Model Size and Speed Trade-off
+
+* **RN50:** This is the most lightweight model, with approximately **50 million parameters**, and the quickest to embed, taking about **3 minutes for 10,000 samples**. However, it offers the lowest retrieval accuracy, with an R@1 (Recall at 1) of roughly **43%**.
+* **RN101:** Positioned in the middle, RN101 has around **100 million parameters** and an embedding time of about **5 minutes**. It provides moderate retrieval accuracy, with an R@1 of approximately **33%**.
+* **ViT-B-32:** This is the largest model, with roughly **151 million parameters**, and the slowest to embed, taking about **8 minutes**. Despite its size and speed, it achieves the highest recall: R@1 of about **67%**, R@5 of roughly **90%**, and R@10 of approximately **96%**.
+
+### Cross-Domain Image-to-Image Recall
+
+When retrieving images across different domains (specifically, COCO vs. Stable-Diffusion images), the R@1 is only about **24%**. This indicates that only about one in four queries successfully finds its exact match at the top rank. This low recall highlights the significant **domain shift** between real photographs and AI-generated images.
+
+### Prompt-Inversion (Image-to-Text-to-Image)
+
+By inverting a Stable-Diffusion image back to its original prompt using our text encoder and then re-encoding it with the image encoder, we recover the original image at the top rank approximately **45% of the time**. This metric quantifies how accurately the model's learned "inversion" reflects the true generative prompt.
+
+### Low Cross-Validation Variance
+
+Our experiment using 5-seed subsampling revealed that the R@1, R@5, and R@10 scores varied by less than **1.5 percentage points**. This low variance provides high confidence that the reported numbers are consistent and not merely a result of random sampling.
+---
+
+
   ## Cross-Validation Results
 
 To assess the stability of our retrieval metrics, we ran "cross-validation" over different random 10,000-sample subsets of the training split for the ViT-B-32 model. Below is a summary of the per-seed Recall@K and the mean ± std across seeds. Here are the detailed per-seed results from the cross-validation:
