@@ -1,4 +1,4 @@
-# Cross-Modal Retrieval Capstone (Step 7)
+# Step 7: Experiment With Various Models
 
 A comprehensive pipeline for evaluating real vs. AI-generated images and text across four retrieval modes, with automated experiments, benchmarks, and visualization.
 
