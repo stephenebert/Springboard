@@ -125,6 +125,53 @@ Our experiment using 5-seed subsampling revealed that the R@1, R@5, and R@10 sco
 ---
 
 
+## Retrieval Mode Results
+
+This section details the performance of our model across various retrieval tasks, providing insights into its cross-modal alignment capabilities.
+
+### 1. Image↔Image (Cross-Domain Image Retrieval)
+
+Using the image encoder to match photos ↔ Stable-Diffusion renders, we observe:
+
+* **Recall@1:** ~24%
+* **Recall@5:** ~55%
+* **Recall@10:** ~67%
+
+**What this means:** Only about one in four queries finds its exact match at rank 1 when you cross from COCO photos into AI-generated images (or vice versa). Allowing the top 5 or top 10 candidates recovers roughly half to two-thirds of true matches, highlighting the substantial domain gap between real and synthesized images.
+
+### 2. Text→Image (Zero-Shot Text-to-Image Retrieval)
+
+Querying with natural language captions against the joint image embedding yields:
+
+* **Recall@1:** ~48%
+* **Recall@5:** ~77%
+* **Recall@10:** ~85%
+
+**What this means:** CLIP-style models can correctly retrieve the single best matching image from a pool of 10k examples roughly half the time, and recover nearly 85% of the correct image if you allow the top 10 guesses. This demonstrates very strong alignment between text and image spaces.
+
+### 3. Image→Text (Zero-Shot Image-to-Text Retrieval)
+
+The dual task—finding the right caption given an image—yields:
+
+* **Recall@1:** ~53%
+* **Recall@5:** ~78%
+* **Recall@10:** ~88%
+
+**What this means:** The image encoder + text encoder pair can recover an image’s true human-written caption as its top guess more than half the time, and nearly 90% if you look at the top 10. This “caption inversion” performance is slightly stronger than text→image, suggesting the joint embedding is particularly effective at describing images.
+
+### 4. Dataset→Dataset (Cross-Corpus Caption Retrieval)
+
+Comparing Flickr-30k captions ↔ COCO captions:
+
+* **COCO→Flickr R@1:** ~0%
+* **Flickr→COCO R@1:** ~0–0.2%
+
+**What this means:** COCO and Flickr-30k use very different styles and content, so almost never will a COCO caption’s nearest neighbor in Flickr-30k be its exact counterpart (and vice versa). In other words, if you ask “which Flickr caption matches this COCO caption best?”, you’ll almost always get something different—reflecting the distinct language distributions in each dataset.
+
+Together, these four modes give a complete picture of your model’s cross-modal alignment: how well images match across domains, how faithfully text and image retrieve one another, and how distinct two major caption corpora really are.
+
+
+
   ## Cross-Validation Results
 
 To assess the stability of our retrieval metrics, we ran "cross-validation" over different random 10,000-sample subsets of the training split for the ViT-B-32 model. Below is a summary of the per-seed Recall@K and the mean $\pm$ std across seeds. Here are the detailed per-seed results from the cross-validation:
