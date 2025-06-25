@@ -1,113 +1,99 @@
-# Cross-Modal Retrieval Capstone (Step 7)
+# Cross-Modal Retrieval Capstone (Step 7)
 
-This project provides a unified pipeline to automate, benchmark, and analyze multiple cross-modal retrieval models on image–caption datasets, covering real photos (MS-COCO, Flickr-30k) and Stable Diffusion renders & prompts.
+A comprehensive pipeline for evaluating real vs. AI-generated images and text across four retrieval modes, with automated experiments, benchmarks, and visualization.
 
-## Overview
+## Project Overview
+Modern cross-modal models must bridge human–captured photos and generative outputs. This capstone:
 
-This project builds a unified pipeline for evaluating cross-modal retrieval across four modes:
-
-* **Image→Image:** Given an image (real or AI-generated), retrieve its nearest neighbors from both domains.
-* **Text→Image:** Given a text prompt, fetch real-world images and generate new ones via Stable Diffusion.
-* **Image→Text:** Generate descriptive captions or reconstruct original prompts from images.
-* **Dataset→Dataset:** Compare entire corpora (e.g., Flickr-30k captions ↔ MS-COCO captions).
-
-#### Key Components:
-* **Retrieval baselines:** TF-IDF + ResNet, OpenAI CLIP, OpenCLIP.
-* **Prompt inversion:** Reverse Stable Diffusion to recover original prompts.
-* **Advanced models:** X-Modaler, HAT, DCLIP distillation.
-* **Automated experiments:** Hydra/Lightning & CLI (`run_experiment.py`).
-* **Metrics:** Recall@K, MRR, Median Rank, cross-domain recall, plus model size & embedding time.
-* **Generalization:** Cross-validation across random seeds with error-bar analysis.
+* Aggregates three datasets: MS-COCO, Flickr-30k, and Stable Diffusion prompt–image pairs.
+* Supports four retrieval modes:
+    * **Image↔Image:** Nearest neighbors within and across domains.
+    * **Text→Image:** Retrieve real photos and generate AI renders from text.
+    * **Image→Text:** Produce captions or invert diffusion prompts.
+    * **Dataset→Dataset:** Compare full caption corpora (COCO ↔ Flickr-30k).
+* Benchmarks multiple architectures: ResNet+TF-IDF, OpenAI CLIP, OpenCLIP variants, X-Modaler, HAT, DCLIP.
+* Automates reproducible runs via notebooks and a CLI (`run_experiment.py`).
+* Evaluates: Recall@K, MRR, Median Rank, cross-domain recall, plus model size vs. embedding time trade-offs.
+* Generalizes: cross-validation across seeds with error bars.
 
 ## Repository Structure
 ```
 step7/
-├── 00_paths_build_metadata.ipynb      # Build metadata from COCO/Flickr/Stable Diffusion
-├── 01_retrieval_dataset.ipynb         # Dataset classes & sampling
-├── 01a_image_text_paired.ipynb        # Exploratory data inspection
-├── 02_clip_baseline_training.ipynb    # Single-backbone CLIP embedding + Recall@K
-├── 02b_multiple_backbones.py          # Loop over RN50, ViT-B-32, RN101
-├── 03_metrics_utils.ipynb             # Utility functions for metrics & loops
-├── 04_image_to_image_retrieval.ipynb  # Nearest-neighbor image search demos
-├── 05_text_to_image_retrieval.ipynb   # Text→image (real + AI) retrieval demos
-├── 05b_image_to_text_retrieval.ipynb  # Image→text (captioning + prompt inversion)
-├── 06_evaluation_visualization.ipynb  # Plot scaling, ablation, cost vs. performance
-├── 07_dataset_to_dataset.ipynb        # Corpus-level retrieval analysis
-├── 08_model_ablation.ipynb            # Ablation studies across architectures
-├── 09_visual_nn_demo.ipynb            # Qualitative nearest-neighbor grids
-├── 10_Run_Experiment.ipynb            # CLI-based reproducible experiment
-├── 11_cross_validation.ipynb          # Cross-val variance with precomputed embeddings
-├── cross_modals.py                    # Shared helper functions
-├── run_experiment.py                  # CLI entry point for full pipeline
-└── Figure_1.png                       # Sample qualitative result
+├── notebooks/                     # Jupyter workflows
+│   ├── 00_build_metadata.ipynb    # Create metadata.parquet
+│   ├── 01_dataset_inspection.ipynb
+│   ├── 02_clip_baseline.ipynb     # Single-model CLIP retrieval
+│   ├── 03_multiple_backbones.ipynb# Run RN50, ViT-B-32, RN101
+│   ├── 04_image2image.ipynb
+│   ├── 05_text2image.ipynb
+│   ├── 06_image2text.ipynb
+│   ├── 07_dataset2dataset.ipynb
+│   ├── 08_cost_performance.ipynb  # Model size vs. embed time
+│   ├── 09_cross_validation.ipynb
+│   └── 10_visual_demo.ipynb
+├── src/                           # Python modules & utilities
+│   ├── cross_modals.py            # Data loaders, transforms, metrics
+│   └── retrieval.py               # Dataset class
+├── run_experiment.py              # CLI wrapper for full pipeline
+└── README.md                      # This file
 ```
 
-## Setup & Dependencies
-
-#### 1. Clone & Unzip
+## Setup & Installation
+#### 1. Clone repository:
 ```bash
-git clone <your-repo-url>
-unzip step7.zip -d cross-modal-retrieval
-cd cross-modal-retrieval/step7
+git clone <repo-url>
+cd step7
 ```
 
-#### 2. Create Environment & Install
+#### 2. Install dependencies:
 ```bash
 conda create -n xmodal python=3.10
 conda activate xmodal
 pip install -r requirements.txt
 ```
 
-#### 3. Prepare Data
-Ensure your data is structured under the following paths:
-```
-C:/Users/steph/OneDrive/Desktop/data/metadata.parquet
-C:/Users/steph/OneDrive/Desktop/data/SD/images
-C:/Users/steph/OneDrive/Desktop/data/coco/train2017
-C:/Users/steph/OneDrive/Desktop/data/flickr30k/flickr30k_images
-```
+#### 3. Prepare data (edit `notebooks/00_build_metadata.ipynb` paths if needed):
+* MS-COCO 2017 images & captions
+* Flickr-30k images & captions
+* Stable Diffusion prompt–image pairs
 
-## Running Experiments
-
-#### 1. Build Metadata
-Run `00_paths_build_metadata.ipynb` to generate `metadata.parquet`.
-
-#### 2. Baseline Retrieval
--   **Single backbone:** Open `02_clip_baseline_training.ipynb`, set the `BACKBONE`, and run.
--   **Multiple backbones:**
-    ```bash
-    python 02b_multiple_backbones.py
-    ```
-
-#### 3. Specialized Modes
--   **Image→Image:** `04_image_to_image_retrieval.ipynb`
--   **Text→Image:** `05_text_to_image_retrieval.ipynb`
--   **Image→Text:** `05b_image_to_text_retrieval.ipynb`
--   **Dataset→Dataset:** `07_dataset_to_dataset.ipynb`
-
-#### 4. Evaluation & Visualization
--   **Scaling & cost:** `06_evaluation_visualization.ipynb`
--   **Cross-validation:** `11_cross_validation.ipynb`
--   **Ablation:** `08_model_ablation.ipynb`
--   **Qualitative grids:** `09_visual_nn_demo.ipynb`
-
-#### 5. CLI Alternative
+#### 4. Generate metadata:
 ```bash
-python run_experiment.py --model ViT-B-32 --preset cpu-fast --max 10000
+jupyter nbconvert --to notebook --execute notebooks/00_build_metadata.ipynb
 ```
 
-## Results & Findings
+## Quickstart
+#### Notebook Workflow
+1.  **`02_clip_baseline.ipynb`**: Single-model retrieval with CLIP; set `BACKBONE` and run.
+2.  **`03_multiple_backbones.ipynb`**: Batch-run RN50, ViT-B-32, RN101; embeds & metrics.
+3.  **`04`–`07`**: Explore each retrieval mode (image↔image, text→image, image→text, dataset↔dataset).
+4.  **`08_cost_performance.ipynb`**: Plot parameter count vs. embedding time.
+5.  **`09_cross_validation.ipynb`**: Cross-validation error bars.
+6.  **`10_visual_demo.ipynb`**: Qualitative nearest-neighbor grids.
 
--   **Recall@K:**
-    -   `ViT-B-32`: **~67%/90%/96%** on 10k samples
-    -   `RN50`: **~43%/66%/75%**
-    -   `RN101`: **~33%/56%/66%**
+#### CLI Alternative
+```bash
+python run_experiment.py \
+  --model ViT-B-32 \
+  --pretrained openai \
+  --preset cpu-fast \
+  --max-samples 10000 \
+  --batch 64
+```
+This command will create a new folder under `experiments/` containing:
+* `img_embs.npy`, `txt_embs.npy`
+* `metrics.json` (Recall@1/5/10, median rank)
+* `config.json` (hyperparams, param_count, embed_secs)
 
--   **Generalization:** Cross-validation standard deviation is less than **1.5%** across 5 seeds.
+## Key Results
 
--   **Cost Tradeoff:**
-    -   `ViT-B-32` (~150M parameters) → ~8 min to embed 10k samples
-    -   `RN50` (~50M) → ~3 min
-    -   `RN101` (~100M) → ~5 min
+| Model    | Params (M) | Embed Time (min) | R@1   | R@5   | R@10  |
+| :------- | :--------: | :--------------: | :---- | :---- | :---- |
+| RN50     |     50     |       3.0        | 43.3% | 66.6% | 75.3% |
+| ViT-B-32 |    151     |       8.0        | 67.0% | 90.2% | 95.9% |
+| RN101    |    100     |       5.0        | 33.3% | 56.3% | 65.8% |
 
--   **Prompt Inversion:** **~45% R@1** when recovering Stable Diffusion prompts.
+-   **Cross-domain recall@1 (image→image):** ~24%
+-   **Prompt inversion R@1:** ~45%
+-   **Cross-val std < 1.5%** across 5 seeds
+
