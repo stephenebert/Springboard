@@ -121,6 +121,7 @@ By inverting a Stable-Diffusion image back to its original prompt using our text
 ### Low Cross-Validation Variance
 
 Our experiment using 5-seed subsampling revealed that the R@1, R@5, and R@10 scores varied by less than **1.5 percentage points**. This low variance provides high confidence that the reported numbers are consistent and not merely a result of random sampling.
+
 ---
 
 
