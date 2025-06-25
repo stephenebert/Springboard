@@ -140,7 +140,7 @@ Modern cross-modal models must bridge human–captured photos and generative out
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 step7/
@@ -169,7 +169,7 @@ step7/
 
 ---
 
-## ⚙️ Setup & Installation
+## Setup & Installation
 
 1. **Clone repository**:
 
