@@ -11,7 +11,7 @@ Modern cross-modal models must bridge human–captured photos and generative out
     * **Text→Image:** Retrieve real photos and generate AI renders from text.
     * **Image→Text:** Produce captions or invert diffusion prompts.
     * **Dataset→Dataset:** Compare full caption corpora (COCO ↔ Flickr-30k).
-* Benchmarks multiple architectures: ResNet+TF-IDF, OpenAI CLIP, OpenCLIP variants, X-Modaler, HAT, DCLIP.
+* Benchmarks multiple architectures (e.g. ResNet+TF-IDF, OpenAI CLIP, OpenCLIP variants, X-Modaler, HAT, DCLIP).
 * Automates reproducible runs via notebooks and a CLI (`run_experiment.py`).
 * Evaluates: Recall@K, MRR, Median Rank, cross-domain recall, plus model size vs. embedding time trade-offs.
 * Generalizes: cross-validation across seeds with error bars.
