@@ -35,7 +35,8 @@ step7/
 │   ├── cross_modals.py            # Data loaders, transforms, metrics
 │   └── retrieval.py               # Dataset class
 ├── run_experiment.py              # CLI wrapper for full pipeline
-└── README.md                      # This file
+├── experiments/                   # Output: embeddings, metrics, configs, etc
+└── README.md             
 ```
 
 ## Setup & Installation
@@ -96,4 +97,33 @@ This command will create a new folder under `experiments/` containing:
 -   **Cross-domain recall@1 (image→image):** ~24%
 -   **Prompt inversion R@1:** ~45%
 -   **Cross-val std < 1.5%** across 5 seeds
+  ## Cross-Validation Results
+
+  
+import pandas as pd
+
+# Data provided by the user
+data = {
+    'seed': [0, 1, 2, 3, 4],
+    'R@1': [43.10, 42.29, 43.04, 42.34, 42.63],
+    'R@5': [66.53, 66.25, 66.62, 65.47, 66.80],
+    'R@10': [75.31, 74.88, 74.84, 74.11, 75.90]
+}
+
+# Create a DataFrame for better organization and calculation
+df = pd.DataFrame(data)
+
+print("Per-seed results:")
+print(df.to_string(index=False)) # Use to_string() and index=False for cleaner output
+
+# Calculate mean and standard deviation
+mean_results = df.mean().to_dict()
+std_results = df.std().to_dict()
+
+# Print mean and std, rounding for display
+print("\nMean:")
+print({k: round(v, 3) for k, v in mean_results.items()})
+
+print("\nStd:")
+print({k: round(v, 5) for k, v in std_results.items()})
 
