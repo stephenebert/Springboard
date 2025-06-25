@@ -99,7 +99,8 @@ This command will create a new folder under `experiments/` containing:
 -   **Prompt inversion R@1:** ~45%
 -   **Cross-val std < 1.5%** across 5 seeds
   ## Cross-Validation Results
-Here are the detailed per-seed results from the cross-validation:
+
+To assess the stability of our retrieval metrics, we ran "cross-validation" over different random 10,000-sample subsets of the training split for the ViT-B-32 model. Below is a summary of the per-seed Recall@K and the mean ± std across seeds. Here are the detailed per-seed results from the cross-validation:
 
 | Seed | R@1   | R@5   | R@10  |
 |------|-------|-------|-------|
@@ -116,6 +117,23 @@ Here are the detailed per-seed results from the cross-validation:
 | R@1    | 42.68 | 0.38  |
 | R@5    | 66.33 | 0.52  |
 | R@10   | 75.01 | 0.66  |
+
+ Mean $\pm$ Std
+
+* **R@1:** $42.68 \pm 0.38$ pp
+
+* **R@5:** $66.33 \pm 0.52$ pp
+
+* **R@10:** $75.01 \pm 0.66$ pp
+
+## What this tells us
+
+* **Low variance:** All three recall measures vary by less than 1 percentage point across different random subsets, demonstrating the statistical reliability of our estimates.
+
+* **Consistent performance:** The VIT-B-32's performance remains stable, with R@1 consistently around 43%, R@5 around 66%, and R@10 around 75%.
+
+* **Minimal sampling noise:** The tiny standard deviations ($0.3-0.7$ pp) indicate that these results allow for meaningful comparisons between different models or data-size ablations without significant concern for random chance.
+
 
 
 ## Example Output
