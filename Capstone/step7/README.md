@@ -151,7 +151,7 @@ Querying with natural language captions against the joint image embedding yields
 
 ### 3. Image→Text (Zero-Shot Image-to-Text Retrieval)
 
-The dual task—finding the right caption given an image—yields:
+The dual task finding the right caption given an image yields:
 
 * **Recall@1:** ~53%
 * **Recall@5:** ~78%
@@ -166,7 +166,7 @@ Comparing Flickr-30k captions ↔ COCO captions:
 * **COCO→Flickr R@1:** ~0%
 * **Flickr→COCO R@1:** ~0–0.2%
 
-**What this means:** COCO and Flickr-30k use very different styles and content, so almost never will a COCO caption’s nearest neighbor in Flickr-30k be its exact counterpart (and vice versa). In other words, if one asks “which Flickr caption matches this COCO caption best?”, one will almost always get something different—reflecting the distinct language distributions in each dataset.
+**What this means:** COCO and Flickr-30k use very different styles and content, so almost never will a COCO caption’s nearest neighbor in Flickr-30k be its exact counterpart (and vice versa). In other words, if one asks “which Flickr caption matches this COCO caption best?”, one will almost always get something different reflecting the distinct language distributions in each dataset.
 
 Together, these four modes give a complete picture of the model’s cross-modal alignment: how well images match across domains, how faithfully text and image retrieve one another, and how distinct two major caption corpora really are.
 
