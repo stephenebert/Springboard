@@ -37,6 +37,7 @@ step7/
 ├── run_experiment.py              # CLI wrapper for full pipeline
 ├── experiments/                   # Output: embeddings, metrics, configs, etc
 ├── Figure_1.png                   #ViT-B-32 achieves robust recall performance
+├── step_7_notes.pdf               #Full explanation of the codebase, metrics, and workflow
 └── README.md             
 ```
 
@@ -63,6 +64,10 @@ pip install -r requirements.txt
 ```bash
 jupyter nbconvert --to notebook --execute notebooks/00_build_metadata.ipynb
 ```
+
+### Documentation
+
+- [`step_7_notes.pdf`](step_7_notes.pdf): Detailed technical notes explaining the purpose, logic, and key code components of each notebook and script in this repository. It provides background context, code explanations, metric definitions, and guidance for navigating and understanding the entire pipeline.
 
 ## Quickstart
 #### Notebook Workflow
