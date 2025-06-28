@@ -5,12 +5,6 @@ text_to_image_demo.py
 • Prints the top-K nearest images (domain, score, id) for three example prompts
 • Computes text→image Recall@1/5/10 with a low-RAM, chunked routine
 
-Args (optional)
----------------
---root PATH   : path to experiments folder
---run  NAME   : run folder (default = newest with embeddings)
---k    N      : top-K neighbours to show (default 5)
-
 Example
 -------
 python text_to_image_demo.py
