@@ -12,8 +12,8 @@ This step scales our cross-modal retrieval pipeline to the full training set (â‰
 
 3. **Build fast ANN indices (FAISS)** - We experiment with several approximate-nearest-neighbour layouts:
    * `FlatIP` (exact search, baseline)
-   * `IVF-Flat` (coarse quantiser + exact residual)
-   * `IVF-PQ` (coarse quantiser + product quantisation)
+   * `IVF-Flat` (coarse quantizer + exact residual)
+   * `IVF-PQ` (coarse quantizer + product quantization)
    * `HNSWFlat` (graph-based)
    
    For each index we measure **recall @ 10**, **average latency** (ms/query), and **RSS memory** right after building.
