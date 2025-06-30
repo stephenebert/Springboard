@@ -37,3 +37,20 @@ step8/
    pip install -r requirements.txt
 
 3. Prepare metadata – ensure data/metadata.parquet exists (from Step 7).
+
+## Full-Scale Embedding
+
+Generate 512-D image/text embeddings for all ≈ 850 K training samples and save them into a single HDF5 file:
+
+```bash
+python scale_pipeline_hdf5.py \
+  --parquet data/metadata.parquet \
+  --out experiments/full/embeddings_full.h5 \
+  --model ViT-B-32 \
+  --pretrained laion2b_s34b_b79k \
+  --batch 64 \
+  --chunk 2000 \
+  --workers 4
+
+- Chunked I/O via HDF5 (with LZF compression) keeps RAM usage constant.
+- Transforms match those in Step 7 for consistency.
