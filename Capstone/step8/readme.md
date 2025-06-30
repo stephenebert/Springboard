@@ -53,5 +53,5 @@ python scale_pipeline_hdf5.py \
     --workers 4
 ```
 
-Chunked I/O via HDF5 (with LZF compression) keeps RAM usage constant.
-Transforms match those in Step 7 for consistency.
+- Chunked I/O via HDF5 (with LZF compression) keeps RAM usage constant.
+- Transforms match those in Step 7 for consistency.
