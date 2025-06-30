@@ -12,7 +12,7 @@ step8/
 │ ├── embeddings_full.h5 # HDF5: all image/text embeddings
 │ ├── img_embs_full.npy
 │ └── txt_embs_full.npy
-├── scale_pipeline_hdf5.py # Chunk & embed → HDF5 (full dataset)
+├── scale_pipeline_hdf5.py # Chunk & embed to HDF5 (full dataset)
 ├── evaluate_retrieval.py # Compute exact Recall@K via brute-force
 ├── faiss_index_comparison.py # Compare FlatIP, IVF-Flat, HNSWFlat, IVF-PQ
 ├── faiss_param_sweep.py # Hyper-parameter sweep (nlist, nprobe, M, ef)
