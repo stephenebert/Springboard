@@ -86,8 +86,9 @@ python faiss_param_sweep.py \
   --nq 1000 \
   --k 10
 ```
--- Choice for production: IVF-Flat(nlist=1024,nprobe=16) or IVF-PQ.
--- Sweeps over nlist, nprobe, M, efSearch.
+- Choice for production: IVF-Flat(nlist=1024,nprobe=16) or IVF-PQ.
+
+-  Sweeps over nlist, nprobe, M, efSearch.
 
   
 ## 6. Index Benchmarking
