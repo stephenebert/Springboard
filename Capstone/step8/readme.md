@@ -102,7 +102,7 @@ python faiss_param_sweep.py \
 
   
 ## 6. Index Benchmarking
-Finally, we built and compared four FAISS index types—FlatIP (exact inner-product), IVF-Flat (ANN with Voronoi cells), HNSWFlat (graph-based), and IVF-PQ (product quantization) on the full 850 K embedding dataset. For each, we measured:
+Finally, we built and compared four FAISS index types FlatIP (exact inner-product), IVF-Flat (ANN with Voronoi cells), HNSWFlat (graph-based), and IVF-PQ (product quantization) on the full 850 K embedding dataset. For each, we measured:
 
 - Recall@10 to quantify accuracy against the brute-force baseline,
 
