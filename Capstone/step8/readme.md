@@ -43,13 +43,13 @@ step8/
 Generate 512-D image/text embeddings for all ≈ 850 K training samples and save them into a single HDF5 file:
 
    ```bash
-   python scale_pipeline_hdf5.py \
-     --parquet data/metadata.parquet \
-     --out experiments/full/embeddings_full.h5 \
-     --model ViT-B-32 \
-     --pretrained laion2b_s34b_b79k \
-     --batch 64 \
-     --chunk 2000 \
-     --workers 4
+      python scale_pipeline_hdf5.py \
+        --parquet data/metadata.parquet \
+        --out experiments/full/embeddings_full.h5 \
+        --model ViT-B-32 \
+        --pretrained laion2b_s34b_b79k \
+        --batch 64 \
+        --chunk 2000 \
+        --workers 4
 ---
 dsfsd
