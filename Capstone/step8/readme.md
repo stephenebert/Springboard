@@ -90,6 +90,7 @@ Run a hyperparameter sweep to find the optimal balance between recall, latency, 
      --nprobe_list 8 16 32 \
      --hnsw_m_list 16 32 \
      --hnsw_ef_list 16 32 64
+```
 ---
 
 **Generates a summary table:**
