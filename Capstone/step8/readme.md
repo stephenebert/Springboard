@@ -82,14 +82,14 @@ HNSWFlat(M=32,ef=32)           R@10=81.10% | latency=0.03 ms | RSS=2802 MB
 Run a hyperparameter sweep to find the optimal balance between recall, latency, and memory for IVF-Flat and HNSWFlat indices.
 
 ---
-
-python faiss_param_sweep.py \
-  --h5 experiments/full/embeddings_full.h5 \
-  --k 10 \
-  --nlist_list 512 1024 2048 \
-  --nprobe_list 8 16 32 \
-  --hnsw_m_list 16 32 \
-  --hnsw_ef_list 16 32 64
+```bash
+   python faiss_param_sweep.py \
+     --h5 experiments/full/embeddings_full.h5 \
+     --k 10 \
+     --nlist_list 512 1024 2048 \
+     --nprobe_list 8 16 32 \
+     --hnsw_m_list 16 32 \
+     --hnsw_ef_list 16 32 64
 ---
 
 **Generates a summary table:**
