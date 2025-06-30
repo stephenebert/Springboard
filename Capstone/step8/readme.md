@@ -78,7 +78,6 @@ python index_benchmark.py \
 | IVF-Flat(nlist=1024,nprobe=16) | 82.70%  | 1.17         | 5087     |
 | HNSWFlat(M=32, ef=32) | 81.10%  | 0.03         | 2802     |
 | ...                   | ...     | ...          | ...      |
-...
 ---
 # Hyperparameter Sweep
 
