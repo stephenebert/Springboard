@@ -20,7 +20,7 @@ This step scales our cross-modal retrieval pipeline to the full training set (â‰
 
 4. **Hyper-parameter sweeps** - We sweep `nlist / nprobe` for IVF and `M / efSearch` for HNSW to find the sweet spot where recall stays â‰¥ ~82% but latency and memory shrink dramatically.
 
-5. **Cost / performance dashboards** - Everything is logged to CSV â†’ piped into a quick `seaborn` scatter where:
+5. **Cost / performance dashboards** - Everything is logged to CSV : piped into a quick `seaborn` scatter where:
    * **x-axis:** latency
    * **y-axis:** RAM
    * **marker size / colour:** recall
@@ -29,7 +29,7 @@ This step scales our cross-modal retrieval pipeline to the full training set (â‰
 
 **Why?** Step 7 proved the concept on 10k samples; Step 8 proves it scales. One is left with:
 * Embeddings one can ship to production.
-* A FAISS index configuration that answers in ~1â€“2 ms with ~82% Recall@10.
+* A FAISS index configuration that answers in ~1-2 ms with ~82% Recall@10.
 * Concrete memory / latency / cost numbers for the README and slide-deck.
 
 ## Repository Structure
