@@ -77,7 +77,7 @@ FlatIP                         R@10=82.70% | latency=4.56 ms | RSS=1702 MB
 IVF-Flat(nlist=1024,nprobe=16) R@10=82.70% | latency=1.17 ms | RSS=5087 MB
 HNSWFlat(M=32,ef=32)           R@10=81.10% | latency=0.03 ms | RSS=2802 MB
 ...
-
+---
 ## Hyperparameter Sweep
 
 Run a hyperparameter sweep to find the optimal balance between recall, latency, and memory for IVF-Flat and HNSWFlat indices.
