@@ -30,8 +30,10 @@ step8/
    cd step8
    
 2. **Install dependencies**
-   ```bash
+
+    ```bash
    conda create -n step8 python=3.10
-conda activate step8
-pip install -r requirements.txt
-4. Prepare metadata – ensure data/metadata.parquet exists (from Step 7).
+   conda activate step8
+   pip install -r requirements.txt
+
+3. Prepare metadata – ensure data/metadata.parquet exists (from Step 7).
