@@ -41,6 +41,9 @@ Produces embeddings_full.h5 with two datasets:
   ![Figure 0: Embedding](Figure_0.png)
   - The embeddings took 28 hours to finish running.
 ## 2. Exact & Approximate Index Benchmark
+
+In this benchmark we build an IVF-Flat index with 1024 centroids and then sweep the nprobe parameter (the number of lists visited at query time) from 1 up to 64. As shown in Figure 2, Recall@10 quickly reaches the exact search level (82.7 %) once we probe just 2 clusters and it never improves further by visiting more lists. Meanwhile, average query latency rises from 0.99 ms at nprobe=1 to 3.56 ms at nprobe=64. In other words, setting nprobe=2-4 gives you virtually the same retrieval accuracy as a full linear scan but with a 2–3x speedup, making it an excellent sweet spot for large-scale deployments.
+
 ```bash
 python index_benchmark.py \
   --h5 experiments/full/embeddings_full.h5 \
