@@ -52,5 +52,5 @@ Generate 512-D image/text embeddings for all ≈ 850 K training samples and save
      --chunk 2000 \
      --workers 4
 
-- Chunked I/O via HDF5 (with LZF compression) keeps RAM usage constant.
-- Transforms match those in Step 7 for consistency.
+-- Chunked I/O via HDF5 (with LZF compression) keeps RAM usage constant.
+-- Transforms match those in Step 7 for consistency.
