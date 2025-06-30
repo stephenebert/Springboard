@@ -25,7 +25,7 @@ step8/
 ```
 ---
 
-## 1. Chunked Embedding → HDF5
+## 1. Chunked Embedding --> HDF5
 
 ```bash
 python scale_pipeline_hdf5.py \
@@ -37,7 +37,18 @@ python scale_pipeline_hdf5.py \
   --batch 64 \
   --chunk 2000
 ```
-f
+Produces embeddings_full.h5 with two datasets:
+- /image_embeddings (850 668 x 512)
+- /text_embeddings (850 668 x 512)
+  
+## 2. Exact & Approximate Index Benchmark
+```bash
+python index_benchmark.py \
+  --h5 experiments/full/embeddings_full.h5 \
+  --nq 1000 \
+  --k 10
+```
+d
    
 2. **Install dependencies**
 
