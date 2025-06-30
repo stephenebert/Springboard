@@ -32,7 +32,7 @@ step8/
 | **Chunk size** | 65,536 rows • 512 dims | Fits comfortably in <2GB RAM, enabling processing on 16GB laptops while saturating I/O. |
 | **Benchmark metrics** | Recall@K, average latency, resident-set-size (RSS) | Mirror real-world retrieval QoS: accuracy, speed, and memory. |
 
-> **Trade-offs:** IVF-Flat gives higher recall than IVF-PQ but at 4× memory; HNSW is even faster at K≤10 yet slower to build. The param-sweep script quantifies this and lets you pick a sweet spot for deployment geometry.
+> **Trade-offs:** IVF-Flat gives higher recall than IVF-PQ but at 4× memory; HNSW is even faster at K≤10 yet slower to build. The param-sweep script quantifies this and lets one pick a sweet spot for deployment geometry.
 ## 2. Quick-start
 
 ### 2.1  Installation
