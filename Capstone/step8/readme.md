@@ -88,7 +88,7 @@ python faiss_param_sweep.py \
   --nq 1000 \
   --k 10
 ```
-![Figure 4: Combined FAISS Index Comparison](Figure_4.png)
+![Figure 3: Combined FAISS Index Comparison](Figure_3.png)
 - Plots all indices and their tuned parameters on one axis: X-axis (Avg query latency (ms)), Y-axis (Recall@10 (%)), Y-axis (Recall@10 (%))
 - IVF-PQ sits furthest left (fast & accurate).
 - HNSWFlat is ultra-fast but lower recall.
