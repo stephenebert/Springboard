@@ -75,7 +75,7 @@ python faiss_index_comparison.py \
 ```bash
 python faiss_memory_latency_benchmark.py
 ```
-![Figure 3: Memory vs Latency (Recall@10 size/color ~ R@10)](Figure_3.png)
+![Figure 2: Memory vs Latency (Recall@10 size/color ~ R@10)](Figure_2.png)
 -RAM footprint ≈ 152 MB for all indices.
 
 -Latency spans 0.02 ms → 5.28 ms.
