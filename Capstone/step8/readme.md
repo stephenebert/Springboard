@@ -48,43 +48,53 @@ python index_benchmark.py \
   --nq 1000 \
   --k 10
 ```
-![Figure 1: IVF-Flat (nlist=1024) • Sweep nprobe](Figure_1.png)
+![Figure 1: IVF-Flat (nlist=1024) | Sweep nprobe](Figure_1.png)
 - Recall@10 saturates at 82.7 % for nprobe ≥ 2.
 - Latency increases from 0.99 ms (nprobe=1) -> 3.56 ms (nprobe=64).
 - Takeaway: nprobe = 2-4 offers near-optimal recall with 2-3x speedup over exact.
 
-
-
-
-   
-2. **Install dependencies**
-
-    ```bash
-   conda create -n step8 python=3.10
-   conda activate step8
-   pip install -r requirements.txt
-
-3. Prepare metadata – ensure data/metadata.parquet exists (from Step 7).
-
-# Full-Scale Embedding
-
-Generate 512-D image/text embeddings for all ≈ 850 K training samples and save them into a single HDF5 file:
-
+## 3. Compare Multiple ANN Indices
 ```bash
-python scale_pipeline_hdf5.py \
-    --parquet data/metadata.parquet \
-    --out experiments/full/embeddings_full.h5 \
-    --model ViT-B-32 \
-    --pretrained laion2b_s34b_b79k \
-    --batch 64 \
-    --chunk 2000 \
-    --workers 4
+python faiss_index_comparison.py \
+  --h5 experiments/full/embeddings_full.h5 \
+  --nq 1000 \
+  --k 10
 ```
+![Figure 2: Approximate Index Comparison](Figure_2.png)
+| Index                            | Recall@10 | Latency (ms) |
+|----------------------------------|-----------|--------------|
+| FlatIP (exact)                   | 82.7 %    | 5.28         |
+| IVF-Flat (nlist=1024,nprobe=16)  | 82.7 %    | 2.30         |
+| IVF-PQ (nlist=1024,m=64)         | 82.7 %    | 1.03         |
+| HNSWFlat (M=32)                  | 80.6 %    | 0.02         |
 
-- Chunked I/O via HDF5 (with LZF compression) keeps RAM usage constant.
-- Transforms match those in Step 7 for consistency.
+**Note:** IVF-PQ matches exact recall at ~5x lower latency.
+
+
+## 4. Memory vs. Latency Trade-off
+```bash
+python faiss_memory_latency_benchmark.py
+```
+![Figure 3: Memory vs Latency (Recall@10 size/color ~ R@10)](Figure_3.png)
+-RAM footprint ≈ 152 MB for all indices.
+
+-Latency spans 0.02 ms → 5.28 ms.
+
+- Bubble size & color ~ Recall@10, highlighting IVF-PQ & IVF-Flat sweet spots.
+## 5. Hyperparameter Sweeps
+```bash
+python faiss_param_sweep.py \
+  --h5 experiments/full/embeddings_full.h5 \
+  --nq 1000 \
+  --k 10
+```
+![Figure 4: Combined FAISS Index Comparison](Figure_4.png)
+- Plots all indices and their tuned parameters on one axis: X-axis (Avg query latency (ms)), Y-axis (Recall@10 (%)), Y-axis (Recall@10 (%))
+- IVF-PQ sits furthest left (fast & accurate).
+- HNSWFlat is ultra-fast but lower recall.
+
   
-# Index Benchmarking
+## 5. Index Benchmarking
 Build various FAISS indices and measure their performance based on:
 - Recall@10 (exact vs. ANN)
 - Avg. latency (ms/query)
@@ -107,29 +117,7 @@ python index_benchmark.py \
 | HNSWFlat(M=32, ef=32) | 81.10%  | 0.03         | 2802     |
 | ...                   | ...     | ...          | ...      |
 ---
-# Hyperparameter Sweep
 
-Run a hyperparameter sweep to find the optimal balance between recall, latency, and memory for IVF-Flat and HNSWFlat indices.
-
----
-```bash
-   python faiss_param_sweep.py \
-     --h5 experiments/full/embeddings_full.h5 \
-     --k 10 \
-     --nlist_list 512 1024 2048 \
-     --nprobe_list 8 16 32 \
-     --hnsw_m_list 16 32 \
-     --hnsw_ef_list 16 32 64
-```
----
-
-**Generates a summary table:**
-
-| Index                 | R@10    | Latency (ms) | Memory (MB) |
-|-----------------------|---------|--------------|-------------|
-| IVF-Flat(nlist=1024,16)| 82.10%  | 1.72         | 0.13        |
-| HNSWFlat(M=32, ef=64) | 29.70%  | 0.02         | 0.00        |
-| ...                   | ...     | ...          | ...         |
 
 
 # Key Findings
