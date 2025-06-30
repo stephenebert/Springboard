@@ -22,7 +22,58 @@ step8/
 ```
 ---
 
-## 1. Chunked Embedding --> HDF5
+## 1. Design decisions
+
+| Component | Choice | Why it was chosen |
+|-----------|--------|-------------------|
+| **Embedding model** | OpenAI CLIP ViT-B/32 (512-d) | Strong open-source baseline; balances quality vs. time/VRAM for ≈1M samples. |
+| **Storage format** | HDF5 (`embeddings_full.h5`) | Supports chunked writes/reads and compression; plays nicely with NumPy & FAISS. Parquet is better for tabular metadata but slower for large binary blobs. |
+| **ANN engine** | FAISS IVF-Flat / IVF-PQ / HNSWFlat | Wide community adoption; CPU-only install keeps setup simple on student hardware. IVF scales sub-linear; HNSW adds low-latency option. |
+| **Chunk size** | 65,536 rows • 512 dims | Fits comfortably in <2GB RAM, enabling processing on 16GB laptops while saturating I/O. |
+| **Benchmark metrics** | Recall@K, average latency, resident-set-size (RSS) | Mirror real-world retrieval QoS: accuracy, speed, and memory. |
+
+> **Trade-offs:** IVF-Flat gives higher recall than IVF-PQ but at 4× memory; HNSW is even faster at K≤10 yet slower to build. The param-sweep script quantifies this and lets you pick a sweet spot for deployment geometry.
+## 2. Quick-start
+
+### 2.1  Installation
+
+```bash
+conda create -n capstone8 python=3.10 -y
+conda activate capstone8
+pip install -r requirements.txt
+```
+
+### 2.2 End-to-end run on the full dataset
+
+**# 1 ) Encode images & captions → HDF5**
+```bash
+python scale_pipeline_hdf5.py \
+  --metadata_path data/metadata.parquet \
+  --model clip-vit-base32 \
+  --chunk_size 65536 \
+  --output_path experiments/full/embeddings_full.h5
+```
+
+**# 2 ) Train an IVF-Flat index and benchmark it**
+```bash
+python index_benchmark.py \
+  --embeddings_path experiments/full/embeddings_full.h5 \
+  --index_type IVF4096,Flat \
+  --topk 10 \
+  --output_dir experiments/full/index_benchmarks
+```
+
+**# 3 ) Explore other hyper-parameters (optional)**
+```bash
+python faiss_param_sweep.py \
+  --embeddings_path experiments/full/embeddings_full.h5 \
+  --index_types IVF2048,PQ32 IVF4096,HNSW32 \
+  --tops "5 10 30" \
+  --out_csv experiments/full/param_sweep.csv
+```
+
+
+## 3. Chunked Embedding --> HDF5
 
 In this first stage, we scale our embedding process to the full training set by streaming data in manageable chunks and writing the results into an HDF5 file. Using scale_pipeline_hdf5.py, we divide the ≈850 K images and captions into 2000-example blocks, embed each block with the ViT-B-32 model (pretrained on LAION-2B), and append the normalized 512-dim vectors to two HDF5 datasets (/image_embeddings and /text_embeddings). This approach lets us work around memory constraints and checkpoint progress safely. On our hardware, the end-to-end run took about 28 hours to complete, yielding a single embeddings_full.h5 file (≈1.4 GB) that contains all image/text vectors ready for large-scale indexing.
 ```bash
@@ -40,7 +91,7 @@ Produces embeddings_full.h5 with two datasets:
 - /text_embeddings (850668 x 512)
   ![Figure 0: Embedding](Figure_0.png)
   - The embeddings took 28 hours to finish running.
-## 2. Exact & Approximate Index Benchmark
+## 4. Exact & Approximate Index Benchmark
 
 In this benchmark we build an IVF-Flat index with 1024 centroids and then sweep the nprobe parameter (the number of lists visited at query time) from 1 up to 64. As shown in Figure 2, Recall@10 quickly reaches the exact search level (82.7 %) once we probe just 2 clusters and it never improves further by visiting more lists. Meanwhile, average query latency rises from 0.99 ms at nprobe=1 to 3.56 ms at nprobe=64. In other words, setting nprobe=2-4 gives us virtually the same retrieval accuracy as a full linear scan but with a 2–3x speedup, making it an excellent sweet spot for large-scale deployments.
 
@@ -55,7 +106,7 @@ python index_benchmark.py \
 - Latency increases from 0.99 ms (nprobe=1) -> 3.56 ms (nprobe=64).
 - Takeaway: nprobe = 2-4 offers near-optimal recall with 2-3x speedup over exact.
 
-## 3. Compare Multiple ANN Indices
+## 5. Compare Multiple ANN Indices
 
 In this comparison we pit four different FAISS index types against one another FlatIP (exact inner‐product), IVF-Flat (nlist=1024, nprobe=16), IVF-PQ (nlist=1024, m=64), and HNSWFlat (M=32) to see how they trade off accuracy and speed (Figure 3). As expected, the exact FlatIP search tops out at 82.7 % Recall@10 but has the highest latency (~5.3 ms/query). Both IVF-Flat and IVF-PQ match that recall level: IVF-Flat does so in about 2.3 ms, while IVF-PQ achieves it in only ~1.0 ms nearly a 5x speedup over the exact scan. HNSWFlat, on the other hand, delivers sub 0.1 ms queries but sacrifices recall (80.6 %). All four indices consume roughly the same RAM footprint (~152 MB), so the choice really comes down to latency‐versus‐accuracy needs: IVF-PQ offers the best of both worlds (exact recall at 5x lower latency), IVF-Flat gives a 2x speedup with zero loss in accuracy, and HNSWFlat is ultra‐fast but at a steep cost in recall.
 ```bash
@@ -74,9 +125,9 @@ python faiss_index_comparison.py \
 
 **Note:** IVF-PQ matches exact recall at ~5x lower latency.
 
-## 4. Memory vs. Latency Trade-off
+## 6. Memory vs. Latency Trade-off
 
-Figure 4 shows that all four FAISS indices occupy roughly the same modest RAM footprint (around 152 MB), so memory use is not the primary concern. Latency versus accuracy is. At one extreme, FlatIP (exact search) delivers the highest recall (82.7 %) but at the cost of a relatively slow ∼4.1 ms per query. Moving left on the latency axis, IVF-Flat cuts that time in half (∼1.8 ms) without sacrificing accuracy, and IVF-PQ further accelerates queries to under 1 ms while still matching FlatIP’s 82.7 % recall—achieving a nearly 5× speedup with no loss in performance. HNSWFlat pushes latency down into the tens of microseconds but at a notable drop in recall (∼80.6 %). Overall, IVF-PQ stands out as the best trade-off for large-scale deployment, combining exact-search accuracy with sub-millisecond speed at minimal memory overhead.
+This figure shows that all four FAISS indices occupy roughly the same modest RAM footprint (around 152 MB), so memory use is not the primary concern. Latency versus accuracy is. At one extreme, FlatIP (exact search) delivers the highest recall (82.7 %) but at the cost of a relatively slow ∼4.1 ms per query. Moving left on the latency axis, IVF-Flat cuts that time in half (∼1.8 ms) without sacrificing accuracy, and IVF-PQ further accelerates queries to under 1 ms while still matching FlatIP’s 82.7 % recall—achieving a nearly 5× speedup with no loss in performance. HNSWFlat pushes latency down into the tens of microseconds but at a notable drop in recall (∼80.6 %). Overall, IVF-PQ stands out as the best trade-off for large-scale deployment, combining exact-search accuracy with sub-millisecond speed at minimal memory overhead.
 ```bash
 python faiss_memory_latency_benchmark.py
 ```
@@ -87,7 +138,7 @@ python faiss_memory_latency_benchmark.py
   -- IVF-PQ & IVF-Flat: best accuracy & moderate speed.
   -- HNSWFlat: ultra-fast but lower recall.
   
-## 5. Hyperparameter Sweeps
+## 7. Hyperparameter Sweeps
 
 To fine-tune our approximate search indices, we ran an automated sweep over each index's key knobs: for IVF-Flat, the number of Voronoi cells (nlist) and the number of cells probed at query time (nprobe); and for HNSWFlat, both the graph connectivity (M) and the search depth (efSearch). By systematically measuring recall@10, query latency, and memory usage across these settings, we found that IVF-Flat with nlist=1024, nprobe=16 consistently matched the exact-search recall of 82.7 % while halving the average query time, and that IVF-PQ offered similar accuracy with sub-millisecond lookups. These results confirm that either IVF-Flat (nlist=1024, nprobe=16) or IVF-PQ (nlist=1024, m=64) are the best choices for production, delivering near-optimal accuracy at dramatically reduced cost.
 ```bash
@@ -101,7 +152,7 @@ python faiss_param_sweep.py \
 -  Sweeps over nlist, nprobe, M, efSearch.
 
   
-## 6. Index Benchmarking
+## 8. Index Benchmarking
 Finally, we built and compared four FAISS index types FlatIP (exact inner-product), IVF-Flat (ANN with Voronoi cells), HNSWFlat (graph-based), and IVF-PQ (product quantization) on the full 850 K embedding dataset. For each, we measured:
 
 - Recall@10 to quantify accuracy against the brute-force baseline,
