@@ -20,7 +20,7 @@ step8/
 ├── faiss_param_sweep.py # Hyper-parameter sweep (nlist, nprobe, M, ef)
 ├── faiss_memory_latency_benchmark.py # RSS vs. latency vs. Recall plotter
 ├── graphs.py # Regenerate all figures
-└── README.md #
+└── README.md 
 ```
 ---
 
@@ -39,7 +39,8 @@ python scale_pipeline_hdf5.py \
 Produces embeddings_full.h5 with two datasets:
 - /image_embeddings (850668 x 512)
 - /text_embeddings (850668 x 512)
-  
+  ![Figure 0: Embedding](Figure_0.png)
+  - The embeddings took 28 hours to finish running.
 ## 2. Exact & Approximate Index Benchmark
 ```bash
 python index_benchmark.py \
