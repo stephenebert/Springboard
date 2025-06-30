@@ -23,7 +23,7 @@ This step scales our cross-modal retrieval pipeline to the full training set (â‰
 5. **Cost / performance dashboards** - Everything is logged to CSV : piped into a quick `seaborn` scatter where:
    * **x-axis:** latency
    * **y-axis:** RAM
-   * **marker size / colour:** recall
+   * **marker size / color:** recall
    
    That single plot lets reviewers eyeball the trade-offs instantly.
 
