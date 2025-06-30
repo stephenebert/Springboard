@@ -5,3 +5,31 @@ This step scales our cross-modal retrieval pipeline to the full training set (�
 ---
 
 ## Repository Structure
+```
+step8/
+├── data/ # Symlink or local data directory
+│ └── metadata.parquet # Unified metadata from Step 7
+├── experiments/
+│ └── full/ # Outputs for full-scale embeddings & indices
+│ ├── embeddings_full.h5 # HDF5 file with all image/text embeddings
+│ └── index_benchmarks/ # FAISS index artifacts & logs
+├── scale_pipeline_hdf5.py # Chunked embedding --> HDF5 (full dataset)
+├── index_benchmark.py # Build FAISS indices, measure recall/latency/RSS
+├── faiss_param_sweep.py # Hyperparameter sweep for IVF-Flat & HNSWFlat
+├── requirements.txt # Step 8 specific deps (h5py, faiss-cpu, psutil)
+└── README.md
+```
+---
+
+## Setup & Installation
+
+1. **Clone & enter directory**  
+   ```bash
+   git clone <repo-url> step8
+   cd step8
+2. Install dependencies
+    conda create -n step8 python=3.10
+    conda activate step8
+    pip install -r requirements.txt
+3. Prepare metadata
+    Ensure data/metadata.parquet exists (from Step 7).
