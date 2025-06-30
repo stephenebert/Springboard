@@ -48,7 +48,14 @@ python index_benchmark.py \
   --nq 1000 \
   --k 10
 ```
-d
+![Figure 1: IVF-Flat (nlist=1024) • Sweep nprobe](Figure_1.png)
+- Recall@10 saturates at 82.7 % for nprobe ≥ 2.
+- Latency increases from 0.99 ms (nprobe=1) -> 3.56 ms (nprobe=64).
+- Takeaway: nprobe = 2-4 offers near-optimal recall with 2-3x speedup over exact.
+
+
+
+
    
 2. **Install dependencies**
 
