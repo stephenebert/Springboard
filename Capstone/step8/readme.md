@@ -19,3 +19,15 @@ step8/
 ├── requirements.txt       # Step 8 specific deps (h5py, faiss-cpu, psutil)
 └── README.md
 ```
+---
+
+## Setup & Installation
+
+1. **Clone & enter directory**
+
+   ```bash
+   git clone <repo-url> step8
+   cd step8
+   
+2. **Install dependencies**
+3. Prepare metadata – ensure data/metadata.parquet exists (from Step 7).
