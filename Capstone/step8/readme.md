@@ -25,13 +25,18 @@ step8/
 ```
 ---
 
-## Setup & Installation
+## 1. Chunked Embedding → HDF5
 
-1. **Clone & enter directory**
+```bash
+python scale_pipeline_hdf5.py \
+  --parquet data/metadata.parquet \
+  --out experiments/full/embeddings_full.h5 \
+  --model ViT-B-32 \
+  --pretrained laion2b_s34b_b79k \
+  --device cpu \
+  --batch 64 \
+  --chunk 2000
 
-   ```bash
-   git clone <repo-url> step8
-   cd step8
    
 2. **Install dependencies**
 
