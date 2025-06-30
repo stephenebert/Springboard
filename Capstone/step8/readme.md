@@ -7,17 +7,22 @@ This step scales our cross-modal retrieval pipeline to the full training set (�
 ## Repository Structure
 ```
 step8/
-├── embeddings_full.h5 # HDF5: all image/text embeddings
-│── index_benchmarks/ # FAISS index artifacts & logs
-├── scale_pipeline_hdf5.py # Chunked embed --> HDF5 (full dataset)
+├── data/
+│ └── metadata.parquet # Unified metadata from Step 7 and locally stored on computer
+├── experiments/
+│ ├── full/
+│ │ ├── embeddings_full.h5 # HDF5: all image/text embeddings and locally stored on computer
+│ │ ├── img_embs_full.npy # locally stored on computer
+│ │ └── txt_embs_full.npy # locally stored on computer
+│ └── index_benchmarks/ # FAISS index artifacts & logs
+├── scale_pipeline_hdf5.py # Chunked embed → HDF5 (full dataset)
 ├── index_benchmark.py # Build FAISS indices, measure recall/latency/RSS
 ├── faiss_param_sweep.py # Hyperparameter sweep for IVF-Flat & HNSWFlat
 ├── faiss_index_comparison.py # Compare FlatIP, IVF-Flat, HNSWFlat, IVF-PQ
 ├── faiss_memory_latency_benchmark.py # RSS vs. latency vs. recall plotter
 ├── evaluate_retrieval.py # Ground-truth recall via brute-force
 ├── graphs.py # Regenerate all figures
-├── requirements.txt # Step 8 deps (h5py, faiss-cpu, psutil, ...)
-└── README.md #
+└── README.md
 ```
 ---
 
