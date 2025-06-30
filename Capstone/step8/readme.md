@@ -38,8 +38,8 @@ python scale_pipeline_hdf5.py \
   --chunk 2000
 ```
 Produces embeddings_full.h5 with two datasets:
-- /image_embeddings (850 668 x 512)
-- /text_embeddings (850 668 x 512)
+- /image_embeddings (850668 x 512)
+- /text_embeddings (850668 x 512)
   
 ## 2. Exact & Approximate Index Benchmark
 ```bash
