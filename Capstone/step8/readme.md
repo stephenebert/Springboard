@@ -72,9 +72,12 @@ python index_benchmark.py \
   
   **Sample output:**
   
-FlatIP                         R@10=82.70% | latency=4.56 ms | RSS=1702 MB
-IVF-Flat(nlist=1024,nprobe=16) R@10=82.70% | latency=1.17 ms | RSS=5087 MB
-HNSWFlat(M=32,ef=32)           R@10=81.10% | latency=0.03 ms | RSS=2802 MB
+| Index Type            | R@10    | Latency (ms) | RSS (MB) |
+|-----------------------|---------|--------------|----------|
+| FlatIP                | 82.70%  | 4.56         | 1702     |
+| IVF-Flat(nlist=1024,nprobe=16) | 82.70%  | 1.17         | 5087     |
+| HNSWFlat(M=32, ef=32) | 81.10%  | 0.03         | 2802     |
+| ...                   | ...     | ...          | ...      |
 ...
 ---
 # Hyperparameter Sweep
