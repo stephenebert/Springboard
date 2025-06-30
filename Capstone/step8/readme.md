@@ -45,7 +45,7 @@ pip install -r requirements.txt
 
 ### 2.2 End-to-end run on the full dataset
 
-**# 1 ) Encode images & captions → HDF5**
+**# 1 ) Encode images & captions --> HDF5**
 ```bash
 python scale_pipeline_hdf5.py \
   --metadata_path data/metadata.parquet \
@@ -63,7 +63,7 @@ python index_benchmark.py \
   --output_dir experiments/full/index_benchmarks
 ```
 
-**# 3 ) Explore other hyper-parameters (optional)**
+**# 3 ) Explore other hyper-parameters**
 ```bash
 python faiss_param_sweep.py \
   --embeddings_path experiments/full/embeddings_full.h5 \
