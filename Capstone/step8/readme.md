@@ -47,3 +47,28 @@ python scale_pipeline_hdf5.py \
   --workers 4
 - Chunked I/O via HDF5 (compression = LZF) keeps RAM usage constant.
 - Transforms match those in Step 7 for consistency.
+
+## Index Benchmarking
+Build various FAISS indices and measure:
+- Recall@10 (exact vs. ANN)
+- Avg. latency (ms/query)
+- RAM footprint (RSS in MB)
+
+Run:
+
+python index_benchmark.py \
+  --h5 experiments/full/embeddings_full.h5 \
+  --k 10 \
+  --nlist 1024 \
+  --nprobe_list 1 2 4 8 16 32 64 \
+  --hnsw_m_list 8 16 32 \
+  --hnsw_ef_list 8 16 32 64 128
+
+  Sample output:
+  
+FlatIP         R@10=82.70% | latency=4.56 ms | RSS=1702 MB  
+IVF-Flat(nlist=1024,nprobe=16) R@10=82.70% | 1.17 ms  | 5087 MB  
+HNSWFlat(M=32,ef=32)           R@10=81.10% | 0.03 ms  | 2802 MB  
+...
+
+
