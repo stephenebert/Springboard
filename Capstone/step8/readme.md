@@ -11,7 +11,7 @@ step8/
 │ └── metadata.parquet # Unified metadata from Step 7 and locally stored on computer
 ├── experiments (all locally on computer due to size)/
 │ ├── full/
-│ │ ├── embeddings_full.h5 # HDF5: all image/text embeddings and locally stored on computer
+│ │ ├── embeddings_full.h5 # HDF5
 │ │ ├── img_embs_full.npy 
 │ │ ├──  txt_embs_full.npy 
 │ 
