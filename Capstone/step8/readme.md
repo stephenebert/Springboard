@@ -1,8 +1,6 @@
 # Step 8: Scale Your Prototype
 
-This step scales our cross-modal retrieval pipeline to the full training set (≈ 850 K samples) and benchmarks a variety of FAISS indices for large-scale, low-latency deployment.
-
----
+This step scales our cross-modal retrieval pipeline to the full training set (≈ 850 K samples) and benchmarks a variety of FAISS indices for large-scale, low-latency deployment. Step 8 brings our prototype from "research mode" to "production scale." In this phase, we embed the entire 850 K-sample corpus into high-dimensional feature vectors (images and captions) using a chunked, out-of-core pipeline that writes directly into HDF5. We then build and benchmark a family of FAISS indices—exact (FlatIP) and approximate (IVF-Flat, IVF-PQ, HNSWFlat) to measure Recall@10, query latency, and RAM footprint at real-world scale. Finally, we sweep critical hyperparameters (nlist, nprobe, M, efSearch) to identify the optimal speed/accuracy trade-offs for deployment. By the end of Step 8, you’ll have a fully scalable retrieval backend tuned for sub-millisecond to low-millisecond performance with minimal memory overhead.
 
 ## Repository Structure
 ```
