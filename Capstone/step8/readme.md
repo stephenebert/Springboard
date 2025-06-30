@@ -56,6 +56,8 @@ python index_benchmark.py \
 - Takeaway: nprobe = 2-4 offers near-optimal recall with 2-3x speedup over exact.
 
 ## 3. Compare Multiple ANN Indices
+
+In this comparison we pit four different FAISS index types against one another FlatIP (exact inner‐product), IVF-Flat (nlist=1024, nprobe=16), IVF-PQ (nlist=1024, m=64), and HNSWFlat (M=32) to see how they trade off accuracy and speed (Figure 3). As expected, the exact FlatIP search tops out at 82.7 % Recall@10 but has the highest latency (~5.3 ms/query). Both IVF-Flat and IVF-PQ match that recall level: IVF-Flat does so in about 2.3 ms, while IVF-PQ achieves it in only ~1.0 ms nearly a 5x speedup over the exact scan. HNSWFlat, on the other hand, delivers sub 0.1 ms queries but sacrifices recall (80.6 %). All four indices consume roughly the same RAM footprint (~152 MB), so the choice really comes down to your latency‐versus‐accuracy needs: IVF-PQ offers the best of both worlds (exact recall at 5x lower latency), IVF-Flat gives a 2x speedup with zero loss in accuracy, and HNSWFlat is ultra‐fast but at a steep cost in recall.
 ```bash
 python faiss_index_comparison.py \
   --h5 experiments/full/embeddings_full.h5 \
