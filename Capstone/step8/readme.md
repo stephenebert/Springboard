@@ -40,6 +40,7 @@ step8/
     Ensure `data/metadata.parquet` exists (from Step 7).
 
 ---
+---
 
 ## Full-Scale Embedding
 
