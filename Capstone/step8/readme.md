@@ -2,6 +2,36 @@
 
 This step scales our cross-modal retrieval pipeline to the full training set (≈ 850 K samples) and benchmarks a variety of FAISS indices for large-scale, low-latency deployment. Step 8 brings our prototype from "research mode" to "production scale." In this phase, we embed the entire 850 K-sample corpus into high-dimensional feature vectors (images and captions) using a chunked, out-of-core pipeline that writes directly into HDF5. We then build and benchmark a family of FAISS indices exact (FlatIP) and approximate (IVF-Flat, IVF-PQ, HNSWFlat) to measure Recall@10, query latency, and RAM footprint at real-world scale. Finally, we sweep critical hyperparameters (nlist, nprobe, M, efSearch) to identify the optimal speed/accuracy trade-offs for deployment. By the end of Step 8, we’ll have a fully scalable retrieval backend tuned for sub-millisecond to low-millisecond performance with minimal memory overhead.
 
+## High-Level Overview
+
+**What "Step 8: Scale a Prototype" is doing:**
+
+1. **Embed *everything*** - We take the *entire* training split of the combined COCO + Flickr-30k + Stable-Diffusion corpus (≈ 851 k image–caption pairs) and push them through our best backbone (ViT-B-32). *Output:* two giant 850,668 x 512 matrices—one for images, one for texts saved to `experiments/full/embeddings_full.h5`.
+
+2. **Store them efficiently** - Instead of many small `.npy` files, we write a single HDF5 container with chunking + LZF compression, so we can memory-map slices without exhausting RAM.
+
+3. **Build fast ANN indices (FAISS)** - We experiment with several approximate-nearest-neighbour layouts:
+   * `FlatIP` (exact search, baseline)
+   * `IVF-Flat` (coarse quantiser + exact residual)
+   * `IVF-PQ` (coarse quantiser + product quantisation)
+   * `HNSWFlat` (graph-based)
+   
+   For each index we measure **recall @ 10**, **average latency** (ms/query), and **RSS memory** right after building.
+
+4. **Hyper-parameter sweeps** - We sweep `nlist / nprobe` for IVF and `M / efSearch` for HNSW to find the sweet spot where recall stays ≥ ~82% but latency and memory shrink dramatically.
+
+5. **Cost / performance dashboards** - Everything is logged to CSV → piped into a quick `seaborn` scatter where:
+   * **x-axis:** latency
+   * **y-axis:** RAM
+   * **marker size / colour:** recall
+   
+   That single plot lets reviewers eyeball the trade-offs instantly.
+
+**Why?** Step 7 proved the concept on 10k samples; Step 8 proves it scales. One is left with:
+* Embeddings one can ship to production.
+* A FAISS index configuration that answers in ~1–2 ms with ~82% Recall@10.
+* Concrete memory / latency / cost numbers for the README and slide-deck.
+
 ## Repository Structure
 ```
 step8/
