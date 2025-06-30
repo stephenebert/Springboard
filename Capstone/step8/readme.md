@@ -36,7 +36,8 @@ python scale_pipeline_hdf5.py \
   --device cpu \
   --batch 64 \
   --chunk 2000
-
+```
+f
    
 2. **Install dependencies**
 
