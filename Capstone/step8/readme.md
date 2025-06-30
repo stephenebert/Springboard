@@ -95,10 +95,11 @@ Run a hyperparameter sweep to find the optimal balance between recall, latency, 
 
 **Generates a summary table:**
 
-Index	R@10	Latency (ms)	Memory (MB)
-IVF-Flat(nlist=1024,16)	82.10%	1.72	0.13
-HNSWFlat(M=32, ef=64)	29.70%	0.02	0.00
-...
+| Index                 | R@10    | Latency (ms) | Memory (MB) |
+|-----------------------|---------|--------------|-------------|
+| IVF-Flat(nlist=1024,16)| 82.10%  | 1.72         | 0.13        |
+| HNSWFlat(M=32, ef=64) | 29.70%  | 0.02         | 0.00        |
+| ...                   | ...     | ...          | ...         |
 
 
 # Key Findings
