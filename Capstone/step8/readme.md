@@ -29,7 +29,7 @@ step8/
 | **Embedding model** | OpenAI CLIP ViT-B/32 (512-d) | Strong open-source baseline; balances quality vs. time/VRAM for ≈1M samples. |
 | **Storage format** | HDF5 (`embeddings_full.h5`) | Supports chunked writes/reads and compression; plays nicely with NumPy & FAISS. Parquet is better for tabular metadata but slower for large binary blobs. |
 | **ANN engine** | FAISS IVF-Flat / IVF-PQ / HNSWFlat | Wide community adoption; CPU-only install keeps setup simple on student hardware. IVF scales sub-linear; HNSW adds low-latency option. |
-| **Chunk size** | 65,536 rows • 512 dims | Fits comfortably in <2GB RAM, enabling processing on 16GB laptops while saturating I/O. |
+| **Chunk size** | 65,536 rows, 512 dims | Fits comfortably in <2GB RAM, enabling processing on 16GB laptops while saturating I/O. |
 | **Benchmark metrics** | Recall@K, average latency, resident-set-size (RSS) | Mirror real-world retrieval QoS: accuracy, speed, and memory. |
 
 > **Trade-offs:** IVF-Flat gives higher recall than IVF-PQ but at 4x memory; HNSW is even faster at K≤10 yet slower to build. The param-sweep script quantifies this and lets one pick a sweet spot for deployment geometry.
