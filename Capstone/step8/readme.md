@@ -93,7 +93,7 @@ Produces embeddings_full.h5 with two datasets:
   - The embeddings took 28 hours to finish running.
 ## 4. Exact & Approximate Index Benchmark
 
-In this benchmark we build an IVF-Flat index with 1024 centroids and then sweep the nprobe parameter (the number of lists visited at query time) from 1 up to 64. As shown in Figure 2, Recall@10 quickly reaches the exact search level (82.7 %) once we probe just 2 clusters and it never improves further by visiting more lists. Meanwhile, average query latency rises from 0.99 ms at nprobe=1 to 3.56 ms at nprobe=64. In other words, setting nprobe=2-4 gives us virtually the same retrieval accuracy as a full linear scan but with a 2–3x speedup, making it an excellent sweet spot for large-scale deployments.
+In this benchmark we build an IVF-Flat index with 1024 centroids and then sweep the nprobe parameter (the number of lists visited at query time) from 1 up to 64. As shown in Figure 2, Recall@10 quickly reaches the exact search level (82.7 %) once we probe just 2 clusters and it never improves further by visiting more lists. Meanwhile, average query latency rises from 0.99 ms at nprobe=1 to 3.56 ms at nprobe=64. In other words, setting nprobe=2-4 gives us virtually the same retrieval accuracy as a full linear scan but with a 2-3x speedup, making it an excellent sweet spot for large-scale deployments.
 
 ```bash
 python index_benchmark.py \
@@ -161,7 +161,7 @@ Finally, we built and compared four FAISS index types FlatIP (exact inner-produc
 
 - RAM footprint (RSS) to gauge memory overhead.
 
-Our benchmarks show that exact FlatIP yields the highest recall (82.7 %) but suffers a 4–5 ms/query latency. IVF-Flat (nlist=1024, nprobe=16) matches that recall with ∼1.7 ms average latency, a 2-3x speedup. IVF-PQ further boosts throughput to <1 ms/query without loss in recall, offering a nearly 5x speedup. HNSWFlat (M=32, efSearch=32) delivers ultra-low latency (<0.03 ms) but at the cost of a significant recall drop (∼80.6 %). All indices consume roughly 1.5 GB of RAM. Overall, this comprehensive benchmarking highlights that IVF-Flat and IVF-PQ strike the best balance of accuracy, speed, and memory efficiency for large-scale deployment.
+Our benchmarks show that exact FlatIP yields the highest recall (82.7 %) but suffers a 4-5 ms/query latency. IVF-Flat (nlist=1024, nprobe=16) matches that recall with ∼1.7 ms average latency, a 2-3x speedup. IVF-PQ further boosts throughput to <1 ms/query without loss in recall, offering a nearly 5x speedup. HNSWFlat (M=32, efSearch=32) delivers ultra-low latency (<0.03 ms) but at the cost of a significant recall drop (∼80.6 %). All indices consume roughly 1.5 GB of RAM. Overall, this comprehensive benchmarking highlights that IVF-Flat and IVF-PQ strike the best balance of accuracy, speed, and memory efficiency for large-scale deployment.
 
 
 
@@ -193,7 +193,7 @@ python index_benchmark.py \
 # Key Findings
 - Exact (FlatIP): Highest recall (82.7 %) but slowest (≈ 5 ms/query).
 
-- IVF-Flat (nlist=1024, nprobe=16): Same recall, 2–3x faster, minimal RAM.
+- IVF-Flat (nlist=1024, nprobe=16): Same recall, 2-3x faster, minimal RAM.
 
 - IVF-PQ: Matches recall & latency (~1 ms) at very low memory.
 
