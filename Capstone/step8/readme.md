@@ -69,18 +69,19 @@ python faiss_index_comparison.py \
 | HNSWFlat (M=32)                  | 80.6 %    | 0.02         |
 
 **Note:** IVF-PQ matches exact recall at ~5x lower latency.
+-RAM footprint ≈ 152 MB for all indices.
+
+-Latency spans 0.02 ms → 5.28 ms.
 
 
 ## 4. Memory vs. Latency Trade-off
 ```bash
 python faiss_memory_latency_benchmark.py
 ```
-![Figure 2: Memory vs Latency (Recall@10 size/color ~ R@10)](Figure_2.png)
--RAM footprint ≈ 152 MB for all indices.
-
--Latency spans 0.02 ms → 5.28 ms.
-
-- Bubble size & color ~ Recall@10, highlighting IVF-PQ & IVF-Flat sweet spots.
+![Figure 3: Memory vs Latency (Recall@10 size/color ~ R@10)](Figure_3.png)
+- Plots all indices and their tuned parameters on one axis: X-axis (Avg query latency (ms)), Y-axis (Recall@10 (%)), Y-axis (Recall@10 (%))
+- IVF-PQ sits furthest left (fast & accurate).
+- HNSWFlat is ultra-fast but lower recall.
 ## 5. Hyperparameter Sweeps
 ```bash
 python faiss_param_sweep.py \
@@ -88,13 +89,9 @@ python faiss_param_sweep.py \
   --nq 1000 \
   --k 10
 ```
-![Figure 3: Combined FAISS Index Comparison](Figure_3.png)
-- Plots all indices and their tuned parameters on one axis: X-axis (Avg query latency (ms)), Y-axis (Recall@10 (%)), Y-axis (Recall@10 (%))
-- IVF-PQ sits furthest left (fast & accurate).
-- HNSWFlat is ultra-fast but lower recall.
 
   
-## 5. Index Benchmarking
+## 6. Index Benchmarking
 Build various FAISS indices and measure their performance based on:
 - Recall@10 (exact vs. ANN)
 - Avg. latency (ms/query)
