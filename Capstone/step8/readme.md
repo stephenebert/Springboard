@@ -24,6 +24,7 @@ step8/
 
 ## 1. Chunked Embedding --> HDF5
 
+In this first stage, we scale our embedding process to the full training set by streaming data in manageable chunks and writing the results into an HDF5 file. Using scale_pipeline_hdf5.py, we divide the ≈850 K images and captions into 2000-example blocks, embed each block with the ViT-B-32 model (pretrained on LAION-2B), and append the normalized 512-dim vectors to two HDF5 datasets (/image_embeddings and /text_embeddings). This approach lets us work around memory constraints and checkpoint progress safely. On our hardware, the end-to-end run took about 28 hours to complete, yielding a single embeddings_full.h5 file (≈1.4 GB) that contains all image/text vectors ready for large-scale indexing.
 ```bash
 python scale_pipeline_hdf5.py \
   --parquet data/metadata.parquet \
