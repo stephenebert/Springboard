@@ -2,7 +2,7 @@
 evaluate_retrieval.py
 
 Measure indexing time, memory, and per-query latency
-on your full image-embedding store, with optional FAISS.
+on the full image-embedding store, with FAISS.
 """
 
 import argparse
