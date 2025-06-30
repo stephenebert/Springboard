@@ -1,7 +1,7 @@
 """
 faiss_param_sweep.py
 
-Evaluate various FAISS index hyperparameters on your full CLIP embeddings:
+Evaluate various FAISS index hyperparameters on the full CLIP embeddings:
   - measures Recall@K, average latency, and RSS memory
   - sweeps IVF-Flat (nlist / nprobe) and HNSWFlat (M / efSearch)
 """
@@ -18,7 +18,7 @@ except ImportError:
     HAS_FAISS = False
     print("FAISS not installed : falling back to NumPy brute-force for ground truth")
 
-# Path to your full-image-embeddings HDF5
+
 H5_PATH = r"C:\Users\steph\OneDrive\Desktop\step7\experiments\full\embeddings_full.h5"
 
 # Number of random queries and recall@K
