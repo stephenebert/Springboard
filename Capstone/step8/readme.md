@@ -8,7 +8,7 @@ This step scales our cross-modal retrieval pipeline to the full training set (�
 ```
 step8/
 ├── embeddings_full.h5 # HDF5: all image/text embeddings
-│ index_benchmarks/ # FAISS index artifacts & logs
+│── index_benchmarks/ # FAISS index artifacts & logs
 ├── scale_pipeline_hdf5.py # Chunked embed --> HDF5 (full dataset)
 ├── index_benchmark.py # Build FAISS indices, measure recall/latency/RSS
 ├── faiss_param_sweep.py # Hyperparameter sweep for IVF-Flat & HNSWFlat
