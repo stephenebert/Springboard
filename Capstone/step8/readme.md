@@ -71,4 +71,14 @@ IVF-Flat(nlist=1024,nprobe=16) R@10=82.70% | 1.17 ms  | 5087 MB
 HNSWFlat(M=32,ef=32)           R@10=81.10% | 0.03 ms  | 2802 MB  
 ...
 
+## Hyperparameter Sweep
+...
+python faiss_param_sweep.py \
+  --h5 experiments/full/embeddings_full.h5 \
+  --k 10 \
+  --nlist_list 512 1024 2048 \
+  --nprobe_list 8 16 32 \
+  --hnsw_m_list 16 32 \
+  --hnsw_ef_list 16 32 64
+...
 
