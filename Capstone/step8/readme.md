@@ -84,3 +84,21 @@ python faiss_param_sweep.py \
   
 ---
 
+Generates a summary table:
+
+Index	R@10	Latency (ms)	Memory (MB)
+IVF-Flat(nlist=1024,16)	82.10%	1.72	0.13
+HNSWFlat(M=32, ef=64)	29.70%	0.02	0.00
+...
+
+
+## Key Findings
+- Exact (FlatIP): highest recall (82.7 %) but ~4.6 ms/query.
+
+- IVF-Flat (nlist=1024, nprobe=16): matches exact recall at ~1.7 ms/query.
+
+- HNSWFlat (M=32, ef=32–64): sub-1 ms/query but recall drops to ~30 %.
+
+- Memory usage: IVF-Flat trades ~0.1 MB per 10 K vectors for major latency gains.
+
+- Recommendation: Use IVF-Flat(1024,16) for production: it combines exact-level accuracy with a 2–3× speedup and minimal memory overhead.
