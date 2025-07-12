@@ -63,7 +63,7 @@ capstone-local/
 │   ├── __init__.py
 │   └── main.py                    # FastAPI service (loads FAISS index)
 │
-├── data/
+├── data/ #Data is stored locally due to being too large
 │   ├── faiss-indexes/
 │   │   ├── ivf_flat_1024.index    # built by build_index_step8.py
 │   │   └── metadata_train.json    # converted by convert_jsonl.py
