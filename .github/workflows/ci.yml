@@ -1,15 +1,12 @@
 # .github/workflows/ci.yml
+name: CI
 
-# Tell GitHub to run this workflow on pushes and PRs to main
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -19,17 +16,26 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        working-directory: Capstone/step11
+        run: |
+          pip install -r requirements.txt
 
+      # ────────────────────────────────────────────────────────────
       - name: Launch FastAPI (background)
+        working-directory: Capstone/step11
         env:
-          FAISS_INDEX_PATH: Capstone/step11/tests/fixtures/data_small/ivf_flat_small.index
-          META_PATH:        Capstone/step11/tests/fixtures/data_small/id2meta_small.json
+          FAISS_INDEX_PATH: tests/fixtures/data_small/ivf_flat_small.index
+          META_PATH:        tests/fixtures/data_small/id2meta_small.json
         run: |
           uvicorn app.main:app --host 0.0.0.0 --port 8000 & echo $! > server.pid
 
       - name: Wait for server to be healthy
-        run: sleep 2
+        working-directory: Capstone/step11
+        run: |
+          # you could poll /health here instead of just sleeping
+          sleep 2
 
       - name: Run pytest
-        run: pytest -q Capstone/step11/tests
+        working-directory: Capstone/step11
+        run: |
+          pytest -q tests
