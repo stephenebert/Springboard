@@ -1,6 +1,7 @@
 # app/main.py
 
-import os, json
+import os
+import json
 from pathlib import Path
 from typing import List, Dict
 
@@ -60,31 +61,39 @@ def load_artifacts():
     if not META_PATH.is_file():
         raise RuntimeError(f"Metadata file not found: {META_PATH}")
 
-    # load the FAISS index
+    # 1) load the FAISS index
     INDEX = faiss.read_index(str(INDEX_PATH))
 
-    # load the metadata JSON
+    # 2) load the metadata JSON
     raw = json.loads(META_PATH.read_text())
     if isinstance(raw, dict):
-        # keys are strings, cast to ints
+        # JSON is a dict: keys are strings, cast them to ints
         METADATA = { int(k): v for k, v in raw.items() }
     elif isinstance(raw, list):
-        # list-of-records: assign by position
+        # JSON is a list: assign each position to its index
         METADATA = { i: rec for i, rec in enumerate(raw) }
     else:
         raise RuntimeError("Unexpected metadata format")
 
 @app.get("/health")
 def health():
+    # return exactly the three keys your tests expect:
     return {
         "status":     "ok",
         "index_dim":  INDEX.d,
         "index_size": INDEX.ntotal,
     }
 
-def _search(vec: List[float], k: int) -> List[SearchResult]:
-    q = np.array(vec, dtype="float32").reshape(1, -1)
-    distances, indices = INDEX.search(q, k)
+@app.post("/search", response_model=List[SearchResult])
+def search(payload: SearchRequest):
+    if INDEX is None:
+        raise HTTPException(503, "Index not loaded")
+    if len(payload.query_vec) != INDEX.d:
+        raise HTTPException(400, f"Expected vector of length {INDEX.d}")
+
+    # do the actual search
+    q = np.array(payload.query_vec, dtype="float32").reshape(1, -1)
+    distances, indices = INDEX.search(q, payload.k)
 
     results: List[SearchResult] = []
     for dist, idx in zip(distances[0], indices[0]):
@@ -95,13 +104,5 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
             url=meta["url"],
             score=float(dist),
         ))
+
     return results
-
-@app.post("/search", response_model=List[SearchResult])
-def search(payload: SearchRequest):
-    if INDEX is None:
-        raise HTTPException(503, "Index not loaded")
-    if len(payload.query_vec) != INDEX.d:
-        raise HTTPException(400, f"Expected vector of length {INDEX.d}")
-    return _search(payload.query_vec, payload.k)
-
