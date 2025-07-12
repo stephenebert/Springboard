@@ -1,5 +1,6 @@
 name: CI
 
+# run on pushes to main or any branch named step11/**
 on:
   push:
     branches:
@@ -10,43 +11,52 @@ on:
       - main
 
 jobs:
-  test-build:
+  test-and-build:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: retrieval_app
       TAG: ${{ github.sha }}
 
     steps:
-      # 1) Checkout your code
-      - name: Checkout repo
+      # 1) pull down the code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2) Set up Python
+      # 2) install Python, cache pip
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           cache: pip
 
-      # 3) Install Python dependencies
+      # 3) install everything (FastAPI, test deps, uvicorn)
       - name: Install dependencies
         working-directory: Capstone/step11
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest requests numpy
+          # make sure uvicorn is present so we can spin up the service
+          pip install uvicorn
 
-      # 4) Run your unit tests
+      # 4) start your FastAPI app in the background
+      - name: Launch FastAPI (uvicorn)
+        working-directory: Capstone/step11
+        run: |
+          nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 & 
+          # wait a bit for it to come up
+          sleep 5
+
+      # 5) run your smoke & unit tests against the live server
       - name: Run pytest
         working-directory: Capstone/step11
         run: pytest -q tests
 
-      # 5) Prep a cache key for Docker layer caching
+      # 6) prep a cache key for Docker buildx
       - name: Extract Docker layer cache key
         id: prep
         run: echo "cache_key=$(echo ${{ github.ref }} | tr / -)" >> $GITHUB_OUTPUT
 
-      # 6) Cache Docker buildx layers
+      # 7) cache the buildx layers so rebuilds are fast
       - name: Cache Docker layers
         uses: actions/cache@v4
         with:
@@ -55,12 +65,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # 7) Set up Docker Buildx
+      # 8) set up docker/buildx
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 8) Build your Docker image (no push)
-      - name: Build image
+      # 9) build your image (no push)
+      - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
           context: Capstone/step11
@@ -68,6 +78,7 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
           load: false
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+          cache-to:   type=local,dest=/tmp/.buildx-cache,mode=max
 
-      # (Optionally, add steps here to push to GHCR/ECR when on main)
+      # (Optional) you can add a “push” step here if on main…
+
