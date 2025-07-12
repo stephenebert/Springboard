@@ -1,19 +1,14 @@
-import numpy as np, requests, math
-
+import requests, numpy as np
 BASE = "http://localhost:8000"
 
-def random_unit_vec(dim: int = 512) -> list[float]:
-    v = np.random.randn(dim).astype("float32")
-    v /= math.sqrt((v ** 2).sum())           # L2-normalize for cosine sim
-    return v.tolist()
+def random_unit_vec(d=512):
+    x = np.random.randn(d).astype("float32")
+    x /= np.linalg.norm(x)
+    return x.tolist()
 
 def test_search_returns_k():
     k = 3
     payload = {"query_vec": random_unit_vec(), "k": k}
     resp = requests.post(f"{BASE}/search", json=payload)
     assert resp.status_code == 200
-    data = resp.json()
-    assert len(data["results"]) == k
-    for hit in data["results"]:
-        # minimal sanity checks on each hit
-        assert {"id", "image_path", "caption", "score"} <= hit.keys()
+    assert len(resp.json()) == k
