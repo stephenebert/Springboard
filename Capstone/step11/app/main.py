@@ -31,7 +31,7 @@ META_PATH = Path(
 # -----------------------------------------------------------------------------
 # 2) Globals to hold your loaded artifacts
 # -----------------------------------------------------------------------------
-INDEX: faiss.Index | None = None       # type: ignore[type-arg]
+INDEX: faiss.Index | None = None
 METADATA: Dict[str, Dict] = {}
 
 # -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ app = FastAPI()
 
 @app.on_event("startup")
 def load_artifacts() -> None:
-    """Load FAISS index and metadata into global variables."""
+    """Load FAISS index and metadata into globals."""
     global INDEX, METADATA
 
     if not INDEX_PATH.is_file():
@@ -68,11 +68,16 @@ def load_artifacts() -> None:
 
 @app.get("/health")
 def health() -> Dict:
-    """Health check / readiness endpoint."""
-    return {"status": "ok"}
+    """Health check: status + index dimensions."""
+    # INDEX is guaranteed non-None here because startup would have blown up
+    return {
+        "status": "ok",
+        "index_dim": INDEX.d,       # dimension (e.g. 512)
+        "index_size": INDEX.ntotal  # how many vectors in the index
+    }
 
 def _search(vec: List[float], k: int) -> List[SearchResult]:
-    """Perform a FAISS search and format results."""
+    """Perform FAISS search and wrap results."""
     q = np.array(vec, dtype="float32").reshape(1, -1)
     distances, indices = INDEX.search(q, k)
 
@@ -91,7 +96,7 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
 
 @app.post("/search", response_model=List[SearchResult])
 def search(payload: SearchRequest):
-    """Search endpoint: expects a unit vector and an integer k."""
+    """Search endpoint: expects a list float vector and int k."""
     if INDEX is None:
         raise HTTPException(503, "Index not loaded")
 
@@ -99,5 +104,4 @@ def search(payload: SearchRequest):
         raise HTTPException(400, f"Expected vector of length {INDEX.d}")
 
     return _search(payload.query_vec, payload.k)
-
 
