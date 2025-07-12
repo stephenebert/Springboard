@@ -1,0 +1,32 @@
+# .github/workflows/ci.yml
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ──────────────────────────────────────────
+      # Launch FastAPI with the small‐data fixtures
+      - name: Launch FastAPI (background)
+        env:
+          FAISS_INDEX_PATH: tests/fixtures/data_small/ivf_flat_small.index
+          META_PATH:        tests/fixtures/data_small/id2meta_small.json
+        run: |
+          uvicorn app.main:app --host 0.0.0.0 --port 8000 & echo $! > server.pid
+
+      - name: Wait for server to be healthy
+        run: |
+          # optionally poll /health until 200
+          sleep 2
+
+      - name: Run pytest
+        run: pytest -q tests
