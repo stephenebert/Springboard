@@ -25,7 +25,7 @@ docker compose run --rm app \
     --out_dir /data/faiss-indexes  
 
 # 3️.  Check liveness
-curl http://localhost:8000/health   # → {"status":"ok", ...}
+curl http://localhost:8000/health   # --> {"status":"ok", ...}
 
 # 4️.  Quick smoke test
 python smoke_test.py                # prints top‑K JSON
