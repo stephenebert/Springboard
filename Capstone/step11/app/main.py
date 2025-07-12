@@ -1,4 +1,5 @@
 # app/main.py
+
 import os
 import json
 from pathlib import Path
@@ -9,9 +10,9 @@ import numpy as np
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-# -----------------------------------------------------------------------------#
-# 1) Paths & defaults                                                          #
-# -----------------------------------------------------------------------------#
+# -----------------------------------------------------------------------------
+# 1) Paths & defaults
+# -----------------------------------------------------------------------------
 ROOT = Path(__file__).resolve().parent.parent
 
 INDEX_PATH = Path(
@@ -27,15 +28,15 @@ META_PATH = Path(
     )
 )
 
-# -----------------------------------------------------------------------------#
-# 2) Globals to hold loaded artefacts                                          #
-# -----------------------------------------------------------------------------#
-INDEX: faiss.Index | None = None            # type: ignore[assignment]
+# -----------------------------------------------------------------------------
+# 2) Globals to hold your loaded artifacts
+# -----------------------------------------------------------------------------
+INDEX: faiss.Index | None = None       # type: ignore[type-arg]
 METADATA: Dict[str, Dict] = {}
 
-# -----------------------------------------------------------------------------#
-# 3) Pydantic models                                                           #
-# -----------------------------------------------------------------------------#
+# -----------------------------------------------------------------------------
+# 3) Pydantic models
+# -----------------------------------------------------------------------------
 class SearchRequest(BaseModel):
     query_vec: List[float]
     k: int
@@ -46,14 +47,14 @@ class SearchResult(BaseModel):
     url: str
     score: float
 
-# -----------------------------------------------------------------------------#
-# 4) FastAPI                                                                   #
-# -----------------------------------------------------------------------------#
+# -----------------------------------------------------------------------------
+# 4) FastAPI setup
+# -----------------------------------------------------------------------------
 app = FastAPI()
 
 @app.on_event("startup")
-def _load_artifacts() -> None:
-    """Read the tiny FAISS index & metadata at start-up."""
+def load_artifacts() -> None:
+    """Load FAISS index and metadata into global variables."""
     global INDEX, METADATA
 
     if not INDEX_PATH.is_file():
@@ -67,26 +68,16 @@ def _load_artifacts() -> None:
 
 @app.get("/health")
 def health() -> Dict:
-    """Simple readiness probe used by the tests."""
-    return {
-        "status": "ok",
-        "index_dim": INDEX.d,            # e.g. 512
-        "index_size": INDEX.ntotal,      # number of vectors
-    }
+    """Health check / readiness endpoint."""
+    return {"status": "ok"}
 
-# -----------------------------------------------------------------------------#
-# 5) Internal helpers                                                          #
-# -----------------------------------------------------------------------------#
 def _search(vec: List[float], k: int) -> List[SearchResult]:
-    """Low-level FAISS search → List[SearchResult]."""
-    q = np.asarray(vec, dtype="float32").reshape(1, -1)
-    k = max(1, min(k, INDEX.ntotal))   # clamp 1 ≤ k ≤ N
-
+    """Perform a FAISS search and format results."""
+    q = np.array(vec, dtype="float32").reshape(1, -1)
     distances, indices = INDEX.search(q, k)
-    results: List[SearchResult] = []
 
+    results: List[SearchResult] = []
     for dist, idx in zip(distances[0], indices[0]):
-        # Metadata may be missing for a given id – supply safe defaults.
         meta = METADATA.get(str(int(idx)), {})
         results.append(
             SearchResult(
@@ -98,19 +89,15 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
         )
     return results
 
-# -----------------------------------------------------------------------------#
-# 6) Public endpoint                                                           #
-# -----------------------------------------------------------------------------#
 @app.post("/search", response_model=List[SearchResult])
 def search(payload: SearchRequest):
+    """Search endpoint: expects a unit vector and an integer k."""
     if INDEX is None:
         raise HTTPException(503, "Index not loaded")
 
     if len(payload.query_vec) != INDEX.d:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Expected vector of length {INDEX.d}, got {len(payload.query_vec)}",
-        )
+        raise HTTPException(400, f"Expected vector of length {INDEX.d}")
 
     return _search(payload.query_vec, payload.k)
+
 
