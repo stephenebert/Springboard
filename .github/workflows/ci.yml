@@ -1,85 +1,95 @@
-# Springboard/.github/workflows/ci.yml
-
+# .github/workflows/ci.yml  (repo-root)
 name: CI
 
-# fire on pushes to main or any branch under step11/**
 on:
   push:
-    branches:
-      - main
-      - 'step11/**'
+    branches: [main, 'step11/**']
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  # 1) Run unit tests inside step11/
+# 1) test
   test:
-    name: Run pytest
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Capstone/step11   # ← all commands happen here
+    env:
+      # point FastAPI at the toy index we committed for CI
+      FAISS_INDEX_PATH: tests/fixtures/ivf_flat_1024.index
+      META_PATH:       tests/fixtures/id2meta.json
+      NPROBE:          1                    # anything is fine for CI
+
+    steps:
+    # 1. code checkout
+    - uses: actions/checkout@v4
+
+    # 2. Python
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: pip
+
+    - name: Install deps
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest requests numpy
+
+    # 3. Launch FastAPI (+ background)
+    - name: Launch FastAPI (background)
+      run: |
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 & echo $! > server.pid
+        # poll /health until it returns 200 (max 15 s)
+        for i in {1..15}; do
+          curl -s http://localhost:8000/health && exit 0 || sleep 1
+        done
+        echo "::error::Server failed to start"; cat server.pid; exit 1
+
+    # 4. run tests
+    - name: Run pytest
+      run: pytest -q tests
+      # always kill the background server
+      if: always()
+      continue-on-error: false
+
+    # 5. Stop server (even if tests failed)
+    - name: Stop FastAPI
+      if: always()
+      run: |
+        kill -9 $(cat server.pid) || true
+
+# 2) build  (only if tests succeeded)
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: retrieval_app
+      TAG: ${{ github.sha }}
     defaults:
       run:
         working-directory: Capstone/step11
 
     steps:
-      # 1. Grab your code
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      # 2. Use Python 3.10 + cache pip
-      - name: Setup Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-          cache: pip
+    - uses: docker/setup-buildx-action@v3
 
-      # 3. Install your requirements + pytest
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest requests numpy
+    - name: Cache Docker layers
+      uses: actions/cache@v4
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
 
-      # 4. Run your tests
-      - name: Run pytest
-        run: pytest -q tests
-
-  # 2) Build Docker image (but don't push it)
-  build:
-    name: Build Docker image
-    needs: test
-    runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: retrieval_app
-      # we'll tag the image by the SHA
-      TAG: ${{ github.sha }}
-
-    steps:
-      # 1. Checkout again
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      # 2. Set up Docker buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # 3. Cache build layers in /tmp/.buildx-cache
-      - name: Cache Docker layers
-        uses: actions/cache@v4
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
-      # 4. Build the image (using the Dockerfile in step11/)
-      - name: Build image
-        uses: docker/build-push-action@v5
-        with:
-          context: Capstone/step11
-          file: Capstone/step11/Dockerfile
-          tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
-          load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+    - name: Build image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: Dockerfile
+        tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
+        load: true
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to:   type=local,dest=/tmp/.buildx-cache,mode=max
 
