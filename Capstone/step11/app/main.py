@@ -52,8 +52,12 @@ class SearchResult(BaseModel):
 # -----------------------------------------------------------------------------
 app = FastAPI()
 
+
 @app.on_event("startup")
 def load_artifacts():
+    """
+    Read the FAISS index and the (tiny) metadata dictionary into globals.
+    """
     global INDEX, METADATA
 
     if not INDEX_PATH.is_file():
@@ -62,11 +66,19 @@ def load_artifacts():
         raise RuntimeError(f"Metadata file not found: {META_PATH}")
 
     INDEX = faiss.read_index(str(INDEX_PATH))
+
+    # ── CHANGED ── convert JSON keys (strings) → int  ────────────────
     with open(META_PATH, "r") as f:
-        METADATA = json.load(f)
+        raw = json.load(f)
+    METADATA = {int(k): v for k, v in raw.items()}
+    # ────────────────────────────────────────────────────────────────
+
 
 @app.get("/health")
 def health():
+    """
+    Minimal liveness + a tiny bit of index info so the tests can assert on it.
+    """
     if INDEX is None:
         raise HTTPException(503, "Index not loaded")
     return {
@@ -75,16 +87,26 @@ def health():
         "index_size": INDEX.ntotal,
     }
 
+
 def _search(vec: List[float], k: int) -> List[SearchResult]:
-    q = np.array(vec, dtype="float32").reshape(1, -1)
+    """
+    Helper that does the FAISS search and maps ids → metadata.
+    """
+    q = np.asarray(vec, dtype="float32").reshape(1, -1)
     distances, indices = INDEX.search(q, k)
 
     results: List[SearchResult] = []
     for dist, idx in zip(distances[0], indices[0]):
-        meta = METADATA[str(int(idx))]
+
+        # ── CHANGED ── ignore padding ids (-1) and look up by int ────
+        if idx == -1 or idx not in METADATA:
+            continue
+        meta = METADATA[idx]
+        # ────────────────────────────────────────────────────────────
+
         results.append(
             SearchResult(
-                id=int(idx),
+                id=idx,
                 caption=meta["caption"],
                 url=meta["url"],
                 score=float(dist),
@@ -92,11 +114,15 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
         )
     return results
 
+
 @app.post("/search", response_model=List[SearchResult])
 def search(payload: SearchRequest):
+    """
+    Main search endpoint: validates the vector length and calls _search().
+    """
     if INDEX is None:
         raise HTTPException(503, "Index not loaded")
     if len(payload.query_vec) != INDEX.d:
         raise HTTPException(400, f"Expected vector of length {INDEX.d}")
-    return _search(payload.query_vec, payload.k)
 
+    return _search(payload.query_vec, payload.k)
