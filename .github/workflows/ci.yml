@@ -17,8 +17,8 @@ jobs:
       TAG: ${{ github.sha }}
 
     steps:
-      # 1) Checkout the repo
-      - name: Checkout code
+      # 1) Checkout your code
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       # 2) Set up Python
@@ -28,18 +28,20 @@ jobs:
           python-version: '3.10'
           cache: pip
 
-      # 3) Install dependencies
+      # 3) Install Python dependencies
       - name: Install dependencies
+        working-directory: Capstone/step11
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest requests numpy
 
-      # 4) Run unit tests
+      # 4) Run your unit tests
       - name: Run pytest
+        working-directory: Capstone/step11
         run: pytest -q tests
 
-      # 5) Prepare cache key for Docker buildx
+      # 5) Prep a cache key for Docker layer caching
       - name: Extract Docker layer cache key
         id: prep
         run: echo "cache_key=$(echo ${{ github.ref }} | tr / -)" >> $GITHUB_OUTPUT
@@ -53,35 +55,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # 7) Set up Docker buildx
+      # 7) Set up Docker Buildx
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 8) Build (but don’t push) the Docker image
+      # 8) Build your Docker image (no push)
       - name: Build image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: Dockerfile
+          context: Capstone/step11
+          file: Capstone/step11/Dockerfile
           tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
           load: false
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
-      # (Optional) uncomment these to push to ECR/GHCR on main
-      # - name: Login to Amazon ECR
-      #   if: github.ref == 'refs/heads/main'
-      #   uses: docker/login-action@v3
-      #   with:
-      #     registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-      #     username: AWS
-      #     password: ${{ secrets.AWS_ECR_LOGIN }}
-      #
-      # - name: Push image
-      #   if: github.ref == 'refs/heads/main'
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     file: Dockerfile
-      #     push: true
-      #     tags: ${{ secrets.AWS_ECR_REPO }}:${{ env.TAG }}
+      # (Optionally, add steps here to push to GHCR/ECR when on main)
