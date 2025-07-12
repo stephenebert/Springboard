@@ -1,13 +1,23 @@
 # .github/workflows/ci.yml
+
+# Tell GitHub to run this workflow on pushes and PRs to main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+
       - name: Install dependencies
         run: pip install -r requirements.txt
 
