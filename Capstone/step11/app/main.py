@@ -1,101 +1,137 @@
-#!/usr/bin/env python
-"""
-FastAPI retrieval service backed by the Step 8 IVF-Flat index.
+# app/main.py
 
-Environment variables (with sensible defaults)
------------------------------------------------
-FAISS_INDEX_PATH   Path to the .index file     [/data/ivf_flat_1024.index]
-META_PATH          Path to id2meta.json        [/data/id2meta.json]
-NPROBE             FAISS nprobe at runtime     [16]
-
-Endpoints
------------------------------------------------
-GET  /health                       - liveness & config
-POST /search {query_vec,k} --> top-K - ANN search (cos-sim)
-GET  /metrics                      - Prometheus scraper endpoint
-"""
-
-from __future__ import annotations
-
-import json
 import os
+import json
 from pathlib import Path
 from typing import List
 
 import faiss
-import numpy as np
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, conlist, Field
+from starlette.middleware import Middleware
+from prometheus_fastapi_instrumentator import InstrumentatorMiddleware, Instrumentator
 
-# Prometheus instrumentation 
-from prometheus_fastapi_instrumentator import Instrumentator
+# 1) Figure out repo‐root relative defaults
 
+# this file lives in <repo>/app/main.py, so repo root is two levels up
+REPO_ROOT = Path(__file__).parent.parent.resolve()
 
-# Startup: load FAISS index + metadata once, pin in RAM
-INDEX_PATH = Path(os.getenv("FAISS_INDEX_PATH", "/data/ivf_flat_1024.index"))
-META_PATH  = Path(os.getenv("META_PATH",       "/data/id2meta.json"))
-NPROBE     = int(os.getenv("NPROBE", "16"))
+# default index path: <repo>/data/ivf_flat_1024.index
+DEFAULT_INDEX_PATH = REPO_ROOT / "data" / "ivf_flat_1024.index"
+# default meta path:    <repo>/data/id2meta.json
+DEFAULT_META_PATH  = REPO_ROOT / "data" / "id2meta.json"
 
+# allow overrides via environment
+INDEX_PATH = Path(os.getenv("FAISS_INDEX_PATH", str(DEFAULT_INDEX_PATH))).resolve()
+META_PATH  = Path(os.getenv("META_PATH",       str(DEFAULT_META_PATH))).resolve()
+
+# sanity‐check
 if not INDEX_PATH.exists():
     raise RuntimeError(f"FAISS index not found: {INDEX_PATH}")
 if not META_PATH.exists():
-    raise RuntimeError(f"Metadata JSON not found: {META_PATH}")
+    raise RuntimeError(f"Metadata file not found: {META_PATH}")
 
-faiss_index = faiss.read_index(str(INDEX_PATH))
-faiss_index.nprobe = NPROBE
-DIM = faiss_index.d
 
-with META_PATH.open("r", encoding="utf-8") as f:
-    ID2META: list[dict] = json.load(f)
-
-# FastAPI wiring
-app = FastAPI(title="Step 8 Retrieval Service", version="0.1.0")
-
-# expose /metrics and add request/latency counters
-Instrumentator().instrument(app).expose(app)         
-
+# 2) Declare Pydantic models
 
 class SearchRequest(BaseModel):
-    query_vec: List[float] = Field(
-        ...,
-        description="512-D CLIP embedding (image or text)",
-        min_items=DIM,
-        max_items=DIM,
+    query_vec: conlist(float, min_items=None) = Field(
+        ..., description="Normalized float32 vector of length d"
     )
-    k: int = Field(5, ge=1, le=50, description="Number of nearest neighbours to return")
+    k: int = Field(..., gt=0, description="Number of nearest neighbours to return")
 
 
-@app.get("/health", summary="Liveness probe & index stats")
+class SearchResult(BaseModel):
+    id: int
+    caption: str
+    score: float
+
+
+# 3) Prepare app (with Prometheus middleware)
+
+middleware = [
+    Middleware(InstrumentatorMiddleware)  # exposes /metrics
+]
+app = FastAPI(middleware=middleware)
+
+# attach prometheus instrumentator
+Instrumentator().instrument(app).expose(app)
+
+
+# 4) In‐memory artifacts (populated on startup)
+
+INDEX: faiss.Index = None
+METADATA: List[dict] = []
+
+
+def _load_artifacts():
+    global INDEX, METADATA
+
+    # 1) load metadata JSON (list of dicts with "id" and "caption" keys)
+    with open(META_PATH, "r", encoding="utf-8") as f:
+        METADATA = json.load(f)
+
+    # 2) load and normalize FAISS index
+    INDEX = faiss.read_index(str(INDEX_PATH))
+    # note: assume index expects normalized vectors
+    faiss.normalize_L2(INDEX.reconstruct_n(0, 1))  # warm up
+    # store the embedding dim for easy checking
+    INDEX.d = INDEX.d  # faiss keeps .d attribute
+
+
+def _search(query_vec: List[float], k: int) -> List[SearchResult]:
+    # run FAISS search
+    q = query_vec.copy()
+    faiss.normalize_L2(q)
+    D, I = INDEX.search(  # distances, indices
+        faiss.VectorFloat(q),  # you may need to convert to numpy array
+        k
+    )
+    results: List[SearchResult] = []
+    for dist, idx in zip(D[0], I[0]):
+        meta = METADATA[idx]
+        results.append(SearchResult(
+            id=meta["id"],
+            caption=meta["caption"],
+            score=float(dist)
+        ))
+    return results
+
+# 5) API endpoints
+
+@app.get("/health")
 def health():
     return {
         "status": "ok",
-        "index_dim": DIM,
-        "nprobe": faiss_index.nprobe,
-        "index_size": faiss_index.ntotal,
+        "index_dim": INDEX.d,
+        "index_size": INDEX.ntotal,
+        "nprobe": getattr(INDEX, "nprobe", None),
     }
 
 
-@app.post("/search", summary="ANN search (cosine similarity)")
-def search(req: SearchRequest):
-    vec = np.asarray(req.query_vec, dtype="float32")
-    if vec.shape[0] != DIM:
+@app.post("/search", response_model=List[SearchResult])
+def search(payload: SearchRequest):
+    if len(payload.query_vec) != INDEX.d:
         raise HTTPException(
             status_code=400,
-            detail=f"Vector dimension {vec.shape[0]} ≠ index dim {DIM}",
+            detail=f"Expected vector of length {INDEX.d}"
         )
+    return _search(payload.query_vec, payload.k)
 
-    vec = vec[None, :]
-    faiss.normalize_L2(vec)            # cosine similarity via inner-product
-    D, I = faiss_index.search(vec, req.k)
 
-    results = [
-    {
-        "id": int(idx),
-        "image_path": ID2META[idx]["image_path"],  
-        "caption":    ID2META[idx]["caption"],
-        "score": float(score),
-    }
-    for idx, score in zip(I[0], D[0])
-]
+# 6) Lifespan (startup) handler
 
-    return {"k": req.k, "results": results}
+from fastapi import FastAPI
+from starlette.types import ASGIApp, Receive, Scope, Send
+
+@app.router.lifespan  # new style
+async def _lifespan(app: FastAPI, receive: Receive, send: Send):
+    # load index + metadata before handling any requests
+    _load_artifacts()
+    # then yield control back to the server
+    yield
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+
