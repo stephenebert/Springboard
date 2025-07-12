@@ -5,7 +5,7 @@
 
 ---
 
-## TL;DR – How to run it now
+## How to run
 
 ```bash
 # 0️.  prerequisites
