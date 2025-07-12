@@ -7,14 +7,13 @@ from typing import List, Dict
 import faiss
 import numpy as np
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, conlist
+from pydantic import BaseModel
 
 # -----------------------------------------------------------------------------
 # 1) Paths & defaults
 # -----------------------------------------------------------------------------
 ROOT = Path(__file__).resolve().parent.parent
 
-# Prefer env-vars, but fall back to the 1k-item test fixtures
 INDEX_PATH = Path(
     os.getenv(
         "FAISS_INDEX_PATH",
@@ -38,7 +37,7 @@ METADATA: Dict[str, Dict] = {}
 # 3) Pydantic models
 # -----------------------------------------------------------------------------
 class SearchRequest(BaseModel):
-    query_vec: conlist(float, min_items=None)
+    query_vec: List[float]
     k: int
 
 class SearchResult(BaseModel):
@@ -61,10 +60,7 @@ def load_artifacts():
     if not META_PATH.is_file():
         raise RuntimeError(f"Metadata file not found: {META_PATH}")
 
-    # load the index
     INDEX = faiss.read_index(str(INDEX_PATH))
-
-    # load the metadata mapping (id → {caption, url})
     with open(META_PATH, "r") as f:
         METADATA = json.load(f)
 
@@ -78,11 +74,11 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
 
     results = []
     for dist, idx in zip(distances[0], indices[0]):
-        entry = METADATA.get(str(int(idx)))
+        meta = METADATA[str(int(idx))]
         results.append(SearchResult(
             id=int(idx),
-            caption=entry["caption"],
-            url=entry["url"],
+            caption=meta["caption"],
+            url=meta["url"],
             score=float(dist),
         ))
     return results
@@ -91,6 +87,8 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
 def search(payload: SearchRequest):
     if INDEX is None:
         raise HTTPException(503, "Index not loaded")
+
     if len(payload.query_vec) != INDEX.d:
         raise HTTPException(400, f"Expected vector of length {INDEX.d}")
+
     return _search(payload.query_vec, payload.k)
