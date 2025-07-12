@@ -9,9 +9,9 @@ import numpy as np
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 # 1) Paths & defaults
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 ROOT = Path(__file__).resolve().parent.parent
 
 INDEX_PATH = Path(
@@ -27,15 +27,15 @@ META_PATH = Path(
     )
 )
 
-# -----------------------------------------------------------------------------
-# 2) Globals to hold your loaded artifacts
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# 2) Globals to hold loaded artifacts
+# ----------------------------------------------------------------------
 INDEX: faiss.Index = None
 METADATA: Dict[str, Dict] = {}
 
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 # 3) Pydantic models
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 class SearchRequest(BaseModel):
     query_vec: List[float]
     k: int
@@ -46,13 +46,13 @@ class SearchResult(BaseModel):
     url: str
     score: float
 
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 # 4) FastAPI setup
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 app = FastAPI()
 
 @app.on_event("startup")
-def load_artifacts():
+def _startup_event():
     global INDEX, METADATA
 
     if not INDEX_PATH.is_file():
@@ -72,9 +72,9 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
     q = np.array(vec, dtype="float32").reshape(1, -1)
     distances, indices = INDEX.search(q, k)
 
-    results = []
+    results: List[SearchResult] = []
     for dist, idx in zip(distances[0], indices[0]):
-        meta = METADATA[str(int(idx))]
+        meta = METADATA.get(str(int(idx)))
         results.append(SearchResult(
             id=int(idx),
             caption=meta["caption"],
@@ -86,7 +86,7 @@ def _search(vec: List[float], k: int) -> List[SearchResult]:
 @app.post("/search", response_model=List[SearchResult])
 def search(payload: SearchRequest):
     if INDEX is None:
-        raise HTTPException(503, "Index not loaded")
+        raise HTTPException(503, "Index not loaded yet")
 
     if len(payload.query_vec) != INDEX.d:
         raise HTTPException(400, f"Expected vector of length {INDEX.d}")
