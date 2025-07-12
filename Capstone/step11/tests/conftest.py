@@ -1,22 +1,24 @@
 # tests/conftest.py
-
 import os
 from pathlib import Path
+
 import pytest
-from fastapi.testclient import TestClient
 
-# 1) Point the app at our tiny fixtures
-DATA_DIR = Path(__file__).parent / "fixtures" / "data_small"
-os.environ["FAISS_INDEX_PATH"] = str(DATA_DIR / "ivf_flat_small.index")
-os.environ["META_PATH"]       = str(DATA_DIR / "id2meta_small.json")
 
-# 2) Now import the app (it will pick up the two env vars above)
-from app.main import app
-
-# 3) Provide a TestClient for all tests
-@pytest.fixture(scope="session")
-def client():
+@pytest.fixture(autouse=True)
+def override_fixture_paths(monkeypatch: pytest.MonkeyPatch) -> None:
     """
-    A FastAPI TestClient that runs the app in‐process.
+    Point the app at the 1 000-item fixture set that lives under
+    tests/fixtures/data_small/.
     """
-    return TestClient(app)
+    root = Path(__file__).resolve().parents[1]          # repo-root / tests
+    fixtures = root / "fixtures" / "data_small"
+
+    monkeypatch.setenv(
+        "FAISS_INDEX_PATH",                # matches main.py
+        str(fixtures / "ivf_flat_small.index"),
+    )
+    monkeypatch.setenv(
+        "META_PATH",
+        str(fixtures / "id2meta_small.json"),
+    )
