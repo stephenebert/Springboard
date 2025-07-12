@@ -1,4 +1,5 @@
 # app/main.py
+
 import os, json
 from pathlib import Path
 from typing import List, Dict
@@ -59,21 +60,22 @@ def load_artifacts():
     if not META_PATH.is_file():
         raise RuntimeError(f"Metadata file not found: {META_PATH}")
 
-    # load FAISS index
+    # load the FAISS index
     INDEX = faiss.read_index(str(INDEX_PATH))
 
-    # load metadata (our fixture is a list, so we have to turn it into a dict)
+    # load the metadata JSON
     raw = json.loads(META_PATH.read_text())
-    if isinstance(raw, list):
-        # assume each entry has an integer "id" field
-        METADATA = { entry["id"]: entry for entry in raw }
-    else:
-        # if it were already a dict
+    if isinstance(raw, dict):
+        # keys are strings, cast to ints
         METADATA = { int(k): v for k, v in raw.items() }
+    elif isinstance(raw, list):
+        # list-of-records: assign by position
+        METADATA = { i: rec for i, rec in enumerate(raw) }
+    else:
+        raise RuntimeError("Unexpected metadata format")
 
 @app.get("/health")
 def health():
-    # tests expect three keys exactly: status, index_dim, index_size
     return {
         "status":     "ok",
         "index_dim":  INDEX.d,
@@ -83,7 +85,8 @@ def health():
 def _search(vec: List[float], k: int) -> List[SearchResult]:
     q = np.array(vec, dtype="float32").reshape(1, -1)
     distances, indices = INDEX.search(q, k)
-    results = []
+
+    results: List[SearchResult] = []
     for dist, idx in zip(distances[0], indices[0]):
         meta = METADATA[int(idx)]
         results.append(SearchResult(
