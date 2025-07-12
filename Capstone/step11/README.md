@@ -88,7 +88,8 @@ capstone-local/
 ├── Dockerfile                     # builds the app image
 ├── docker-compose.yml             # full stack (FastAPI + DynamoDB + Prometheus)
 ├── requirements.txt               # Python deps for the image
-└── README.md                      
+└── README.md
+```                 
 ---
 
 
