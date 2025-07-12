@@ -8,19 +8,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # 1) grab code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up Python
+      # 2) install Python
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
+      # 3) install app's deps + pytest
       - name: Install dependencies
         working-directory: Capstone/step11
         run: |
-          pip install -r requirements.txt
+          pip install -r requirements.txt pytest
 
-      # ────────────────────────────────────────────────────────────
+      # 4) launch FastAPI server in the background
       - name: Launch FastAPI (background)
         working-directory: Capstone/step11
         env:
@@ -29,13 +33,12 @@ jobs:
         run: |
           uvicorn app.main:app --host 0.0.0.0 --port 8000 & echo $! > server.pid
 
+      # 5) give it a moment to start up 
       - name: Wait for server to be healthy
         working-directory: Capstone/step11
-        run: |
-          # you could poll /health here instead of just sleeping
-          sleep 2
+        run: sleep 2
 
+      # 6) run tests
       - name: Run pytest
         working-directory: Capstone/step11
-        run: |
-          pytest -q tests
+        run: pytest -q tests
