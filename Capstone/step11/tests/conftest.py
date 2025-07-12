@@ -1,17 +1,22 @@
 # tests/conftest.py
-import os
-import pytest
 
-@pytest.fixture(autouse=True)
-def override_test_paths(monkeypatch):
+import os
+from pathlib import Path
+import pytest
+from fastapi.testclient import TestClient
+
+# 1) Point the app at our tiny fixtures
+DATA_DIR = Path(__file__).parent / "fixtures" / "data_small"
+os.environ["FAISS_INDEX_PATH"] = str(DATA_DIR / "ivf_flat_small.index")
+os.environ["META_PATH"]       = str(DATA_DIR / "id2meta_small.json")
+
+# 2) Now import the app (it will pick up the two env vars above)
+from app.main import app
+
+# 3) Provide a TestClient for all tests
+@pytest.fixture(scope="session")
+def client():
     """
-    Point the app at our tiny fixtures instead of the full dataset.
+    A FastAPI TestClient that runs the app in‐process.
     """
-    monkeypatch.setenv(
-        "INDEX_PATH",
-        "tests/fixtures/data_small/ivf_flat_small.index",
-    )
-    monkeypatch.setenv(
-        "META_PATH",
-        "tests/fixtures/data_small/id2meta_small.json",
-    )
+    return TestClient(app)
