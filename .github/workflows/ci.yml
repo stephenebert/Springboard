@@ -1,14 +1,16 @@
 # .github/workflows/ci.yml
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) grab code
+      # 1) check out your repo
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -18,27 +20,28 @@ jobs:
         with:
           python-version: "3.10"
 
-      # 3) install app's deps + pytest
+      # 3) install app requirements + pytest + requests
       - name: Install dependencies
         working-directory: Capstone/step11
         run: |
-          pip install -r requirements.txt pytest
+          pip install -r requirements.txt pytest requests
 
-      # 4) launch FastAPI server in the background
+      # 4) launch FastAPI in the background (pointing at the tiny fixtures)
       - name: Launch FastAPI (background)
         working-directory: Capstone/step11
         env:
           FAISS_INDEX_PATH: tests/fixtures/data_small/ivf_flat_small.index
           META_PATH:        tests/fixtures/data_small/id2meta_small.json
         run: |
-          uvicorn app.main:app --host 0.0.0.0 --port 8000 & echo $! > server.pid
+          uvicorn app.main:app --host 0.0.0.0 --port 8000 & \
+            echo $! > server.pid
 
-      # 5) give it a moment to start up 
+      # 5) give it a second to spin up
       - name: Wait for server to be healthy
         working-directory: Capstone/step11
         run: sleep 2
 
-      # 6) run tests
+      # 6) actually run tests
       - name: Run pytest
         working-directory: Capstone/step11
         run: pytest -q tests
