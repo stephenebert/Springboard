@@ -113,17 +113,17 @@ git push origin main
 * [x] Build large IVF‑Flat index (`nlist=1024`, `nprobe=16`)
 * [x] Smoke test returns 200 + top‑K JSON
 * [x] Unit tests (`pytest`)
-* [ ] CI workflow (GitHub Actions) – build, test, push image artifact
-* [ ] Prometheus metrics → Grafana Cloud (free tier) dashboard
+* [ ] CI workflow (GitHub Actions): build, test, push image artifact
+* [ ] Prometheus metrics to Grafana Cloud (free tier) dashboard
 * [ ] Terraform lean Fargate stack (Spot + HTTP API) with budget guardrails
 
 ---
 
 ## Development Tips
 
-* **Re‑index quickly** – If one tweaks `nlist`, run `build_index_step8.py` again; it streams HDF5 in \~3 min on CPU.
-* **RAM usage** – IVF‑Flat index (\~1.7 GB) fits in a 2 GB container; adjust `mem_limit` in `docker-compose.yml` if needed.
-* **p95 latency** – Prometheus scrapes `/metrics`; check `<http://localhost:9090>` ▸ *Graph* ▸ `request_latency_seconds`.
+* **Re‑index quickly**: If one tweaks `nlist`, run `build_index_step8.py` again; it streams HDF5 in \~3 min on CPU.
+* **RAM usage**: IVF‑Flat index (\~1.7 GB) fits in a 2 GB container; adjust `mem_limit` in `docker-compose.yml` if needed.
+* **p95 latency**: Prometheus scrapes `/metrics`; check `<http://localhost:9090>` ▸ *Graph* ▸ `request_latency_seconds`.
 
 ---
 
