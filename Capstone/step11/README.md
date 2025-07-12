@@ -111,7 +111,7 @@ git push origin main
 * [x] Local Compose stack with FastAPI + FAISS + Prometheus
 * [x] Build large IVF‑Flat index (`nlist=1024`, `nprobe=16`)
 * [x] Smoke test returns 200 + top‑K JSON
-* [ ] **Unit tests** (`pytest`) – coming next
+* [x] Unit tests (`pytest`)
 * [ ] CI workflow (GitHub Actions) – build, test, push image artifact
 * [ ] Prometheus metrics → Grafana Cloud (free tier) dashboard
 * [ ] Terraform lean Fargate stack (Spot + HTTP API) with budget guardrails
