@@ -44,7 +44,7 @@ A high-performance image retrieval system built with FAISS, FastAPI, and Docker.
 | Prometheus Metrics  | http://localhost:9090     | Monitoring dashboard |
 ## Project Structure
 
-capstone-retrieval/
+step-11/
 ├── app/
 │   ├── __init__.py
 │   └── main.py                    # FastAPI service
