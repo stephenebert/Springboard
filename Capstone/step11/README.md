@@ -42,3 +42,29 @@ A high-performance image retrieval system built with FAISS, FastAPI, and Docker.
 | :------------------ | :------------------------ | :------------------ |
 | FastAPI Application | http://localhost:8000     | Main retrieval API  |
 | Prometheus Metrics  | http://localhost:9090     | Monitoring dashboard |
+## Project Structure
+step11/
+├── app/
+│   ├── init.py
+│   └── main.py                     # FastAPI service
+├── data/
+│   ├── faiss-indexes/
+│   │   └── ivf_flat_1024.index     # FAISS index file
+│   ├── metadata_train.json         # Metadata mapping
+│   ├── embeddings_full.h5          # HDF5 embeddings
+│   └── metadata.parquet            # Dataset metadata
+├── infra/
+│   └── prometheus.yml              # Monitoring configuration
+├── scripts/
+│   ├── build_index_step8.py        # Index construction
+│   ├── convert_jsonl.py            # Data conversion utilities
+│   ├── scale_pipeline_hdf5.py      # Embedding pipeline
+│   └── smoke_test.py               # Integration testing
+├── tests/
+│   ├── test_health.py              # Health endpoint tests
+│   └── test_search.py              # Search functionality tests
+├── Dockerfile                      # Container configuration
+├── docker-compose.yml              # Multi-service orchestration
+├── requirements.txt                # Python dependencies
+└── README.md
+
