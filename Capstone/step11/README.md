@@ -62,7 +62,7 @@ prometheus         prom/prometheus:v2.52.0  Up 0.0.0.0:9090->9090/tcp
 ```
 Troubleshooting
 - If ports are already in use (error "Bind for 0.0.0.0:8000 failed, port is already allocated"):
-``` git
+``` bash
 docker compose down   # stop previous stack
 sudo lsof -i :8000    # find the process using the port (Linux/macOS)
 netstat -ano | findstr :8000  # Windows
@@ -71,8 +71,20 @@ netstat -ano | findstr :8000  # Windows
 
 Once you see STATUS Up for all three containers, move on to Step 2 (liveness check).
 
-# 2. Check liveness (```bash /health```)
+# 2. Check liveness (```/health```)
+After the containers are Up, confirm the FastAPI service is responsive.
+
+```bash
+# Linux / macOS
 curl http://localhost:8000/health
+
+# Windows PowerShell
+Invoke-WebRequest http://localhost:8000/health | Select-Object -Expand Content
+```
+
+Expected JSON reply (example):
+
+
 
 # 3. Smoke test (large index)
 python scripts/smoke_test.py
