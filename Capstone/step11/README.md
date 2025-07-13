@@ -270,7 +270,7 @@ docker compose -f docker-compose.yml -f docker-compose.test.yml down
 
 2. Port collisions: full uses 8000, mini uses 8010 to avoid conflicts.
 
-3. Monitoring – Prometheus scrapes /metrics; connect Grafana later.
+3. Monitoring: Prometheus scrapes /metrics; connect Grafana later.
 
 4. Costs: local only. Cloud Fargate prototype (Step 12) is approximately $6/mo.
 
