@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04    # GitHub-hosted runner (~2 vCPU, 7 GB RAM)
 
     steps:
-    # 1.  Checkout repo
+    # 1. Checkout repo
     - name: Checkout code
       uses: actions/checkout@v4
 
