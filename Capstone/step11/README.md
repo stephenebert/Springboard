@@ -19,7 +19,7 @@ Everything below already works on a fresh clone.
 ## Run it right now 
 
 
-# 0. prereqs
+# 0. Prerequisites 
 1. Docker Desktop + WSL 2 (Win) / Docker Engine (Linux/Mac)
 2. git clone https://github.com/<YOUR-GITHUB-HANDLE>/<REPO-NAME>.git
 3. cd <REPO-NAME>
