@@ -22,7 +22,7 @@ Everything below already works on a fresh clone.
 #    Docker Desktop + WSL 2 (Win) / Docker Engine (Linux/Mac)
 git clone https://github.com/<YOUR-GITHUB-HANDLE>/<REPO-NAME>.git
 cd <REPO-NAME>
-
+```
 # 1️⃣ Build + launch full stack  (FastAPI 8000, DynamoDB-local, Prometheus)
 docker compose up -d --build
 
