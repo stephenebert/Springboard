@@ -6,14 +6,13 @@ import faiss
 import h5py
 from pathlib import Path
 
-# ————————————————————————————————————————————————————————————————————————
-# 1) Point to your real, full HDF5 embedding file + metadata
-# ————————————————————————————————————————————————————————————————————————
+# 1) Point to real, full HDF5 embedding file + metadata
+
 ROOT      = Path(__file__).parents[1]             # …/capstone-local
 H5_FILE   = ROOT / "data" / "embeddings_full.h5"  # your full HDF5
 META_FILE = ROOT / "data" / "metadata.parquet"    # or id2meta.json if you have it
 
-# if you only have metadata.parquet, convert to JSON first:
+# if only have metadata.parquet, convert to JSON first:
 #   python - <<EOF
 #   import pandas as pd, json
 #   df = pd.read_parquet("data/metadata.parquet")
@@ -23,26 +22,21 @@ META_FILE = ROOT / "data" / "metadata.parquet"    # or id2meta.json if you have 
 #   EOF
 # then set META_FILE = ROOT/"data"/"id2meta.json"
 
-# ————————————————————————————————————————————————————————————————————————
-# 2) Where to write your small subset
-# ————————————————————————————————————————————————————————————————————————
+# 2) Where to write small subset
 OUT_DIR = ROOT / "data_small"
 OUT_DIR.mkdir(exist_ok=True)
 
 N = 1000  # how many samples 
 
-# ————————————————————————————————————————————————————————————————————————
 # 3) Extract first N embeddings from HDF5
-# ————————————————————————————————————————————————————————————————————————
+
 with h5py.File(H5_FILE, "r") as f:
     embs = f["image_embeddings"][:N]          # shape (N, 512)
 embs = embs.astype("float32")
 np.save(OUT_DIR / "img_embs_small.npy", embs)
 
-# ————————————————————————————————————————————————————————————————————————
 # 4) Slice metadata to the same N
-# ————————————————————————————————————————————————————————————————————————
-# Here we assume you have a pre-made id2meta.json next to the parquet
+# Here we assume there exists a pre-made id2meta.json next to the parquet
 meta_json = ROOT / "data" / "id2meta.json"
 if not meta_json.exists():
     raise FileNotFoundError(f"{meta_json} not found; please create it from the parquet")
@@ -52,9 +46,8 @@ small_meta = meta[:N]
 with open(OUT_DIR / "id2meta_small.json", "w", encoding="utf-8") as f:
     json.dump(small_meta, f, indent=2)
 
-# ————————————————————————————————————————————————————————————————————————
 # 5) Build a tiny FAISS index over those N vectors
-# ————————————————————————————————————————————————————————————————————————
+
 faiss.normalize_L2(embs)
 index = faiss.IndexFlatIP(embs.shape[1])
 index.add(embs)
