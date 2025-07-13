@@ -105,3 +105,26 @@ curl -X POST "http://localhost:8000/search" \
 ``` bash
 curl http://localhost:8000/health
 ```
+
+### Monitoring & Metrics
+
+The system includes comprehensive monitoring through Prometheus:
+
+* **Request latency** - `request_latency_seconds`
+* **Request count** - `requests_total`
+* **System health** - Available at `/metrics` endpoint
+
+Access the Prometheus dashboard at [http://localhost:9090](http://localhost:9090) to visualize metrics.
+
+### Testing
+
+Run the test suite:
+
+```bash
+# Unit tests
+pytest tests/
+
+# Integration test
+python smoke_test.py
+```
+
