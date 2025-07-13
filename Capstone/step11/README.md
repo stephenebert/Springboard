@@ -150,7 +150,7 @@ If you get errors
 | Symptom                                      | Likely cause                                                     | Quick fix                                                                                                                                              |
 | -------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `curl: (52) Empty reply from server`         | Service still starting or crashed during load.                   | `docker compose logs -f app` and wait for *"Application startup complete."*                                                                            |
-| `curl: (7) Failed to connect`                | Port **8000** not bound (container down) or blocked by firewall. | `docker compose ps` → check `retrieval_app` status. If “Exited”, inspect logs; if port conflict, free port or change `ports:` in `docker-compose.yml`. |
+| `curl: (7) Failed to connect`                | Port **8000** not bound (container down) or blocked by firewall. | `docker compose ps` --> check `retrieval_app` status. If “Exited”, inspect logs; if port conflict, free port or change `ports:` in `docker-compose.yml`. |
 | HTTP `5xx` with `"detail":"Index not found"` | You haven’t generated the full IVF index yet.                    | Run `python scripts/build_index_step8.py …` then restart `docker compose up -d --build`.                                                               |
 
 - Tip: You can also open the Swagger docs at http://localhost:8000/docs to see the ```/health```, ```/search```, and ```/metrics``` endpoints interactively.
@@ -242,12 +242,12 @@ docker compose -f docker-compose.yml -f docker-compose.test.yml down
 | `scripts/build_index_step8.py`            | Build full **IVF-Flat** index (`ivf_flat_1024.index`, `metadata_train.json`)       | `python ... --h5 data/embeddings_full.h5` |
 | `scripts/smoke_test.py`                   | Posts first text vector to `/search` (port 8000)                                   | `python scripts/smoke_test.py`            |
 | `scripts/smoke_test_small.py`             | Same, but targets mini stack (port 8010)                                           | `python scripts/smoke_test_small.py`      |
-| `tests/fixtures/data_small/`              | Tiny dataset → **committed** (N = 1 000)                                           | loaded automatically by tests             |
+| `tests/fixtures/data_small/`              | Tiny dataset --> **committed** (N = 1 000)                                           | loaded automatically by tests             |
 | `tests/test_health.py` / `test_search.py` | CI unit tests                                                            | `pytest -q tests`                         |
 | `docker-compose.yml`                      | Full stack (FastAPI 8000 + DynamoDB + Prom)                                        | `docker compose up -d`                    |
 | `docker-compose.test.yml`                 | Override: mounts mini data, maps 8010                                              | `docker compose -f ... up -d`             |
 | `infra/prometheus.yml`                    | Minimal scrape config (15 s)                                                       | auto-mounted                              |
-| `.github/workflows/ci.yml`                | GitHub Actions: install deps → run tests → build image                             | triggers on push / PR                     |
+| `.github/workflows/ci.yml`                | GitHub Actions: install deps --> run tests --> build image                             | triggers on push / PR                     |
 
 ## Checklist 
  1. Dockerised FastAPI service
