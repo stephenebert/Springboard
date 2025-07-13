@@ -12,7 +12,36 @@ Two datasets:
   *lives only on your laptop – not committed*
 * **Mini** fixture: 1 000 rows for CI & grading (runs on port 8010)
 
+
 Everything below already works on a fresh clone.
+
+## Project Structure
+
+- `step-11/`
+  - `app/`
+    - `__init__.py`
+    - `main.py` # FastAPI service
+  - `data/`
+    - `faiss-indexes/`
+      - `ivf_flat_1024.index` # FAISS index file
+    - `metadata_train.json` # Metadata mapping
+    - `embeddings_full.h5` # HDF5 embeddings
+    - `metadata.parquet` # Dataset metadata
+  - `infra/`
+    - `prometheus.yml` # Monitoring configuration
+  - `scripts/`
+    - `build_index_step8.py` # Index construction
+    - `convert_jsonl.py` # Data conversion utilities
+    - `scale_pipeline_hdf5.py` # Embedding pipeline
+    - `smoke_test.py` # Integration testing
+  - `tests/`
+    - `test_health.py` # Health endpoint tests
+    - `test_search.py` # Search functionality tests
+  - `Dockerfile` # Container configuration
+  - `docker-compose.yml` # Multi-service orchestration
+  - `requirements.txt` # Python dependencies
+  - `README.md`
+
 
 ---
 
