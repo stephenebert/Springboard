@@ -1,5 +1,5 @@
 # Step 11: Deployment Implementation 
-[![Build Status](https://img.shields.io/badge/status-in%20progress-yellow)](https://github.com/your-handle/capstone-retrieval)
+![Status](https://img.shields.io/badge/status-complete-brightgreen)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://docs.docker.com/get-docker/)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
