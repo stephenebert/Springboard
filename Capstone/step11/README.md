@@ -10,7 +10,7 @@ Two datasets:
 
 * **Full** corpus: COCO + Flickr + Stable Diffusion (>850 k rows, runs on port 8000)  
   *lives only on the user's laptop – not committed*
-* **Mini** fixture: 1 000 rows for CI & grading (runs on port 8010)
+* **Mini** fixture: 1 000 rows for CI (runs on port 8010)
 
 
 Everything below already works on a fresh clone.
@@ -217,7 +217,7 @@ What counts as "success?"
 
 3. Container logs show a matching /search request with execution time < 150 ms (meets SLO).
 
-Mini-fixture: For grading / CI you'd call python scripts/smoke_test_small.py (hits port 8010), which completes in < 0.1 s using the 1 000-vector sample index.
+Mini-fixture: For CI you'd call python scripts/smoke_test_small.py (hits port 8010), which completes in < 0.1 s using the 1 000-vector sample index.
 
 ## Mini-fixture stack (CI / quick demo)
 
@@ -243,7 +243,7 @@ docker compose -f docker-compose.yml -f docker-compose.test.yml down
 | `scripts/smoke_test.py`                   | Posts first text vector to `/search` (port 8000)                                   | `python scripts/smoke_test.py`            |
 | `scripts/smoke_test_small.py`             | Same, but targets mini stack (port 8010)                                           | `python scripts/smoke_test_small.py`      |
 | `tests/fixtures/data_small/`              | Tiny dataset → **committed** (N = 1 000)                                           | loaded automatically by tests             |
-| `tests/test_health.py` / `test_search.py` | CI / grading unit tests                                                            | `pytest -q tests`                         |
+| `tests/test_health.py` / `test_search.py` | CI unit tests                                                            | `pytest -q tests`                         |
 | `docker-compose.yml`                      | Full stack (FastAPI 8000 + DynamoDB + Prom)                                        | `docker compose up -d`                    |
 | `docker-compose.test.yml`                 | Override: mounts mini data, maps 8010                                              | `docker compose -f ... up -d`             |
 | `infra/prometheus.yml`                    | Minimal scrape config (15 s)                                                       | auto-mounted                              |
