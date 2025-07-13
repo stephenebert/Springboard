@@ -196,7 +196,7 @@ What counts as "success?"
 
 3. Container logs show a matching /search request with execution time < 150 ms (meets SLO).
 
-Mini-fixture: For grading / CI you’d call python scripts/smoke_test_small.py (hits port 8010), which completes in < 0.1 s using the 1 000-vector sample index.
+Mini-fixture: For grading / CI you'd call python scripts/smoke_test_small.py (hits port 8010), which completes in < 0.1 s using the 1 000-vector sample index.
 
 ## Mini-fixture stack (CI / quick demo)
 
