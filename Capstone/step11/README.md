@@ -27,13 +27,13 @@ To run the project exactly as described (locally or in CI) you only need three t
 
 Minimal hardware:
 
-≥ 8 GB RAM (4 GB free): full IVF-Flat index (~1.7 GB RAM) plus containers.
+1. ≥ 8 GB RAM (4 GB free): full IVF-Flat index (~1.7 GB RAM) plus containers.
 
-≈ 4 GB disk for Docker image layers + mini fixtures (full data/ folder stays local and is ignored by Git).
+2. ≈ 4 GB disk for Docker image layers + mini fixtures (full data/ folder stays local and is ignored by Git).
 
-Internet access the first time you pull Docker base images.
+3. Internet access the first time you pull Docker base images.
 
--- Note: If you’re just running the mini-fixture stack (port 8010) or running CI, < 2 GB RAM is sufficient because the tiny FAISS index is ≈ 2 MB.
+- Note: If you’re just running the mini-fixture stack (port 8010) or running CI, < 2 GB RAM is sufficient because the tiny FAISS index is ≈ 2 MB.
 
 
 # 1. Build + launch full stack  (FastAPI 8000, DynamoDB-local, Prometheus)
