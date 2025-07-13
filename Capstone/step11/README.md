@@ -37,9 +37,41 @@ Minimal hardware:
 
 
 # 1. Build + launch full stack  (FastAPI 8000, DynamoDB-local, Prometheus)
-docker compose up -d --build
+``` bash
+# From the repo root
+docker compose up -d --build   # first run ≈ 5 min on a laptop
+```
+What happens:
+| Phase                | What Docker does                                                                                               | Notes                                                                                       |
+| -------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| **Build image**      | Uses the `Dockerfile`, installs Python + requirements, copies `app/` code.                                     | Final image ≈ 650 MB. On subsequent runs Docker re-uses cached layers, so it’s much faster. |
+| **Create network**   | `capstone-local_default` virtual bridge for inter-container traffic.                                           |                                                                                             |
+| **Start containers** | 1. `retrieval_app` (FastAPI)<br>2. `dynamodb_local` (local metadata store)<br>3. `prometheus` (metrics scrape) | `-d` runs them in the background (detached mode).                                           |
 
-# 2. Check liveness
+Verify everything came up:
+
+``` bash
+docker compose ps
+```
+Expected output (example):
+``` bash
+NAME               IMAGE                    STATUS           PORTS
+retrieval_app      capstone-local-app       Up 0.0.0.0:8000->8000/tcp
+dynamodb_local     amazon/dynamodb-local    Up 0.0.0.0:8001->8000/tcp
+prometheus         prom/prometheus:v2.52.0  Up 0.0.0.0:9090->9090/tcp
+```
+Troubleshooting
+- If ports are already in use (error "Bind for 0.0.0.0:8000 failed, port is already allocated"):
+``` git
+docker compose down   # stop previous stack
+sudo lsof -i :8000    # find the process using the port (Linux/macOS)
+netstat -ano | findstr :8000  # Windows
+```
+-If ``` bash retrieval_app`` exits with code 137, your machine is low on RAM then allocate ≥ 4 GB to Docker Desktop.
+
+Once you see STATUS Up for all three containers, move on to Step 2 (liveness check).
+
+# 2. Check liveness (```bash /health```)
 curl http://localhost:8000/health
 
 # 3. Smoke test (large index)
