@@ -7,12 +7,6 @@
 
 A high-performance image retrieval system built with FAISS, FastAPI, and Docker. This system enables semantic search across large image datasets using CLIP embeddings with efficient indexing and real-time querying capabilities.
 
-[![CI](https://github.com/<YOUR-GITHUB-HANDLE>/<REPO-NAME>/actions/workflows/ci.yml/badge.svg)](https://github.com/<YOUR-GITHUB-HANDLE>/<REPO-NAME>/actions/workflows/ci.yml)
-
-Cross-modal **image-to-text retrieval** micro-service.  
-Dockerised with FastAPI + FAISS, orchestrated locally via **docker-compose**.  
-Two datasets:
-
 * **Full** corpus — COCO + Flickr + Stable Diffusion (>850 k rows, runs on port 8000)  
   *lives only on your laptop – not committed*
 * **Mini** fixture — 1 000 rows for CI & grading (runs on port 8010)
