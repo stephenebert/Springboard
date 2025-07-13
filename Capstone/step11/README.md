@@ -9,7 +9,7 @@ Dockerised with FastAPI + FAISS, orchestrated locally via **docker-compose**.
 Two datasets:
 
 * **Full** corpus: COCO + Flickr + Stable Diffusion (>850 k rows, runs on port 8000)  
-  *lives only on your laptop – not committed*
+  *lives only on the user's laptop – not committed*
 * **Mini** fixture: 1 000 rows for CI & grading (runs on port 8010)
 
 
@@ -117,7 +117,7 @@ docker compose down   # stop previous stack
 sudo lsof -i :8000    # find the process using the port (Linux/macOS)
 netstat -ano | findstr :8000  # Windows
 ```
--If ```retrieval_app``` exits with code 137, your machine is low on RAM then allocate ≥ 4 GB to Docker Desktop.
+-If ```retrieval_app``` exits with code 137, the machine in question is low on RAM then allocate ≥ 4 GB to Docker Desktop.
 
 Once you see STATUS Up for all three containers, move on to Step 2 (liveness check).
 
