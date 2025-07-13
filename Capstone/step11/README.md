@@ -20,9 +20,9 @@ Everything below already works on a fresh clone.
 
 
 # 0. prereqs
-#    Docker Desktop + WSL 2 (Win) / Docker Engine (Linux/Mac)
-git clone https://github.com/<YOUR-GITHUB-HANDLE>/<REPO-NAME>.git
-cd <REPO-NAME>
+1. Docker Desktop + WSL 2 (Win) / Docker Engine (Linux/Mac)
+2. git clone https://github.com/<YOUR-GITHUB-HANDLE>/<REPO-NAME>.git
+3. cd <REPO-NAME>
 
 # 1. Build + launch full stack  (FastAPI 8000, DynamoDB-local, Prometheus)
 docker compose up -d --build
@@ -92,4 +92,3 @@ docker compose -f docker-compose.yml -f docker-compose.test.yml down
 1. CLIP ViT-B/32 weights © OpenAI (MIT).
 2. FAISS © Meta AI Research (BSD-2-Clause).
 3. Dataset captions: COCO, Flickr30k, Stable Diffusion prompts (CC-BY).
-4. 
