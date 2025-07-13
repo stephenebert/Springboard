@@ -70,3 +70,37 @@ A high-performance image retrieval system built with FAISS, FastAPI, and Docker.
   - `docker-compose.yml` # Multi-service orchestration
   - `requirements.txt` # Python dependencies
   - `README.md`
+ ## Key Components
+
+ 
+## Core Scripts
+
+| Script                   | Purpose                                                              | Usage                                      |
+| :----------------------- | :------------------------------------------------------------------- | :----------------------------------------- |
+| `scale_pipeline_hdf5.py` | Generate embeddings for full corpus (COCO + Flickr + StableDiff)     | `python scale_pipeline_hdf5.py --parquet data/metadata.parquet` |
+| `build_index_step8.py`   | Build FAISS index from embeddings                                    | See installation step 3                    |
+| `convert_jsonl.py`       | Convert JSONL to compact JSON format                                 | `python scripts/convert_jsonl.py`          |
+| `smoke_test.py`          | End-to-end system validation                                         | `python smoke_test.py`                     |
+
+## API Endpoints
+
+* **GET** `/health` - Service health check
+* **POST** `/search` - Semantic search endpoint
+* **GET** `/metrics` - Prometheus metrics
+
+## Usage Examples
+
+### Basic Search Query
+
+```bash
+curl -X POST "http://localhost:8000/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "cat sitting on a window",
+    "top_k": 5
+  }'
+
+### Health Check
+``` bash
+curl http://localhost:8000/health
+'
