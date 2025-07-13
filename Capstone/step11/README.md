@@ -16,8 +16,6 @@ Everything below already works on a fresh clone.
 
 ---
 
-## Run it right now 
-
 
 # 0. Prerequisites 
 1. Docker Desktop + WSL 2 (Win) / Docker Engine (Linux/Mac)
