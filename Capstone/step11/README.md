@@ -33,7 +33,7 @@ A high-performance image retrieval system built with FAISS, FastAPI, and Docker.
       --out_dir /data/faiss-indexes
 4. **Verify installation**
    curl http://localhost:8000/health
-# Expected response: {"status":"ok", ...}
+   \# Expected response: {"status":"ok", ...}
 
 5. **Run smoke test**
    ## Services & Ports
