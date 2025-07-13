@@ -18,9 +18,23 @@ Everything below already works on a fresh clone.
 
 
 # 0. Prerequisites 
-1. Docker Desktop + WSL 2 (Win) / Docker Engine (Linux/Mac)
-2. git clone https://github.com/<YOUR-GITHUB-HANDLE>/<REPO-NAME>.git
-3. cd <REPO-NAME>
+To run the project exactly as described (locally or in CI) you only need three things:
+| Component                                | Windows                                                | macOS / Linux                         | Why it’s needed                                                                            |
+| ---------------------------------------- | ------------------------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Docker** (with Compose v2)             | **Docker Desktop** + **WSL 2** backend (Windows 11/10) | **Docker Engine** (or Docker Desktop) | Runs the FastAPI container, Prometheus, DynamoDB-local, etc.                               |
+| **Git**                                  | Git for Windows (or any Git client)                    | Git (Homebrew / apt / pacman)         | Clone the repo & pull updates.                                                             |
+| **Python 3.8 – 3.11** (optional on host) | `pyenv` / Windows Store / Anaconda                     | System Python / `pyenv` / Homebrew    | Only needed to launch the local smoke-test scripts; the service itself runs inside Docker. |
+
+Minimal hardware:
+
+≥ 8 GB RAM (4 GB free): full IVF-Flat index (~1.7 GB RAM) plus containers.
+
+≈ 4 GB disk for Docker image layers + mini fixtures (full data/ folder stays local and is ignored by Git).
+
+Internet access the first time you pull Docker base images.
+
+-- Note: If you’re just running the mini-fixture stack (port 8010) or running CI, < 2 GB RAM is sufficient because the tiny FAISS index is ≈ 2 MB.
+
 
 # 1. Build + launch full stack  (FastAPI 8000, DynamoDB-local, Prometheus)
 docker compose up -d --build
