@@ -67,14 +67,14 @@ docker compose down   # stop previous stack
 sudo lsof -i :8000    # find the process using the port (Linux/macOS)
 netstat -ano | findstr :8000  # Windows
 ```
--If ``` bash retrieval_app`` exits with code 137, your machine is low on RAM then allocate ≥ 4 GB to Docker Desktop.
+-If ``` retrieval_app`` exits with code 137, your machine is low on RAM then allocate ≥ 4 GB to Docker Desktop.
 
 Once you see STATUS Up for all three containers, move on to Step 2 (liveness check).
 
 # 2. Check liveness (```/health```)
 After the containers are Up, confirm the FastAPI service is responsive.
 
-```bash
+``` bash
 # Linux / macOS
 curl http://localhost:8000/health
 
