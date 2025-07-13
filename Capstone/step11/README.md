@@ -62,7 +62,7 @@ Minimal hardware:
 
 3. Internet access the first time you pull Docker base images.
 
-- Note: If you’re just running the mini-fixture stack (port 8010) or running CI, < 2 GB RAM is sufficient because the tiny FAISS index is ≈ 2 MB.
+- Note: If you're just running the mini-fixture stack (port 8010) or running CI, < 2 GB RAM is sufficient because the tiny FAISS index is ≈ 2 MB.
 
 
 # 1. Build + launch full stack  (FastAPI 8000, DynamoDB-local, Prometheus)
