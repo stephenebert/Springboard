@@ -19,7 +19,7 @@ Everything below already works on a fresh clone.
 
 | Milestone                              | What we delivered                                                                                                             | Importance                                                                       |
 | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| **Local micro-service**                | FastAPI + FAISS image-to-text retrieval app (`app/main.py`) wrapped in a Docker image.                                        | Same container you’ll later publish to ECR/Fargate.                                  |
+| **Local micro-service**                | FastAPI + FAISS image-to-text retrieval app (`app/main.py`) wrapped in a Docker image.                                        | Same container later publish to ECR, Fargate, etc.                                  |
 | **Offline artifacts**                  | Full `embeddings_full.h5`, `ivf_flat_1024.index`, `metadata_train.json` built via `build_index_step8.py`.                 | Keeps inference fast (<150 ms p95) by loading a pre-trained IVF-Flat index into RAM. |
 | **Mini fixture**                       | `tests/fixtures/data_small/` (1 000 vectors + 2 MB index).                                                                    | Lets CI run <2 min.                |
 | **docker-compose stacks**              | *Full* stack (8000) + *Test* override (8010) with Prometheus and DynamoDB-local.                                              | One-liner startup on any laptop; mirrors future cloud topology.                      |
@@ -272,7 +272,7 @@ docker compose -f docker-compose.yml -f docker-compose.test.yml down
 
 3. Monitoring: Prometheus scrapes /metrics; connect Grafana later.
 
-4. Costs: local only. Cloud Fargate prototype (Step 12) is approximately $6/mo.
+4. Costs: local only. Cloud Fargate prototype is approximately $6/mo.
 
 ## Licensing & Credits
 1. CLIP ViT-B/32 weights © OpenAI (MIT).
