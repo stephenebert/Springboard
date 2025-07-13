@@ -99,8 +99,9 @@ curl -X POST "http://localhost:8000/search" \
     "query": "cat sitting on a window",
     "top_k": 5
   }'
+```
 
 ### Health Check
 ``` bash
 curl http://localhost:8000/health
-'
+```
