@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  app:
+    # re-use the same built image
+    image: retrieval_app:latest
+    # mount the small fixture instead of the big /data folder
+    volumes:
+      - ./tests/fixtures/data_small:/data:ro
+    environment:
+      - FAISS_INDEX_PATH=/data/ivf_flat_small.index
+      - META_PATH=/data/id2meta_small.json
+      - NPROBE=8                 # can pick a small nprobe for speed
+    ports:
+      - "8010:8000"             # avoid colliding with any existing stack
+
