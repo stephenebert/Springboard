@@ -24,7 +24,7 @@ import textwrap
 import numpy as np
 import requests
 
-# Config – override via env vars if you want
+# Config: override via env vars if the user wants
 FIXTURE_DIR = pathlib.Path("tests/fixtures/data_small")
 NPY_PATH    = FIXTURE_DIR / "img_embs_small.npy"
 API_ROOT    = "http://localhost:8010"      # matches docker-compose.test.yml
