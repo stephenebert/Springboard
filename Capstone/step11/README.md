@@ -83,9 +83,28 @@ Invoke-WebRequest http://localhost:8000/health | Select-Object -Expand Content
 ```
 
 Expected JSON reply (example):
+```bash
+{
+  "status":     "ok",
+  "index_dim":  512,        // embedding length
+  "nprobe":     16,         // FAISS search param (env-var NPROBE)
+  "index_size": 850668      // vectors loaded into RAM
+}
+```
+Why this matters
+- ```status: "ok"```: application booted, fully loaded the FAISS index, and can answer queries.
+- Other fields echo runtime config so you can verify the right index is in memory.
+  
+If you get errors
 
+| Symptom                                      | Likely cause                                                     | Quick fix                                                                                                                                              |
+| -------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `curl: (52) Empty reply from server`         | Service still starting or crashed during load.                   | `docker compose logs -f app` and wait for *"Application startup complete."*                                                                            |
+| `curl: (7) Failed to connect`                | Port **8000** not bound (container down) or blocked by firewall. | `docker compose ps` → check `retrieval_app` status. If “Exited”, inspect logs; if port conflict, free port or change `ports:` in `docker-compose.yml`. |
+| HTTP `5xx` with `"detail":"Index not found"` | You haven’t generated the full IVF index yet.                    | Run `python scripts/build_index_step8.py …` then restart `docker compose up -d --build`.                                                               |
 
-
+- Tip: You can also open the Swagger docs at http://localhost:8000/docs to see the ```/health```, ```/search```, and ```/metrics``` endpoints interactively.
+Once ```/health``` returns 200 OK with the JSON above, proceed to 3. Smoke test.
 # 3. Smoke test (large index)
 python scripts/smoke_test.py
 
