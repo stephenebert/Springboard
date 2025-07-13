@@ -1,4 +1,4 @@
-# Step 11 · Deployment Implementation 
+# Step 11: Deployment Implementation 
 [![Build Status](https://img.shields.io/badge/status-in%20progress-yellow)](https://github.com/your-handle/capstone-retrieval)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://docs.docker.com/get-docker/)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://python.org)
@@ -135,7 +135,68 @@ If you get errors
 - Tip: You can also open the Swagger docs at http://localhost:8000/docs to see the ```/health```, ```/search```, and ```/metrics``` endpoints interactively.
 Once ```/health``` returns 200 OK with the JSON above, proceed to 3. Smoke test.
 # 3. Smoke test (large index)
-python scripts/smoke_test.py
+The repo ships with a helper script that:
+1. Loads the very first text-embedding vector from data/embeddings_full.h5.
+
+2. Sends it to the /search endpoint on port 8000 asking for the top-3 nearest images.
+
+3. Pretty-prints the HTTP status, headers, and the parsed JSON payload.
+
+   ``` bash
+   # From the repo root
+   python scripts/smoke_test.py
+   ```
+Typical console output
+``` bash
+-->  status  200
+-->  headers application/json
+--> first 300 bytes of body:
+   {"k":3,"results":[{"id":77532,"image_path":"C:\\...\\custom_79956_0.png",
+   "caption":"King Henry VIII nearby an internal drive holding an umbrella in the grass",
+   "score":0.3766064941883087}, …]}
+
+--> parsed JSON:
+   {
+     "k": 3,
+     "results": [
+       {
+         "id": 77532,
+         "image_path": "C:\\...\\custom_79956_0.png",
+         "caption": "King Henry VIII nearby an internal drive holding an umbrella in the grass",
+         "score": 0.3766064941883087
+       },
+       {
+         "id": 0,
+         "image_path": "C:\\...\\custom_0_0.png",
+         "caption": "painting of King Henry VIII carrying an umbrella",
+         "score": 0.3446621000766754
+       },
+       {
+         "id": 29172,
+         "image_path": "C:\\...\\custom_31596_0.png",
+         "caption": "painting of …",
+         "score": 0.3178233504295349
+       }
+     ]
+   }
+```
+| Field        | Meaning                                        |
+| ------------ | ---------------------------------------------- |
+| `k`          | How many neighbours you asked for (default 3). |
+| `id`         | Row ID inside the dataset / FAISS index.       |
+| `image_path` | Absolute path on disk (for demo purposes).     |
+| `caption`    | Original textual prompt / description.         |
+| `score`      | Cosine similarity (1.0 = identical).           |
+
+
+What counts as "success?"
+1. HTTP 200 returned.
+
+2. JSON contains at least one result with a sane similarity score (0 < score ≤ 1).
+
+3. Container logs show a matching /search request with execution time < 150 ms (meets SLO).
+
+Mini-fixture: For grading / CI you’d call python scripts/smoke_test_small.py (hits port 8010), which completes in < 0.1 s using the 1 000-vector sample index.
 
 ## Mini-fixture stack (CI / quick demo)
 
