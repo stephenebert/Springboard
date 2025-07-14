@@ -4,17 +4,22 @@ A production-ready, cross-modal retrieval API (FastAPI + FAISS) with a Gradio fr
 
 ---
 
-## Checklist
+## Features
 
-| Criterion                          | How It’s Met                                                                                                                                                                                                                |
-|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Correctness**                    | • FAISS IVF-Flat index loaded on startup, cosine similarity search in `/search` endpoint<br> Health check at `/health` returns index stats and liveness                                                                    |
-| **Code Quality**                   | • PEP8-compliant Python modules<br> Clear separation: `app/main.py`, `app/routers`, `app/models`<br> Docstrings + type annotations                                                                                            |
-| **Testing**                        | • Pytest fixtures under `tests/fixtures/data_small` with a mini index<br> `tests/test_health.py` and `tests/test_search.py` cover edge cases and end-to-end logic<br>• `docker-compose.test.yml` for isolated test runs      |
-| **Documentation**                  | • Comprehensive **README** (this file)<br> In-code comments and module docstrings<br> Example `curl` commands                                                                                                              |
-| **Deployment**                     | • `Dockerfile` for the API with layer caching<br> Auto-deploy on Render.com (Fargate)<br> Gradio app in `app.py` deployed on Hugging Face Spaces                                                                       |
-| **Demonstration & UX**             | • Live **API**: `https://capstone-retrieval-api.onrender.com`<br> Live **UI**: `https://huggingface.co/spaces/<your-user>/retrieval-demo`<br>•Images rendered in a gallery, not raw JSON; friendly slider for k             |
-
+- **Correctness**  
+  - Verified FAISS index load & ANN search semantics  
+  - Pydantic schemas enforce 512-dim input vector & valid `k`  
+- **Code Quality**  
+  - Modular structure (`app/`, `routers/`, `models/`)  
+  - Clear docstrings, type annotations, and adherence to PEP8  
+- **Testing**  
+  - End-to-end tests against a small “canary” index  
+  - Health & search behavior for boundary and error cases  
+- **Documentation**  
+  - This README; in-code comments; curl examples  
+- **Deployment**  
+  - Dockerized API with multi-stage build caching  
+  - Gradio Space with public URL binding via `API_URL` var  
 ---
 
 ## Quick Start
