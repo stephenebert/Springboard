@@ -1,6 +1,23 @@
 # Step 12: Image-to-Text Retrieval Service
 
-A production-ready, cross-modal retrieval API (FastAPI + FAISS) with a Gradio front-end. You can enter a text caption, hit **Submit**, and see the top-K nearest images rendered in a gallery.
+
+A **production-ready**, cross-modal retrieval system that ties together:
+
+1. **Efficient ANN Search API**  
+   - FastAPI service loading a FAISS IVF-Flat index on startup  
+   - High-throughput, low-latency cosine similarity search  
+   - `/health` endpoint for liveness & index stats  
+   - `/search` endpoint accepting 512-dim embeddings + `k` --> top-K results  
+
+2. **Gradio Front-End**  
+   - User-friendly UI to type a caption and choose **k** via slider  
+   - Renders image thumbnails in a responsive gallery instead of raw JSON  
+   - Hosted on Hugging Face Spaces, wired to call your live API  
+
+3. **Robust Development & Deployment**  
+   - Comprehensive pytest suite with fixtures & mini-index  
+   - Dockerfile + `docker-compose.test.yml` for CI & local testing  
+   - Auto-deploy on Render.com (Docker) and Hugging Face Spaces (Gradio)  
 
 ---
 
