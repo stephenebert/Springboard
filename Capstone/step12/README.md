@@ -59,8 +59,28 @@ docker run -e FAISS_INDEX_PATH=/data/ivf_flat_1024.index \
 ```
 
 ### 4. Hit the endpoints
-- Health check
+- Health check prints out ```{"status":"ok","index_dim":512,"nprobe":16,"index_size":1000}```
   ``` bash
   curl https://capstone-retrieval-api.onrender.com/health
-# {"status":"ok","index_dim":512,"nprobe":16,"index_size":1000}
+ ```
+- Search builds a 512-dim float list and POST:
+
+``` bash
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -d '{"query_vec":[0.0,0.0,…512 floats total…], "k":3}' \
+     https://capstone-retrieval-api.onrender.com/search
 ```
+### 5. Run tests
+``` bash
+docker-compose -f docker-compose.test.yml up --build --exit-code-from tests
+```
+## Gradio Front-end
+1. In the root of this repo, install demo deps:
+   ``` bash
+   pip install -r requirements.txt
+   ```
+2. Set your API URL in Settings -> Variables of your HF Space:
+   ``` ini
+   API_URL = https://capstone-retrieval-api.onrender.com
+   ```
