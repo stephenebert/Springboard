@@ -11,9 +11,9 @@ A production-ready, cross-modal retrieval API (FastAPI + FAISS) with a Gradio fr
   - Pydantic schemas enforce 512-dim input vector & valid `k`  
 - **Code Quality**  
   - Modular structure (`app/`, `routers/`, `models/`)  
-  - Clear docstrings, type annotations, and adherence to PEP8  
+  - Clear docstrings & type annotations  
 - **Testing**  
-  - End-to-end tests against a small “canary” index  
+  - End-to-end tests against a small "canary" index  
   - Health & search behavior for boundary and error cases  
 - **Documentation**  
   - This README; in-code comments; curl examples  
