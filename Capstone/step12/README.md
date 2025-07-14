@@ -22,6 +22,7 @@ A **production-ready**, cross-modal retrieval system that ties together:
 ---
 
 ## Features
+Our image-text retrieval API is built end-to-end for correctness, maintainability, and easy deployment.  We verify at startup that the FAISS index and metadata load correctly and that our ANN search returns expected cosine‐similarity matches.  Input validation is enforced by Pydantic schemas (exactly 512-dim vectors and 1 ≤ k ≤ 50), preventing malformed requests.  The code is organized into logical modules (`app/`, `routers/`, `models/`), fully documented with docstrings and type annotations, and rigorously tested via both unit and end-to-end "canary" fixtures covering normal, boundary, and error cases.  Comprehensive docs—including this README, inline examples, and curl snippets—guide local setup, Docker builds, and cloud deployment.  Finally, we provide both a Dockerized FastAPI service and a Gradio Space front-end, each easily deployed to public URLs for rapid experimentation and sharing.
 
 - **Correctness**  
   - Verified FAISS index load & ANN search semantics  
@@ -134,6 +135,9 @@ The Render deployment should like this
 
 
 ## Gradio Front-end
+
+The Gradio front-end is a lightweight, self-contained demo that you can run either locally or directly in Hugging Face Spaces.
+
 1. In the root of this repo, install demo deps:
    ``` bash
    pip install -r requirements.txt
