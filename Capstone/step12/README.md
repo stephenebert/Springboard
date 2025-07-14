@@ -113,7 +113,9 @@ docker-compose -f docker-compose.test.yml up --build --exit-code-from tests
 4. Deploy by pushing ```app.py``` and ```requirements.txt``` to your HF Space.
 Live demo at ```https://huggingface.co/spaces/<your-user>/retrieval-demo```
 
-The HF app and files look like this
+The HF app looks like this
 ![Retrieval Results](images/Screenshot%202025-07-14%20004105.png)
+
+and the HF files look like this
 ![Retrieval Results](images/Screenshot%202025-07-14%20004348.png)
 
