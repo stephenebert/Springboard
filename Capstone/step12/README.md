@@ -84,3 +84,9 @@ docker-compose -f docker-compose.test.yml up --build --exit-code-from tests
    ``` ini
    API_URL = https://capstone-retrieval-api.onrender.com
    ```
+3. Launch locally
+   ``` bash
+   python app.py
+   ```
+4. Deploy by pushing ```app.py``` and ```requirements.txt``` to your HF Space.
+Live demo at ```https://huggingface.co/spaces/<your-user>/retrieval-demo```
