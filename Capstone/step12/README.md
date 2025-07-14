@@ -114,4 +114,4 @@ docker-compose -f docker-compose.test.yml up --build --exit-code-from tests
 Live demo at ```https://huggingface.co/spaces/<your-user>/retrieval-demo```
 
 The HF app looks like this
-![Render Deployment Logs](images/Screenshot%202025-07-14%20004518.png)
+![Render Deployment Logs](images/Screenshot 2025-07-14 004348.png)
