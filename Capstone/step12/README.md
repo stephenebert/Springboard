@@ -97,6 +97,42 @@ curl -X POST \
 ``` bash
 docker-compose -f docker-compose.test.yml up --build --exit-code-from tests
 ```
+
+## Deployment on Render
+
+We host our FastAPI + FAISS service on Render.com. To get it running:
+
+1. **Create a new Web Service**  
+   - Go to your Render dashboard and click **"New +" --> "Web Service"**.  
+   - Connect your GitHub repo (e.g. `Springboard/Capstone/step12`).
+
+2. **Configure the service**  
+   - **Name**: `capstone-retrieval-api` (or your preference)  
+   - **Environment**: Docker  
+   - **Branch**: `main`  
+   - **Dockerfile Path**: `./Dockerfile`  
+   - **Port**: `8000`
+
+3. **Set environment variables**  
+   Under **"Advanced” --> “Environment"**, add:
+``` bash
+FAISS_INDEX_PATH=/data/ivf_flat_1024.index
+META_PATH=/data/id2meta.json
+NPROBE=16
+```
+4. **Deploy & verify**  
+- Click **“Create Web Service”**. Render will build your Docker image and spin up your service.  
+- Watch the **Logs** tab for a “Your service is live 🎉” message.  
+
+5. **Health check**  
+Once live, run:
+```bash
+curl https://<your-service>.onrender.com/health
+```
+The Render deployment should like this
+![Render Deployment Logs](images/Screenshot%202025-07-14%20004518.png)
+
+
 ## Gradio Front-end
 1. In the root of this repo, install demo deps:
    ``` bash
