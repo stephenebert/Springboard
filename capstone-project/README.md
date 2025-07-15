@@ -11,7 +11,7 @@ The capstone project demonstrates comprehensive ML engineering skills including:
 **Live Demo**: [Link to deployed application]
 
 **Key Features**:
-- [Brief description of your project]
+- [Brief description of project]
 - [Technology stack used]
 - [Business value/impact]
 
