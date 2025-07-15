@@ -15,7 +15,7 @@ The capstone project demonstrates comprehensive ML engineering skills including:
 - [Technology stack used]
 - [Business value/impact]
 
-
+```
 capstone-project/
     ├── README.md
     ├── requirements.txt
@@ -133,3 +133,4 @@ capstone-project/
         ├── project_proposal_presentation.pptx
         ├── midterm_progress_presentation.pptx
         └── final_presentation.pptx
+```
