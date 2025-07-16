@@ -4,13 +4,13 @@ This directory documents the **data collection** and **exploratory analysis** ef
 
 ---
 
-## 🎯 Objective
+## Objective
 
 To collect high-quality datasets relevant to image-to-text modeling tasks, unify their schema, and analyze linguistic and structural patterns through exploratory data analysis (EDA).
 
 ---
 
-## 📁 Directory Structure
+## Directory Structure
 
 - `data/`: Raw and processed datasets (captions, metadata).
 - `data-collection/`: Scripts or instructions to download data (Kaggle CLI, COCO tools, etc.).
@@ -27,12 +27,12 @@ To collect high-quality datasets relevant to image-to-text modeling tasks, unify
    - Used as core dataset for reverse engineering
 
 2. **MS COCO 2017 Captions**  
-   - 📌 [COCO Captions](https://cocodataset.org/#download)  
+   - [COCO Captions](https://cocodataset.org/#download)  
    - Human-written captions for 123K real-world images  
    - Used for linguistic baselines and Zipf-style analysis
 
 3. **Flickr-30k Captions**  
-   - 📌 [Flickr-30k on Kaggle](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset/data)  
+   - [Flickr-30k on Kaggle](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset/data)  
    - 30K images with 5 captions each  
    - Complements COCO for style and diversity comparison
 
