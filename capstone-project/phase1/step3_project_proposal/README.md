@@ -8,22 +8,22 @@ The goal is to build a **cross-modal retrieval system** that can compare and ret
 - AI-generated images and their prompts from Stable Diffusion  
 
 This is inspired by the Kaggle competition:  
-🔗 [Stable Diffusion – Image to Prompts](https://www.kaggle.com/competitions/stable-diffusion-image-to-prompts)
+[Stable Diffusion – Image to Prompts](https://www.kaggle.com/competitions/stable-diffusion-image-to-prompts)
 
 We extend the competition by enabling **bi-directional retrieval** across both image and text modalities. Given any image or text, the system will retrieve semantically aligned counterparts from both **human-generated** and **AI-generated** datasets.
 
 ---
 
-## 2. Why This Matters
+## 2. Importance
 
-- 🔄 **Bridges AI and Human Data**: Evaluates how closely synthetic data representations align with real-world images and human language.
-- 🔍 **Supports 4 Retrieval Modes**:
-  - Image ↔ Image
-  - Text ↔ Image
-  - Image → Text
-  - Dataset → Dataset
-- 🔁 **Prompt Fidelity Analysis**: Enables prompt reconstruction from generated images to assess generative model faithfulness.
-- 🧠 **Practical Applications**: Recommendation engines, image editing assistants, prompt engineering research, and benchmark datasets for future multimodal systems.
+- **Bridges AI and Human Data**: Evaluates how closely synthetic data representations align with real-world images and human language.
+- **Supports 4 Retrieval Modes**:
+  - Image-to-Image
+  - Text-to-Image
+  - Image-to-Text
+  - Dataset-to-Dataset
+- **Prompt Fidelity Analysis**: Enables prompt reconstruction from generated images to assess generative model faithfulness.
+- **Practical Applications**: Recommendation engines, image editing assistants, prompt engineering research, and benchmark datasets for future multimodal systems.
 
 ---
 
