@@ -39,7 +39,7 @@ This system combines state-of-the-art neural search with a user-friendly interfa
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Python 3.8+
 - Docker (optional, for containerized deployment)
