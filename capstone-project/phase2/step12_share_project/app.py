@@ -3,7 +3,6 @@ import json
 import requests
 import gradio as gr
 
-# ---------------------------------------------------------------------
 # 1) Where is the FastAPI service?
 #    a. On Spaces, set this in Settings -> Variables as  API_URL=https://capstone-retrieval-api.onrender.com/search
 #    b. Fallback to the literal string below if the variable is missing.
