@@ -20,11 +20,11 @@ Key components:
 
 | Option | Pros | Cons | Verdict |
 |--------|------|------|--------|
-| **Lambda + API Gateway** | Zero-ops, cheap idle | 512MB RAM, no GPU, 5s cold starts | ❌ Too slow |
-| **SageMaker Endpoints** | Managed A/B testing | Expensive, vendor lock-in | ❌ Overkill |
-| **Kubernetes (GKE)** | Full control | High ops burden | ❌ Too heavy |
-| **ECS Fargate** | Pay-per-second, IAM-native, auto-scale | Slightly slower scale-out | ✅ **Chosen** |
-| **On-prem GPU** | No cloud spend | High CapEx, ops overhead | ❌ Not practical |
+| **Lambda + API Gateway** | Zero-ops, cheap idle | 512MB RAM, no GPU, 5s cold starts | Too slow |
+| **SageMaker Endpoints** | Managed A/B testing | Expensive, vendor lock-in | Overkill |
+| **Kubernetes (GKE)** | Full control | High ops burden | Too heavy |
+| **ECS Fargate** | Pay-per-second, IAM-native, auto-scale | Slightly slower scale-out | **Chosen** |
+| **On-prem GPU** | No cloud spend | High CapEx, ops overhead | Not practical |
 
 ---
 
@@ -142,7 +142,7 @@ SLOs:
 
 ---
 
-## 🏁 Conclusion
+## Conclusion
 
 Our deployment plan offers a cost-effective, scalable, and maintainable solution for real-time multimodal retrieval. With CI/CD, nightly embeddings, full observability, and recovery plans, the system is robust for production workloads and research iterations alike.
 
