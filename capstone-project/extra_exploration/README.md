@@ -8,7 +8,7 @@ Upload a photo via file picker, connected phone, copy-paste, or live webcam, and
 2. Embed that caption with CLIP
 3. Instantly surface the closest matching captions from MS-COCO using an in-memory FAISS index
 
-![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
+![Screenshot of the Gradio demo UI](data/UI1.png)
 
 ## What It Does
 
@@ -58,7 +58,7 @@ Open the URL printed in the terminal (e.g., `http://127.0.0.1:7860`) and drop an
 
 **Need a public link?** Edit the last line of `gradio_demo.py` → `demo.launch(share=True)`. 
 
-![Screenshot of terminal output](extra_exploration/data/terminal.png)
+![Screenshot of terminal output](data/terminal.png)
 
 ## Quick Start (pip / virtualenv)
 
