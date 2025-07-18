@@ -1,6 +1,10 @@
 # Image-to-Text Retrieval Demo  (BLIP → CLIP → FAISS)
 
-Turn any image into a short caption with **BLIP**, embed that caption with **CLIP**, and retrieve the most similar human-written captions from MS-COCO using an in-memory **FAISS** index – all wrapped in a simple **Gradio** UI.
+Turn any image into a short caption with **BLIP**, embed that caption with **CLIP**, and retrieve the most similar human-written captions from MS-COCO using an in-memory **FAISS** index – all wrapped in a simple **Gradio** UI. Upload a photo—via file picker, connected phone, or live webcam—and the Gradio interface will:
+
+1. Generate a caption with BLIP
+2. Embed that caption with CLIP
+3. Instantly surface the closest matching captions from MS-COCO using an in-memory FAISS index.
 
 ![Screenshot of the Gradio demo UI](data/UI1.png)
 
@@ -110,6 +114,7 @@ np.save("scripts/coco_caption_texts.npy", np.array(CAPTIONS, dtype=object))
 | `ModuleNotFoundError: audioop` on Python 3.13+ | `audioop` removed from stdlib   | `pip install pyaudioop` **or** run on Python ≤ 3.12                                |
 | Long SciPy compile via pip                     | Building from source            | Use conda-forge wheel: `conda install -c conda-forge scipy`                        |
 | FAISS dimension mismatch                       | Wrong embedding model vs. index | Rebuild index with the same model (`clip-ViT-B-32`)                                |
+
 
 ## Minimal Smoke Tests
 ``` bash
