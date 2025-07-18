@@ -28,7 +28,7 @@ A two-column Gallery on the right shows each image as soon as it’s finished an
 
 
 3. Under the hood: the SD pipeline
-   ```
+   ``` bash
    Prompt ──▶ CLIP text-encoder ──▶ text embedding
                              └─▶ Scheduler (DDIM) ──▶ iterative denoising in latent space
                                                   └─▶ UNet (guided by text)
