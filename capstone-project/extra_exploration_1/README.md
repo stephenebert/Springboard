@@ -28,11 +28,17 @@ A two-column Gallery on the right shows each image as soon as it’s finished an
 
 
 3. Under the hood: the SD pipeline
-   ``` bash
-   Prompt ──▶ CLIP text-encoder ──▶ text embedding
-                             └─▶ Scheduler (DDIM) ──▶ iterative denoising in latent space
-                                                  └─▶ UNet (guided by text)
-Final latent ──▶ VAE decoder ──▶ 512×512 RGB image
+```
+Text Prompt ──▶ CLIP Text Encoder ──▶ Text Embedding
+                                            │
+                                            ▼
+                                      Scheduler (DDIM) ──▶ Iterative Denoising
+                                            │                in Latent Space
+                                            ▼                      │
+                                      Random Noise ──▶ UNet ◀─────┘
+                                            │         (guided by text embedding)
+                                            ▼
+                                      Final Latent ──▶ VAE Decoder ──▶ 512×512 RGB Image
 ```
 - Inference Steps = number of DDIM iterations.
 - Guidance Scale mixes the unconditional and conditional UNet predictions (higher = stricter prompt following).
