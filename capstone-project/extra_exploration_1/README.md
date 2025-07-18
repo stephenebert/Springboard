@@ -57,3 +57,16 @@ stable-diffusion-t2i-demo/
 │   └── steampunk_otter.png
 └── README.md             
 
+## Performance Table
+
+| Device           | Steps | Time   |
+| ---------------- | ----- | ------ |
+| **M2 Max (mps)** | 50    | \~9 s  |
+| RTX 3080 10 GB   | 50    | \~4 s  |
+| 8-core CPU       | 50    | \~50 s |
+
+Measured with Torch 2.2 + Diffusers 0.28
+
+## Acknowledgements
+- Stable Diffusion v1.5 — CompVis, Runway, Stability AI, LAION
+- diffusers, transformers, gradio — Hugging Face
