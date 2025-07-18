@@ -8,7 +8,7 @@ Turn any image into a short caption with **BLIP**, embed that caption with **CLI
 
 ---
 
-## ✨ What It Does
+## What It Does
 
 1. **Upload an image**  
 2. **BLIP** generates a caption  
@@ -20,4 +20,13 @@ Turn any image into a short caption with **BLIP**, embed that caption with **CLI
 
 ## Repository Layout
 
-
+``` bash
+├── gradio_demo.py # ← main app (run this)
+├── requirements.txt # ← pip deps (loose pins)
+├── environment.yml # ← exact conda env (tight pins)
+├── scripts/
+│ ├── coco_caption_clip.index # 591 753 × 512 float32 vectors
+│ └── coco_caption_texts.npy # array of captions aligned with index order
+└── docs/
+└── demo_screenshot.png
+```
