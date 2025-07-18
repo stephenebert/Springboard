@@ -2,6 +2,10 @@
 
 Turn any image into a short caption with **BLIP**, embed that caption with **CLIP**, and retrieve the most similar human-written captions from MS-COCO using an in-memory **FAISS** index – all wrapped in a simple **Gradio** UI. 
 
+This application is also made available on Hugging Face [![HF Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Live%20demo-stephenebert%2Fimage2text--faiss--demo-blue?logo=huggingface&logoColor=white&labelColor=black)](https://huggingface.co/spaces/stephenebert/image2text-faiss-demo)
+but an important note is that the FAISS index + caption array (~1.9 GB) are hosted on a separate HF Dataset and fetched automatically by scripts/get_assets.py.
+
+
 Upload a photo via file picker, connected phone, copy-paste, or live webcam, and the Gradio interface will:
 
 1. Generate a caption with BLIP
