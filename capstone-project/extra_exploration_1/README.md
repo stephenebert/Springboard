@@ -110,16 +110,6 @@ gradio>=4.28
 pyaudioop ; python_version >= "3.13"   # optional shim for Gradio’s audio import
 ```
 
-## Performance Table
-
-| Device           | Steps | Time   |
-| ---------------- | ----- | ------ |
-| **M2 Max (mps)** | 50    | \~9 s  |
-| RTX 3080 10 GB   | 50    | \~4 s  |
-| 8-core CPU       | 50    | \~50 s |
-
-Measured with Torch 2.2 + Diffusers 0.28
-
 ## Acknowledgements
 - Stable Diffusion v1.5 — CompVis, Runway, Stability AI, LAION
 - diffusers, transformers, gradio — Hugging Face
