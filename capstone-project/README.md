@@ -20,20 +20,24 @@ The system is optimized for both **performance** (via FAISS ANN search) and **us
 ## Repository Structure
 
 ```
-capstone/
-├── step1_idea/
-├── step2_collection/
-├── step3_proposal/
-├── step4_research/
-├── step5_wrangling/
-├── step6_model/
-├── step7_experiments/
-├── step8_scaling/
-├── step9_deployment_plan/
-├── step10_architecture/
-├── step11_implementation/
-├── step12_demo/
-└── README.md 
+capstone-project/
+├── extra_exploration/
+├── images/
+├── phase1/
+│   ├── step1_initial_project_ideas/
+│   ├── step2_data_collection/
+│   ├── step3_project_proposal/
+│   ├── step4_survey_existing_research/
+│   ├── step5_data_wrangling/
+│   └── step6_benchmark_model/
+├── phase2/
+│   ├── step7_experiment_models/
+│   ├── step8_scale_prototype/
+│   ├── step9_deployment_method/
+│   ├── step10_deployment_design/
+│   ├── step11_deployment_implementation/
+│   └── step12_share_project/
+└── README.md
 ```
 
 ---
