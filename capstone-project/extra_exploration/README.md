@@ -46,7 +46,9 @@ python gradio_demo.py
 ```
 Open the URL printed in the terminal (output in terminal is like ```http://127.0.0.1:7860```) and drop an image.
 
-Need a public link? Edit the last line of ```gradio_demo.py → demo.launch(share=True)```.
+Need a public link? Edit the last line of ```gradio_demo.py → demo.launch(share=True)```. This is what the terminal should look like to run it privately or locally:
+
+![Screenshot of the Gradio demo UI](data/terminal.png)
 
 ## Quick Start (pip / virtualenv)
 ```
