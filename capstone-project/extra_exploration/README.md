@@ -91,8 +91,8 @@ This provides approximately 2-3x faster caption embedding on M-series GPUs.
 
 ## Building FAISS Assets
 
-> **For detailed instructions on building the FAISS index and caption arrays from scratch, see our [COCO Caption FAISS Assets README]([docs/building_faiss_assets.md](https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration/data)).**
-
+> **For detailed instructions on building the FAISS index and caption arrays from scratch, see our [COCO Caption FAISS Assets README](https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration/data).**
+> 
 ### Quick Rebuild (Advanced)
 
 If you have a custom `captions.txt` file (one caption per line):
