@@ -173,7 +173,7 @@ if __name__ == "__main__":
 
 ### Step 3: Run the Script
 With these files
-![Screenshot of the Gradio demo UI](data/coco.png)
+![Screenshot of the Gradio demo UI](coco.png)
 we build the indices
 ```bash
 python scripts/build_index_from_json.py \
@@ -181,7 +181,7 @@ python scripts/build_index_from_json.py \
        annotations/captions_val2017.json
 ```
 which looks like this
-![Screenshot of the Gradio demo UI](data/coco2.png)
+![Screenshot of the Gradio demo UI](coco2.png)
 
 ## Testing the Demo
 
