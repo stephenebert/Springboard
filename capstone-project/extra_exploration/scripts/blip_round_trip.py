@@ -7,10 +7,9 @@ from sentence_transformers import SentenceTransformer
 from PIL import Image
 import numpy as np, faiss, argparse, textwrap, os, sys
 
-# ---- paths to the index and caption array you just built ----
+# paths to the index and caption array you just built
 FAISS_INDEX   = "/Users/steph/Desktop/Springboard/Capstone/extra_credit/scripts/coco_caption_clip.index"
 CAPTION_ARRAY = "/Users/steph/Desktop/Springboard/Capstone/extra_credit/scripts/coco_caption_texts.npy"
-# -------------------------------------------------------------
 
 print("▶ loading BLIP …")
 blip_proc  = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")

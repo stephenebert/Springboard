@@ -17,14 +17,14 @@ ann_path = (
 out_index = "coco_caption_clip.index"
 out_texts = "coco_caption_texts.npy"
 
-print("▶ Loading COCO captions JSON …")
+print("Loading COCO captions JSON …")
 with open(ann_path) as f:
     data = json.load(f)
 
 captions = [ann["caption"] for ann in data["annotations"]]
-print(f"✔ Loaded {len(captions):,} captions")
+print(f"Loaded {len(captions):,} captions")
 
-print("▶ Encoding captions with CLIP (ViT-B/32) …")
+print("Encoding captions with CLIP (ViT-B/32) …")
 clip_model = SentenceTransformer("clip-ViT-B-32")
 vectors = clip_model.encode(
     captions,
