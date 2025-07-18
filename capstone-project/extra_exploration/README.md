@@ -8,7 +8,7 @@ Upload a photo via file picker, connected phone, copy-paste, or live webcam, and
 2. Embed that caption with CLIP
 3. Instantly surface the closest matching captions from MS-COCO using an in-memory FAISS index
 
-![Screenshot of the Gradio demo UI](data/UI1.png)
+![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
 
 ## What It Does
 
@@ -21,15 +21,22 @@ Upload a photo via file picker, connected phone, copy-paste, or live webcam, and
 ## Repository Layout
 
 ```
+├── README.md                         # ← main project README
 ├── gradio_demo.py                    # ← main app (run this)
-├── requirements.txt                  # ← pip deps (loose pins)
-├── environment.yml                   # ← exact conda env (tight pins)
-├── scripts/
-│   ├── coco_caption_clip.index      # 591,753 × 512 float32 vectors
-│   └── coco_caption_texts.npy       # array of captions aligned with index order
-└── data/
-    ├── UI1.png                      # demo screenshot
-    └── terminal.png                 # terminal output example
+├── extra_exploration/
+│   ├── data/
+│   │   ├── README.md                # ← FAISS building guide
+│   │   ├── UI1.png                  # demo screenshot
+│   │   ├── UI2.png                  # additional screenshot
+│   │   ├── coco.png                 # COCO example image
+│   │   ├── coco2.png                # COCO example image
+│   │   └── terminal.png             # terminal output example
+│   └── scripts/
+│       ├── blip_round_trip.py       # BLIP processing script
+│       ├── build_coco_text_index.py # COCO index builder
+│       ├── generate_blip_caption.py # caption generation
+│       ├── coco_caption_clip.index  # 591,753 × 512 float32 vectors
+│       └── coco_caption_texts.npy   # array of captions aligned with index order
 ```
 
 > **Note**: The FAISS index + captions array are a few hundred MB; use Git LFS if pushing to GitHub.
@@ -51,7 +58,7 @@ Open the URL printed in the terminal (e.g., `http://127.0.0.1:7860`) and drop an
 
 **Need a public link?** Edit the last line of `gradio_demo.py` → `demo.launch(share=True)`. 
 
-![Screenshot of terminal output](data/terminal.png)
+![Screenshot of terminal output](extra_exploration/data/terminal.png)
 
 ## Quick Start (pip / virtualenv)
 
@@ -91,9 +98,8 @@ This provides approximately 2-3x faster caption embedding on M-series GPUs.
 
 ## Building FAISS Assets
 
-> **For detailed instructions on building the FAISS index and caption arrays from scratch, see our ## Building FAISS Assets
+> **For detailed instructions on building the FAISS index and caption arrays from scratch, see our [COCO Caption FAISS Assets README](docs/building_faiss_assets.md).**
 
-> **For detailed instructions on building the FAISS index and caption arrays from scratch, see our [COCO Caption FAISS Assets README](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration/data/README.md).** 
 ### Quick Rebuild (Advanced)
 
 If you have a custom `captions.txt` file (one caption per line):
@@ -119,8 +125,8 @@ vecs = model.encode(
 # Build and save FAISS index
 index = faiss.IndexFlatL2(vecs.shape[1])
 index.add(vecs)
-faiss.write_index(index, "scripts/coco_caption_clip.index")
-np.save("scripts/coco_caption_texts.npy", np.array(CAPTIONS, dtype=object))
+faiss.write_index(index, "extra_exploration/scripts/coco_caption_clip.index")
+np.save("extra_exploration/scripts/coco_caption_texts.npy", np.array(CAPTIONS, dtype=object))
 ```
 
 ## Troubleshooting
@@ -170,11 +176,3 @@ All commands should run without traceback.
 3. **FAISS** — Meta AI
 4. **Gradio** — Hugging Face
 5. **MS-COCO captions** — COCO Consortium
-
-## License
-
-This project is for educational and research purposes. Please check the individual licenses of the underlying models and datasets:
-- BLIP: BSD-3-Clause
-- CLIP: MIT
-- FAISS: MIT
-- MS-COCO: Creative Commons
