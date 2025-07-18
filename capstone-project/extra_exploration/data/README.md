@@ -173,8 +173,10 @@ if __name__ == "__main__":
 
 ### Step 3: Run the Script
 With these files
+
 ![Screenshot of the Gradio demo UI](coco.png)
-we build the indices
+
+we construct the indices
 ```bash
 python scripts/build_index_from_json.py \
        annotations/captions_train2017.json \
