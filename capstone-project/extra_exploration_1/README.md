@@ -5,7 +5,7 @@
 Turn any prompt into a 512 × 512 image using **Stable Diffusion v1.5** (🤗 **diffusers**) wrapped in a clean **Gradio** UI.  
 Runs on CPU, CUDA, **or Apple Silicon (M-series Metal)**.
 
-![Screenshot of the Gradio demo UI](images/bear walking prompt with SD.png)
+![Screenshot of the Gradio demo UI](images/bear walking in SD.png)
 
 ---
 
