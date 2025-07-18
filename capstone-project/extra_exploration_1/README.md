@@ -13,13 +13,13 @@ Runs on CPU, CUDA, **or Apple Silicon (M-series Metal)**.
 
 ## Features
 
-| ✔️ | What |
-|----|------|
-| Prompt textbox + sliders (steps, CFG scale) |
-| Optional deterministic seed |
-| Two-column **Gallery** with download buttons |
-| Auto-detects GPU (CUDA or MPS) |
-| Zero bulky assets – model is pulled & cached automatically |
+| Ready [x] | What                                                  |
+|:--------:|-------------------------------------------------------|
+| ✔️       | Prompt textbox + sliders (steps, CFG scale)            |
+| ✔️       | Optional deterministic seed                           |
+| ✔️       | Two-column **Gallery** with download buttons          |
+| ✔️       | Auto-detects GPU (CUDA or MPS)                        |
+| ✔️       | Zero bulky assets – model is pulled & cached automatically |
 
 ---
 
