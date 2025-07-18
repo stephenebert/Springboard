@@ -35,7 +35,7 @@ Text Prompt ──▶ CLIP Text Encoder ──▶ Text Embedding
                                       Scheduler (DDIM) ──▶ Iterative Denoising
                                             │                in Latent Space
                                             ▼                      │
-                                      Random Noise ──▶ UNet ◀─────┘
+                                      Random Noise ──▶ UNet ◀──────┘
                                             │         (guided by text embedding)
                                             ▼
                                       Final Latent ──▶ VAE Decoder ──▶ 512×512 RGB Image
