@@ -51,9 +51,9 @@ pyaudioop ; python_version >= "3.13"   # optional shim for Gradio’s audio impo
 stable-diffusion-t2i-demo/
 ├── text2image_demo.py     # main Gradio app
 ├── requirements.txt
-├── examples/              # sample outputs for README/Docs
-│   ├── bear_walking.png
-│   └── steampunk_otter.png
+├── images/              # sample outputs for README/Docs
+│   ├── ...
+│   
 └── README.md             
 ```
 ## Performance Table
