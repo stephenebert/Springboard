@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 python text2image_demo.py          # http://127.0.0.1:7860
 ```
-
+![UI](images/terminal.png)
 ---
 
 ## requirements.txt
