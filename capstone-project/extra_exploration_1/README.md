@@ -36,7 +36,7 @@ python text2image_demo.py          # http://127.0.0.1:7860
 ---
 
 ## requirements.txt
-
+```
 torch>=2.2
 diffusers>=0.28
 transformers>=4.42
@@ -44,9 +44,10 @@ accelerate>=0.29
 safetensors
 gradio>=4.28
 pyaudioop ; python_version >= "3.13"   # optional shim for Gradio’s audio import
+```
 
 ## Repo Layout
-
+```
 stable-diffusion-t2i-demo/
 ├── text2image_demo.py     # main Gradio app
 ├── requirements.txt
@@ -54,7 +55,7 @@ stable-diffusion-t2i-demo/
 │   ├── bear_walking.png
 │   └── steampunk_otter.png
 └── README.md             
-
+```
 ## Performance Table
 
 | Device           | Steps | Time   |
