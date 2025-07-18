@@ -78,7 +78,6 @@ print(f"{capt_path.name}   → {capt_path.stat().st_size/1e9:.2f} GB")
 #### **B — Manual ZIP download**
 1. Grab the COCO 2017 data from step 2 [MS COCO 2017 Captions](https://cocodataset.org/#download)
    ``` bash
-   # (or via terminal)
 curl -L -o annotations_trainval2017.zip \
      http://images.cocodataset.org/annotations/annotations_trainval2017.zip
 unzip annotations_trainval2017.zip
