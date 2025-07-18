@@ -1,4 +1,4 @@
-# Image-to-Text Retrieval Service
+# Text-to-Image Retrieval Service
 
 A **production-ready**, cross-modal retrieval system that enables fast, accurate image search using text queries through semantic similarity matching.
 
