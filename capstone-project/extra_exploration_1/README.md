@@ -13,7 +13,7 @@ Runs on CPU, CUDA, **or Apple Silicon (M-series Metal)**.
 
 ## Features
 
-| Ready [x] | What                                                  |
+| Ready  | What                                                  |
 |:--------:|-------------------------------------------------------|
 | ✔️       | Prompt textbox + sliders (steps, CFG scale)            |
 | ✔️       | Optional deterministic seed                           |
