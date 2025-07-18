@@ -48,13 +48,16 @@ pyaudioop ; python_version >= "3.13"   # optional shim for Gradio’s audio impo
 
 ## Repo Layout
 ```
-stable-diffusion-t2i-demo/
-├── text2image_demo.py     # main Gradio app
-├── requirements.txt
-├── images/              # sample outputs for README/Docs
-│   ├── ...
-│   
-└── README.md             
+extra_exploration_1/
+├─ images/
+│  ├─ bear_walking_sd.png
+│  ├─ bear_walking_prompt_sd.png
+│  ├─ cyber_punk_sd.png
+│  └─ terminal.png
+├─ README.md
+├─ pyaudioop.py
+├─ requirements.txt
+└─ text2image_demo.py        
 ```
 ## Performance Table
 
