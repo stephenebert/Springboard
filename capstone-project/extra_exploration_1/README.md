@@ -33,6 +33,7 @@ python -m venv .venv && source .venv/bin/activate   # Win: .venv\Scripts\activat
 pip install -r requirements.txt
 
 python text2image_demo.py          # http://127.0.0.1:7860
+```
 
 ---
 
