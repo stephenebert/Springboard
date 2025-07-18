@@ -2,8 +2,7 @@
 
 Turn any image into a short caption with **BLIP**, embed that caption with **CLIP**, and retrieve the most similar human-written captions from MS-COCO using an in-memory **FAISS** index – all wrapped in a simple **Gradio** UI.
 
-![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
-
+![Screenshot of the Gradio demo UI](data/UI1.png)
 
 ---
 
