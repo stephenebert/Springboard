@@ -1,6 +1,6 @@
 # Image-to-Text Retrieval Demo  (BLIP → CLIP → FAISS)
 
-Turn any image into a short caption with **BLIP**, embed that caption with **CLIP**, and retrieve the most similar human-written captions from MS-COCO using an in-memory **FAISS** index – all wrapped in a simple **Gradio** UI. Upload a photo—via file picker, connected phone, or live webcam—and the Gradio interface will:
+Turn any image into a short caption with **BLIP**, embed that caption with **CLIP**, and retrieve the most similar human-written captions from MS-COCO using an in-memory **FAISS** index – all wrapped in a simple **Gradio** UI. Upload a photo—via file picker, connected phone, copy-paste it in, or live webcam—and the Gradio interface will:
 
 1. Generate a caption with BLIP
 2. Embed that caption with CLIP
