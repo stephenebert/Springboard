@@ -76,3 +76,77 @@ print(f"{faiss_path.name}  → {faiss_path.stat().st_size/1e9:.2f} GB")
 print(f"{capt_path.name}   → {capt_path.stat().st_size/1e9:.2f} GB")
 ```
 #### **B — Manual ZIP download**
+1. Grab the COCO 2017 data from step 2 [MS COCO 2017 Captions](https://cocodataset.org/#download)
+   ``` bash
+   # (or via terminal)
+curl -L -o annotations_trainval2017.zip \
+     http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+unzip annotations_trainval2017.zip
+```
+2. Extract captions
+- annotations/captions_train2017.json
+- annotations/captions_val2017.json
+3. Run the pure-Python converter
+``` bash
+python scripts/build_coco_text_index.py \
+       annotations/captions_train2017.json \
+       annotations/captions_val2017.json
+```
+```
+#!/usr/bin/env python
+"""
+Convert raw COCO JSON caption files into FAISS + .npy.
+Usage:
+    python build_index_from_json.py captions_train2014.json captions_val2014.json
+"""
+import json, sys, pathlib, numpy as np, faiss, tqdm
+from sentence_transformers import SentenceTransformer
+
+if len(sys.argv) < 2:
+    sys.exit("Usage: build_index_from_json.py <json> [<json> ...]")
+
+print("Collecting captions from JSON …")
+captions = []
+for fp in sys.argv[1:]:
+    data = json.load(open(fp))
+    captions.extend([ann["caption"] for ann in data["annotations"]])
+print(f"Total captions: {len(captions):,}")
+
+MODEL_NAME = "clip-ViT-B-32"
+DEVICE     = "cpu"     # change to "mps" or "cuda" as desired
+BATCH      = 1024
+
+print(f"Embedding with {MODEL_NAME} ...")
+model = SentenceTransformer(MODEL_NAME, device=DEVICE)
+vecs  = model.encode(
+    captions,
+    batch_size=BATCH,
+    normalize_embeddings=True,
+    convert_to_numpy=True,
+    show_progress_bar=True,
+).astype("float32")
+
+print("Building FAISS index …")
+index = faiss.IndexFlatL2(vecs.shape[1])
+index.add(vecs)
+
+out_dir = pathlib.Path(__file__).resolve().parent
+faiss_path = out_dir / "coco_caption_clip.index"
+capt_path  = out_dir / "coco_caption_texts.npy"
+faiss.write_index(index, str(faiss_path))
+np.save(capt_path, np.array(captions, dtype=object))
+
+print("Saved index and caption array to:", out_dir)
+```
+2. Drop the files into ```scripts/```
+3. Run the demo
+   ```
+   conda activate capstone-gradio-py310
+python gradio_demo.py
+```
+and you should see
+```
+FAISS index loaded: 591753 vectors, dimension 512
+Launching Gradio demo...
+```
+Open http://127.0.0.1:7860 and you’re set.
