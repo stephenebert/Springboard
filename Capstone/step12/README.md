@@ -164,7 +164,8 @@ and the HF files look like this
 - Repo & docs: <https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration_1>  
 - **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders** 
 ![Retrieval Results](images/terminal.png)
-    
+and this locally outputs, for example,
+![UI](images/bear%20walking%20in%20SD.png)
 - Running on Hugging Face takes forever using the free space. The demo Space currently runs on the **free “CPU basic” tier (2 vCPU | 16 GB RAM)** with no GPU
 accelerator. Stable Diffusion’s UNet must therefore execute **~900-million FP32 operations per denoising step on pure CPU**. Even with only 30 inference steps, that’s roughly 27 billion multiply-adds per image → minutes.
 
