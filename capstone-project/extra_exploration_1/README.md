@@ -1,4 +1,4 @@
-# ✨ Stable Diffusion v1.5 — Text → Image Demo
+# Stable Diffusion v1.5 — Text → Image Demo
 
 [![HF Space](https://img.shields.io/badge/🤗%20Space-click%20to%20try-blue?logo=huggingface&logoColor=white)](https://huggingface.co/spaces/stephenebert/sd-text2image)
 
@@ -83,6 +83,13 @@ You can run this locally or package into a Hugging Face Space.
 | ✔️       | Auto-detects GPU (CUDA or MPS)                        |
 | ✔️       | Zero bulky assets – model is pulled & cached automatically |
 
+> **Speed tip & cold-start notice**  
+> This Space is hosted on the free **CPU-basic** tier (2 vCPU / 16 GB RAM).  
+> The very first prompt after a restart has to download the 4 GB SD v1.5 weights **and** warm up the UNet/VAE – expect ~60 s before the first image appears.  
+> Subsequent prompts on the same session are much faster (≈20 s @ 512²).  
+> Running locally on an Apple-silicon Mac (`--device mps`, fp16) cuts that to **12-20 s**, and on a mid-range CUDA GPU to **4-8 s**.  
+> If you need instant answers in the hosted Space, switch to a paid GPU (e.g. **Nvidia T4 small, \$0.40 /hr**) and pause the hardware when you’re done.
+
 ---
 
 ## Quick Start
@@ -96,6 +103,13 @@ pip install -r requirements.txt
 
 python text2image_demo.py          # http://127.0.0.1:7860
 ```
+For M-chip users:
+
+``` bash
+# Apple-silicon users – optional but recommended
+pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
+```
+
 ![UI](images/terminal.png)
 ---
 
@@ -111,5 +125,5 @@ pyaudioop ; python_version >= "3.13"   # optional shim for Gradio’s audio impo
 ```
 
 ## Acknowledgements
-- Stable Diffusion v1.5 — CompVis, Runway, Stability AI, LAION
-- diffusers, transformers, gradio — Hugging Face
+- Stable Diffusion v1.5: CompVis, Runway, Stability AI, LAION
+- diffusers, transformers, gradio: Hugging Face
