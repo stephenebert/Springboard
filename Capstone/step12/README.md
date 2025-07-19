@@ -164,3 +164,4 @@ and the HF files look like this
 - Repo & docs: <https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration_1>  
 - **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders**.
 
+
