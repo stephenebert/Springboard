@@ -171,10 +171,10 @@ accelerator. Stable Diffusion’s UNet must therefore execute **~900-million FP3
 Empirically:
 ```bash
 
-| Run | Steps | Hardware | Wall Time |
-|-----|-------|----------|-----------|
-| 1 | 30 | HF "CPU basic" | **28m 27s** |
-| 2 | 30 | HF "CPU basic" | **44m 54s** |
+Run | Steps | Hardware      | Wall Time
+----|-------|---------------|----------
+1   | 30    | HF CPU basic  | 28m 27s
+2   | 30    | HF CPU basic  | 44m 54s
 ```
 Total time spent for the two queued generations: **≈ 1 h 13 m 21 s**. (The second run took longer because it started while the first was still holding the single
 worker thread, so Gradio queued it until the pipeline freed up.) The output is
