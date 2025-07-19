@@ -18,7 +18,11 @@ A **production-ready**, cross-modal retrieval system that ties together:
    - Comprehensive pytest suite with fixtures & mini-index  
    - Dockerfile + `docker-compose.test.yml` for CI & local testing  
    - Auto-deploy on Render.com (Docker) and Hugging Face Spaces (Gradio)  
-
+4. **Extra — Stable Diffusion v1.5 Text → Image Mini-Demo**
+- A stand-alone Gradio app that wraps **Stable Diffusion v1.5** via 🤗 `diffusers`.  
+- Repo & docs: <https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration_1>  
+- **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders**.
+- 
 ---
 
 ## Features
