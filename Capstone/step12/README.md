@@ -166,7 +166,7 @@ and the HF files look like this
 ![Retrieval Results](images/terminal.png)
 and this locally outputs, for example,
 
-![Bear Walking Prompt with SD](images/bear_walking_prompt_with_SD.png)
+![Bear Walking Prompt with SD](images/bear%20walking%20prompt%20with%20SD)
 
 - Running on Hugging Face takes forever using the free space. The demo Space currently runs on the **free “CPU basic” tier (2 vCPU | 16 GB RAM)** with no GPU
 accelerator. Stable Diffusion’s UNet must therefore execute **~900-million FP32 operations per denoising step on pure CPU**. Even with only 30 inference steps, that’s roughly 27 billion multiply-adds per image → minutes.
