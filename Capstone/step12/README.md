@@ -159,7 +159,7 @@ The HF app looks like this
 and the HF files look like this
 ![Retrieval Results](images/Screenshot%202025-07-14%20004348.png)
 
-## Extra — Stable Diffusion v1.5 Text → Image Mini-Demo
+## Extra: Stable Diffusion v1.5 Text → Image Mini-Demo
 - A stand-alone Gradio app that wraps **Stable Diffusion v1.5** via HF `diffusers`.  
 - Repo & docs: <https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration_1>  
 - **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders** 
@@ -169,12 +169,12 @@ and the HF files look like this
 accelerator. Stable Diffusion’s UNet must therefore execute **~900-million FP32 operations per denoising step on pure CPU**. Even with only 30 inference steps, that’s roughly 27 billion multiply-adds per image → minutes.
 
 Empirically:
-
-``` bash
-| Run | Steps | Hardware | Wall-time |
-|-----|-------|-----------|-----------|
-| 1   | 30    | HF “CPU basic” | **28 m 27 s** |
-| 2   | 30    | HF “CPU basic” | **44 m 54 s** |
+```
+bash
+| Run | Steps | Hardware | Wall Time |
+|-----|-------|----------|-----------|
+| 1 | 30 | HF "CPU basic" | **28m 27s** |
+| 2 | 30 | HF "CPU basic" | **44m 54s** |
 ```
 Total time spent for the two queued generations: **≈ 1 h 13 m 21 s**. (The second run took longer because it started while the first was still holding the single
 worker thread, so Gradio queued it until the pipeline freed up.) The output is
