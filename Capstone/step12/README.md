@@ -162,9 +162,33 @@ and the HF files look like this
 ## Extra — Stable Diffusion v1.5 Text → Image Mini-Demo
 - A stand-alone Gradio app that wraps **Stable Diffusion v1.5** via HF `diffusers`.  
 - Repo & docs: <https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration_1>  
-- **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders** as displayed here
+- **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders** 
 ![Retrieval Results](images/terminal.png)
     
-- Running on Hugging Face takes forever
+- Running on Hugging Face takes forever using the free space. The demo Space currently runs on the **free “CPU basic” tier (2 vCPU | 16 GB RAM)** with no GPU
+accelerator. Stable Diffusion’s UNet must therefore execute **~900-million FP32 operations per denoising step on pure CPU**. Even with only 30 inference steps, that’s roughly 27 billion multiply-adds per image → minutes.
+
+Empirically:
+
+``` bash
+| Run | Steps | Hardware | Wall-time |
+|-----|-------|-----------|-----------|
+| 1   | 30    | HF “CPU basic” | **28 m 27 s** |
+| 2   | 30    | HF “CPU basic” | **44 m 54 s** |
+```
+Total time spent for the two queued generations: **≈ 1 h 13 m 21 s**. (The second run took longer because it started while the first was still holding the single
+worker thread, so Gradio queued it until the pipeline freed up.) The output is
+
 ![Retrieval Results](images/text2imageSD.png)
+
+
+A paid **T4-small** Space (4 vCPU + 15 GB VRAM) clocks in
+around **12 s**; an A10 G (~$1/hr) hits **~7 s**.
+
+If you need interactive latency, either:
+
+1. **Run locally** on your M-series or CUDA GPU (`python text2image_demo.py`), or  
+2. **Upgrade the Space hardware** to at least `Nvidia T4 small` (≈$0.40/hr) or
+   `ZeroGPU+` (free but requires HF Pro). The code is identical; only the backend changes.
+
 
