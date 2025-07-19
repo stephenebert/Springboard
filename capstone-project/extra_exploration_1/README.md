@@ -84,7 +84,7 @@ You can run this locally or package into a Hugging Face Space.
 | ✔️       | Zero bulky assets – model is pulled & cached automatically |
 
 > **Speed tip & cold-start notice**  
-> This Space is hosted on the free **CPU-basic** tier (2 vCPU / 16 GB RAM).  
+> Note that this Space on Hugging Face is hosted on the free **CPU-basic** tier (2 vCPU / 16 GB RAM).  
 > The very first prompt after a restart has to download the 4 GB SD v1.5 weights **and** warm up the UNet/VAE – expect ~60 s before the first image appears.  
 > Subsequent prompts on the same session are much faster (≈20 s @ 512²).  
 > Running locally on an Apple-silicon Mac (`--device mps`, fp16) cuts that to **12-20 s**, and on a mid-range CUDA GPU to **4-8 s**.  
