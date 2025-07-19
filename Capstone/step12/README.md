@@ -162,6 +162,9 @@ and the HF files look like this
 ## Extra — Stable Diffusion v1.5 Text → Image Mini-Demo
 - A stand-alone Gradio app that wraps **Stable Diffusion v1.5** via HF `diffusers`.  
 - Repo & docs: <https://github.com/stephenebert/Springboard/tree/main/capstone-project/extra_exploration_1>  
-- **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders**.
-
+- **Run it locally on your M-series Mac or CUDA GPU for 5--15 s renders** as displayed here
+![Retrieval Results](images/terminal.png)
+    
+- Running on Hugging Face takes forever
+![Retrieval Results](images/text2imageSD.png)
 
