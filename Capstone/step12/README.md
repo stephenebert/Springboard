@@ -169,8 +169,8 @@ and the HF files look like this
 accelerator. Stable Diffusion’s UNet must therefore execute **~900-million FP32 operations per denoising step on pure CPU**. Even with only 30 inference steps, that’s roughly 27 billion multiply-adds per image → minutes.
 
 Empirically:
-```
-bash
+```bash
+
 | Run | Steps | Hardware | Wall Time |
 |-----|-------|----------|-----------|
 | 1 | 30 | HF "CPU basic" | **28m 27s** |
