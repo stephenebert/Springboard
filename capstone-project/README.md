@@ -78,6 +78,7 @@ capstone-project/
 
 ### Machine Learning Engineering
 - **Deep Learning Feature Extractors**: CLIP and BLIP via Hugging Face Transformers
+- **Generative Models:** Stable Diffusion v1.5 for text-to-image synthesis
 - **Vector Storage & Indexing**: Efficient cosine similarity search via FAISS IVF-Flat and IndexFlatL2
 - **Data Preprocessing Pipelines**: HDF5, JSONL, COCO-format parsing
 - **Evaluation Metrics**: Top-K accuracy, cosine similarity thresholds
@@ -88,6 +89,7 @@ capstone-project/
 - **Gradio interfaces** for both text-to-image and image-to-text interactive demos
 - **Modular codebase** with proper type hints and docstrings
 - **Test suite** with unit + smoke tests
+- **Cross-platform support:** CUDA, Apple Silicon (MPS), and CPU backends
 - **Monitoring** via Prometheus (optional)
 
 ### Deployment
@@ -104,7 +106,7 @@ capstone-project/
 
 ### 1. Text-to-Image Retrieval System
 
-**How It Works:**
+**Explanation:**
 1. A **text query** is converted into a 512-dim embedding via CLIP
 2. The query is passed to a **FastAPI server**, which runs cosine similarity search against a pre-indexed FAISS database
 3. The top-K image IDs are returned with metadata and rendered by Gradio as thumbnails
@@ -117,7 +119,7 @@ capstone-project/
 
 ### 2. Image-to-Text Retrieval Demo
 
-**How It Works:**
+**Explanation:**
 1. **Upload an image** via file picker, webcam, or copy-paste
 2. **BLIP** generates a descriptive caption
 3. **CLIP** encodes that caption to a 512-D embedding
@@ -129,6 +131,30 @@ capstone-project/
 - Real-time caption generation
 - Instant similarity search results
 - Visual feedback with confidence scores
+
+### 3. Stable Diffusion Text-to-Image Generation
+insert image
+
+**Explanation**
+1. **Text Prompt:** CLIP Text Encoder to Text Embedding
+2. **Scheduler (DDIM):** Iterative Denoising in Latent Space
+3. **Random Noise:** UNet (guided by text embedding)
+4. **Final Latent:** VAE Decoder to 512-by-512 RGB Image
+
+## Interactive Features:
+
+| Control                         | Purpose                                                                 |
+|---------------------------------|-------------------------------------------------------------------------|
+| **Prompt** *textbox*            | The text you want to turn into an image.                                |
+| **Inference Steps** *slider*    | How many denoising steps to run (≈ quality vs. speed).                  |
+| **Guidance Scale** *slider*     | `CFG` scale — how strongly the model follows your prompt.               |
+| **Seed** *field*                | 0 or blank → random; any other *int* means re-generate exactly the same *image*. |
+
+**Technical Features**
+- Auto-detects GPU (CUDA, Apple Metal/MPS, or CPU)
+- Zero bulky assets: model pulled & cached automatically
+- Cross-platform compatibility
+- Two-column Gallery with download buttons
 
 ---
 
