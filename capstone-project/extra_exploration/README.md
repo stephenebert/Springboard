@@ -175,8 +175,8 @@ All commands should run without traceback.
 
 ## Credits
 
-1. **BLIP** — Salesforce Research
-2. **CLIP** — OpenAI  
-3. **FAISS** — Meta AI
-4. **Gradio** — Hugging Face
-5. **MS-COCO captions** — COCO Consortium
+1. **BLIP**: Salesforce Research
+2. **CLIP**: OpenAI  
+3. **FAISS**: Meta AI
+4. **Gradio**: Hugging Face
+5. **MS-COCO captions**: COCO Consortium
