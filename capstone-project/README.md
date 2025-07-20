@@ -540,9 +540,10 @@ MIT License.
 - FAISS (© Meta AI)
 - CLIP (© OpenAI)
 - BLIP (© Salesforce Research)
+- Stable Diffusion v1.5 (© CompVis, Runway, Stability AI, LAION)
 - MS-COCO Dataset (CC-BY License)
 - Gradio (© Hugging Face)
-
+- diffusers, transformers (© Hugging Face)
 ---
 
 ## Acknowledgments
@@ -551,7 +552,8 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 
 - **Mentors and Reviewers**: For guidance on technical architecture and best practices
 - **Instructors**: For foundational knowledge in ML engineering and deployment
-- **Open Source Community**: For tools, datasets, and pre-trained models
+- **Open Source Community**: For tools, datasets, and pre-trained models (Stable Diffusion v1.5, CompVis, Runway, Stability AI, LAION)
+- **Hugging Face**: For diffusers, transformers, and gradio libraries
 - **Springboard Program**: For providing the structured learning environment
 
 ---
