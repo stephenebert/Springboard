@@ -282,9 +282,17 @@ clip_model = SentenceTransformer("clip-ViT-B-32", device="mps")
 ```
 Provides 2-3x faster embedding generation.
 
+### Stable Diffusion Performance
+
+- **CUDA**: Full FP16 SD inference (4-8s per image)
+- **Apple Silicon**: Metal acceleration (12-20s per image)
+- **CPU**: Still functional but slower (60s+ per image)
+
+
 ### Memory Management
 - **Text-to-Image**: ~4GB for production index
 - **Image-to-Text**: ~2GB for demo with full COCO corpus
+- **Stable Diffusion**: ~4GB for model weights
 - **Inference**: 1-2 seconds per query on modern hardware
 
 ### Scalability Features
@@ -312,6 +320,7 @@ docker-compose -f docker-compose.test.yml up --build
 ### Evaluation Metrics
 - **Top-K Retrieval Accuracy**: Precision@K, Recall@K
 - **Cosine Similarity Thresholds**: Quality gating
+- **Generation Quality**: Visual coherence, prompt adherence
 - **System Health**: API response times, error rates
 - **User Experience**: Interface responsiveness, result relevance
 
@@ -347,15 +356,17 @@ docker-compose -f docker-compose.test.yml up --build
 
 ## Troubleshooting Guide
 
-| Error / Symptom | Cause | Solution |
-|-----------------|-------|----------|
-| `ValueError: input not a numpy array` (FAISS) | NumPy/FAISS ABI mismatch | Use NumPy 2.x with faiss-cpu 1.11 |
-| `ModuleNotFoundError: scipy` | Missing SciPy dependency | `conda install -c conda-forge scipy>=1.13` |
-| `ModuleNotFoundError: audioop` (Python 3.13+) | Removed stdlib module | `pip install pyaudioop` |
-| FAISS dimension mismatch | Wrong embedding model | Rebuild index with clip-ViT-B-32 |
-| Slow inference | CPU-only execution | Set device="mps" (Apple) or "cuda" (NVIDIA) |
-| Port conflicts | Service already running | Kill existing process or change port |
-| Docker build fails | Missing dependencies | Check requirements.txt and Dockerfile |
+| **Error / Symptom**                                | **Cause**                    | **Solution**                                  |
+|----------------------------------------------------|------------------------------|-----------------------------------------------|
+| ValueError: input not a numpy array (FAISS)        | NumPy/FAISS ABI mismatch     | Use NumPy 2.x with faiss-cpu 1.11             |
+| ModuleNotFoundError: scipy                         | Missing SciPy dependency     | `conda install -c conda-forge scipy>=1.13`    |
+| ModuleNotFoundError: audioop (Python 3.13+)        | Removed stdlib module        | `pip install pyaudioop`                       |
+| FAISS dimension mismatch                           | Wrong embedding model        | Rebuild index with clip-ViT-B-32              |
+| Slow inference                                     | CPU-only execution           | Set `device="mps"` (Apple) or `cuda` (NVIDIA) |
+| Port conflicts                                     | Service already running      | Kill existing process or change port          |
+| Docker build fails                                 | Missing dependencies         | Check `requirements.txt` and `Dockerfile`     |
+| SD model download fails                            | Network/cache issues         | Clear cache: `~/.cache/huggingface`           |
+
 
 ### Installation Verification
 ```bash
@@ -372,16 +383,22 @@ import numpy, scipy, torch, transformers
 print(f'NumPy: {numpy.__version__} | SciPy: {scipy.__version__}')
 print(f'PyTorch: {torch.__version__} | Transformers: {transformers.__version__}')
 "
+
+# Stable Diffusion check
+python -c "
+from diffusers import StableDiffusionPipeline
+print('Diffusers installation verified')
+"
 ```
 
 ---
 
 ## Skills
 
-This capstone project demonstrates:
+This capstone project shows:
 
 ### Technical Skills
-- **Machine Learning**: Deep learning models, embedding techniques, similarity search
+- **Machine Learning**: Deep learning models, embedding techniques, similarity search, generative AI
 - **Data Engineering**: Large-scale data processing, ETL pipelines, vector databases
 - **Software Engineering**: API design, modular architecture, testing frameworks
 - **DevOps**: Containerization, CI/CD, cloud deployment, monitoring
@@ -395,6 +412,7 @@ This capstone project demonstrates:
 - **Computer Vision**: Image preprocessing, feature extraction, visual understanding
 - **Natural Language Processing**: Text processing, semantic embeddings, caption generation
 - **Information Retrieval**: Search algorithms, ranking systems, user experience
+- **Generative AI**: Diffusion models, prompt engineering, controllable generation
 
 ---
 
@@ -406,6 +424,9 @@ This capstone project demonstrates:
 ### Image-to-Text Demo Interface
 ![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
 
+### Stable Diffusion Generation Examples
+
+
 ### Production API Deployment
 ![Deployment Logs](images/Screenshot%202025-07-14%20004518.png)
 
@@ -414,7 +435,7 @@ This capstone project demonstrates:
 
 ---
 
-## Future Enhancements
+## Future Enhancements/Applications
 
 ### Technical Improvements
 - **Multi-modal Models**: Integrate newer models like DALL-E 3, GPT-4V
@@ -453,6 +474,22 @@ pillow>=9.0
 tqdm>=4.60
 ```
 
+### Retrieval System Requirements
+```
+faiss-cpu>=1.11
+sentence-transformers>=2.7
+fastapi>=0.100
+uvicorn>=0.20
+```
+
+### Stable Diffusion Requirements
+```
+diffusers>=0.28
+accelerate>=0.29
+safetensors
+pyaudioop ; python_version >= "3.13"   # Python 3.13+ compatibility
+```
+
 ### Development Tools
 ```
 pytest>=7.0
@@ -471,6 +508,29 @@ streamlit>=1.20           # Alternative UI
 ```
 
 ---
+## Performance Notes
+## Stable Diffusion Performance Expectations
+
+> **Speed tip & cold-start notice**  
+> The Hugging Face Space is hosted on the free **CPU-basic** tier (2 vCPU / 16 GB RAM).  
+> The very first prompt after a restart has to download the 4 GB SD v1.5 weights **and** warm up the UNet/VAE – expect ~60 s before the first image appears.  
+> Subsequent prompts on the same session are much faster (≈20 s @ 512²).  
+> Running locally on an Apple-silicon Mac (`--device mps`, `fp16`) cuts that to **12–20 s**, and on a mid-range CUDA GPU to **4–8 s**.
+
+### Ready Features
+
+| Ready | What                                                       |
+|:-----:|------------------------------------------------------------|
+| ✓     | Prompt textbox + sliders (steps, CFG scale)                |
+| ✓     | Optional deterministic seed                                |
+| ✓     | Two-column **Gallery** with download buttons               |
+| ✓     | Auto-detects GPU (CUDA or MPS)                             |
+| ✓     | Zero bulky assets – model is pulled & cached automatically |
+
+
+
+---
+
 
 ## License
 
