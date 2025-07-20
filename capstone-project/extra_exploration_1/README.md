@@ -89,7 +89,7 @@ You can run this locally or package into a Hugging Face Space.
 > Running locally on an Apple-silicon Mac (`--device mps`, fp16) cuts that to **12-20 s**, and on a mid-range CUDA GPU to **4-8 s**.  
 > If you need instant answers in the hosted Space, switch to a paid GPU (e.g. **Nvidia T4 small, \$0.40 /hr**) and pause the hardware when you’re done.
 
-An example output is
+- An example output is
 ![UI](images/text2imageSD.png)
 ---
 
