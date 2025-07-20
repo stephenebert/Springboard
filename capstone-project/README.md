@@ -15,8 +15,9 @@ This capstone project demonstrates comprehensive **cross-modal retrieval systems
 
 1. **Text-to-Image Retrieval**: Users input text queries to retrieve matching images from a large-scale embedding database
 2. **Image-to-Text Retrieval**: Users upload images to find similar captions using BLIP → CLIP → FAISS pipeline
+3. ***Stable Diffusion Text-to-Image Generation***: Users generate 512×512 images from text prompts using Stable Diffusion v1.5
 
-Both systems are optimized for **performance** (via FAISS ANN search) and **usability** (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment.
+All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment.
 
 ---
 
@@ -26,7 +27,7 @@ Both systems are optimized for **performance** (via FAISS ANN search) and **usab
 capstone-project/
 ├── extra_exploration/
 │   ├── data/
-│   │   ├── README.md                # ← FAISS building guide
+│   │   ├── README.md                # FAISS building guide
 │   │   ├── UI1.png                  # demo screenshot
 │   │   ├── UI2.png                  # additional screenshot
 │   │   ├── coco.png                 # COCO example image
@@ -38,6 +39,18 @@ capstone-project/
 │       ├── generate_blip_caption.py # caption generation
 │       ├── coco_caption_clip.index  # 591,753 × 512 float32 vectors
 │       └── coco_caption_texts.npy   # array of captions aligned with index order
+|── extra_exploration_1/
+│   ├── images/                      # screenshots for Stable Diffusion demo
+│   │   ├── bear walking in SD.png   # SD generation example
+│   │   ├── cyber punk SD.png        # SD generation example
+│   │   └── terminal.png             # terminal output
+│   ├── text2image_demo.py           # Stable Diffusion demo app
+│   ├── requirements.txt             # SD-specific requirements
+│   ├── pyaudioop.py                 # Python 3.13+ compatibility shim
+│   └── README.md                    # SD documentation
+├── images/
+│   ├── Screenshot 2025-07-14 004105.png  # Text-to-Image UI
+│   └── Screenshot 2025-07-14 004518.png  # Deployment logs
 ├── images/
 ├── phase1/
 │   ├── step1_initial_project_ideas/
@@ -53,9 +66,9 @@ capstone-project/
 │   ├── step10_deployment_design/
 │   ├── step11_deployment_implementation/
 │   └── step12_share_project/
-├── gradio_demo.py                    # ← Image-to-Text demo app
-├── environment.yml                   # ← Conda environment
-├── requirements.txt                  # ← pip requirements
+├── gradio_demo.py                    # Image-to-Text demo app
+├── environment.yml                   # Conda environment
+├── requirements.txt                  # pip requirements
 └── README.md
 ```
 
