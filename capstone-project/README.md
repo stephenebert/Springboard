@@ -1,4 +1,4 @@
-# Capstone Project: Cross-Modal Retrieval Systems
+# Capstone Project: Cross-Modal AI Systems - Retrieval and Generation
 
 **Author**: Stephen Ebert  
 **Bootcamp**: Machine Learning Engineering - Springboard  
