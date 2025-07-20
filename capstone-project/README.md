@@ -228,6 +228,17 @@ Open the URL printed in terminal (e.g., `http://127.0.0.1:7860`) and upload an i
 
 For public access, edit `gradio_demo.py` → `demo.launch(share=True)`.
 
+### 3. Stable Diffusion Text-to-Image Generation
+``` bash
+cd extra_exploration_1
+pip install -r requirements.txt
+python text2image_demo.py
+```
+For Apple Silicon users (recommended):
+``` bash
+# Optional but recommended for M-series Macs
+pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
+```
 ---
 
 ## Data Sources & Preprocessing
