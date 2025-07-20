@@ -106,7 +106,7 @@ capstone-project/
 
 ### 1. Text-to-Image Retrieval System
 
-**Explanation:**
+**Explanations:**
 1. A **text query** is converted into a 512-dim embedding via CLIP
 2. The query is passed to a **FastAPI server**, which runs cosine similarity search against a pre-indexed FAISS database
 3. The top-K image IDs are returned with metadata and rendered by Gradio as thumbnails
@@ -119,7 +119,7 @@ capstone-project/
 
 ### 2. Image-to-Text Retrieval Demo
 
-**Explanation:**
+**Explanations:**
 1. **Upload an image** via file picker, webcam, or copy-paste
 2. **BLIP** generates a descriptive caption
 3. **CLIP** encodes that caption to a 512-D embedding
@@ -135,7 +135,7 @@ capstone-project/
 ### 3. Stable Diffusion Text-to-Image Generation
 insert image
 
-**Explanation**
+**Explanations**
 1. **Text Prompt:** CLIP Text Encoder to Text Embedding
 2. **Scheduler (DDIM):** Iterative Denoising in Latent Space
 3. **Random Noise:** UNet (guided by text embedding)
