@@ -425,6 +425,7 @@ This capstone project shows:
 ![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
 
 ### Stable Diffusion Generation Examples
+- ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/text2imageSD.png)
 - ![Extra Exploration Example](extra_exploration_1/example.png)
 
 - ![Extra Exploration Example](extra_exploration_1/example.png)
