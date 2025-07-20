@@ -2,7 +2,7 @@
 
 **Author**: Stephen Ebert  
 **Bootcamp**: Machine Learning Engineering - Springboard  
-**Model Type**: Deep Learning + Cross-Modal Retrieval  
+**Model Types**: Deep Learning + Cross-Modal Retrieval  + Stable Diffusion
 **Frontend**: Gradio  
 **Backend**: FastAPI + FAISS  
 **Deployment**: Docker, Hugging Face Spaces, Render.com  
