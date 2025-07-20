@@ -425,7 +425,9 @@ This capstone project shows:
 ![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
 
 ### Stable Diffusion Generation Examples
+- ![Extra Exploration Example](extra_exploration_1/example.png)
 
+- ![Extra Exploration Example](extra_exploration_1/example.png)
 
 ### Production API Deployment
 ![Deployment Logs](images/Screenshot%202025-07-14%20004518.png)
