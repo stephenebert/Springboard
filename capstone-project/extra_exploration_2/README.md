@@ -43,8 +43,7 @@ extra_exploration_2/
    ``` bash
    git clone https://github.com/stephenebert/Springboard.git
    cd Springboard/capstone-project/extra_exploration_2
-```
-```
+    ```
 
 2. **Install dependencies**
   ``` bash
