@@ -40,10 +40,11 @@ extra_exploration_2/
 ## Quick Start
 
 1. **Clone this repo**  
-   ```bash
+   ``` bash
    git clone https://github.com/stephenebert/Springboard.git
    cd Springboard/capstone-project/extra_exploration_2
 ```
+
 2. **Install dependencies**
   ``` bash
 python -m venv .venv && source .venv/bin/activate
