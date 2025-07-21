@@ -49,4 +49,20 @@ extra_exploration_2/
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
-3. 
+3. **Run locally**
+``` bash
+python app.py
+# http://127.0.0.1:7860/
+```
+4. **Play!**
+
+- Type your prompt
+
+- Pick a checkpoint from the dropdown
+
+- Adjust steps, guidance scale, and seed
+
+- Click Generate
+
+
+
