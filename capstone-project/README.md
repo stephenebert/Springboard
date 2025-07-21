@@ -16,7 +16,8 @@ This capstone project demonstrates comprehensive **cross-modal retrieval systems
 
 1. **Text-to-Image Retrieval**: Users input text queries to retrieve matching images from a large-scale embedding database
 2. **Image-to-Text Retrieval**: Users upload images to find similar captions using BLIP → CLIP → FAISS pipeline
-3. ***Stable Diffusion Text-to-Image Generation***: Users generate 512×512 images from text prompts using Stable Diffusion v1.5
+3. **Stable Diffusion Text-to-Image Generation**: Users generate 512×512 images from text prompts using Stable Diffusion v1.5
+4. **Model-Switcher Stable Diffusion Demo**: Multi-model text-to-image generation with SD v1.5, SDXL Base 1.0, and SD-Turbo
 
 All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment.
 
@@ -84,7 +85,7 @@ capstone-project/
 
 ### Machine Learning Engineering
 - **Deep Learning Feature Extractors**: CLIP and BLIP via Hugging Face Transformers
-- **Generative Models:** Stable Diffusion v1.5 for text-to-image synthesis
+- **Multiple Generative Models:** Stable Diffusion v1.5 and SD-Turbo for text-to-image synthesis
 - **Vector Storage & Indexing**: Efficient cosine similarity search via FAISS IVF-Flat and IndexFlatL2
 - **Data Preprocessing Pipelines**: HDF5, JSONL, COCO-format parsing
 - **Evaluation Metrics**: Top-K accuracy, cosine similarity thresholds
@@ -161,6 +162,22 @@ insert image
 - Zero bulky assets: model pulled & cached automatically
 - Cross-platform compatibility
 - Two-column Gallery with download buttons
+
+### 4. Model-Switcher Stable Diffusion Demo
+Turn any prompt into a 512-by-512 image using multiple Stable Diffusion models in a single interface.
+Available Models:
+
+**Available Models***
+
+- SD v1.5 (base model)
+- SDXL Base 1.0 (higher quality)
+- SD-Turbo (ultra-fast, 4 steps max)
+
+**Advanced Features**
+- **Dynamic Scheduler**: Uses DPMSolverMultistepScheduler for faster, higher-quality sampling
+- **Device Auto-Detection**: CUDA GPU (FP16), Apple M-series (Metal, FP16), CPU (FP32)
+- **Deterministic Seeding**: Enter any integer seed (0 = random) to reproduce exact results
+- **Model Switching**: Switch between models without restarting the application
 
 ---
 
@@ -536,6 +553,7 @@ streamlit>=1.20           # Alternative UI
 | ✓     | Two-column **Gallery** with download buttons               |
 | ✓     | Auto-detects GPU (CUDA or MPS)                             |
 | ✓     | Zero bulky assets – model is pulled & cached automatically |
+| ✓     | Multiple model support (SD v1.5, SDXL, SD-Turbo) |
 
 
 
@@ -550,7 +568,7 @@ MIT License.
 - FAISS (© Meta AI)
 - CLIP (© OpenAI)
 - BLIP (© Salesforce Research)
-- Stable Diffusion v1.5 (© CompVis, Runway, Stability AI, LAION)
+- Stable Diffusion v1.5, SDXL Base 1.0, SD-Turbo (© CompVis, Runway, Stability AI, LAION)
 - MS-COCO Dataset (CC-BY License)
 - Gradio (© Hugging Face)
 - diffusers, transformers (© Hugging Face)
