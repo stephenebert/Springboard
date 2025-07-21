@@ -66,5 +66,35 @@ python app.py
 
 - Click Generate
 
+## Deploy on Hugging Face Spaces
+
+1. Push this directory to a new HF Space ([e.g. your-username/model-switcher-sd](https://huggingface.co/spaces/stephenebert/model-switcher-sd)).
+
+2. In your Space’s Settings to Hardware, pick at least CPU basic (or CUDA/MPS if you have a Pro GPU grant).
+
+3. Under Files, make sure app.py, requirements.txt, and model_switch.png are present.
+
+4. Hit Run: your demo will spin up and be publicly available!
+
+## requirements.txt
+``` bash
+torch>=2.2
+diffusers>=0.28
+transformers>=4.42
+accelerate>=0.29
+safetensors
+gradio>=4.28
+```
+
+## Acknowledgements
+1. Stable Diffusion by CompVis / Runway / Stability AI / LAION
+
+2. diffusers and transformers by Hugging Face
+
+3. Gradio for the seamless UI
+
+
+
+
 
 
