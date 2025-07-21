@@ -49,14 +49,14 @@ capstone-project/
 │   ├── requirements.txt             # SD-specific requirements
 │   ├── pyaudioop.py                 # Python 3.13+ compatibility shim
 │   └── README.md                    # SD documentation
-├── images/
-│   ├── Screenshot 2025-07-14 004105.png  # Text-to-Image UI
-│   └── Screenshot 2025-07-14 004518.png  # Deployment logs
 ├── extra_exploration_2/
 │   ├── app.py                       # Model-switcher Gradio app
 │   ├── model_switch.png             # Screenshot of model switcher UI
 │   ├── requirements.txt             # Multi-model dependencies
 │   └── README.md                    # Model switcher documentation
+├── images/
+│   ├── Screenshot 2025-07-14 004105.png  # Text-to-Image UI
+│   └── Screenshot 2025-07-14 004518.png  # Deployment logs
 ├── images/
 ├── phase1/
 │   ├── step1_initial_project_ideas/
