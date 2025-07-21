@@ -5,7 +5,6 @@ from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
 
 MODEL_OPTS = {
     "SD v1.5 (base)":        "runwayml/stable-diffusion-v1-5",
-    "SDXL Base 1.0":         "stabilityai/stable-diffusion-xl-base-1.0",
     "SD-Turbo (ultra-fast)": "stabilityai/sd-turbo"
 }
 
