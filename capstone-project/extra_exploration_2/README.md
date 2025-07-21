@@ -68,7 +68,7 @@ python app.py
 
 ## Deploy on Hugging Face Spaces
 
-1. Push this directory to a new HF Space ([e.g. your-username/model-switcher-sd](https://huggingface.co/spaces/stephenebert/model-switcher-sd)).
+1. Push this directory to a new HF Space ([e.g. see here for the UI](https://huggingface.co/spaces/stephenebert/model-switcher-sd)).
 
 2. In your Space’s Settings to Hardware, pick at least CPU basic (or CUDA/MPS if you have a Pro GPU grant).
 
