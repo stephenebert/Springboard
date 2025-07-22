@@ -26,57 +26,50 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 ## Repository Structure
 
 ```
-capstone-project/
-├── extra_exploration/
-│   ├── data/
-│   │   ├── README.md                # FAISS building guide
-│   │   ├── UI1.png                  # demo screenshot
-│   │   ├── UI2.png                  # additional screenshot
-│   │   ├── coco.png                 # COCO example image
-│   │   ├── coco2.png                # COCO example image
-│   │   └── terminal.png             # terminal output example
-│   └── scripts/
-│       ├── blip_round_trip.py       # BLIP processing script
-│       ├── build_coco_text_index.py # COCO index builder
-│       ├── generate_blip_caption.py # caption generation
-│       ├── coco_caption_clip.index  # 591,753 × 512 float32 vectors
-│       └── coco_caption_texts.npy   # array of captions aligned with index order
-|── extra_exploration_1/
-│   ├── images/                      # screenshots for Stable Diffusion demo
-│   │   ├── bear walking in SD.png   # SD generation example
-│   │   ├── cyber punk SD.png        # SD generation example
-│   │   └── terminal.png             # terminal output
-│   ├── text2image_demo.py           # Stable Diffusion demo app
-│   ├── requirements.txt             # SD-specific requirements
-│   ├── pyaudioop.py                 # Python 3.13+ compatibility shim
-│   └── README.md                    # SD documentation
-├── extra_exploration_2/
-│   ├── app.py                       # Model-switcher Gradio app
-│   ├── model_switch.png             # Screenshot of model switcher UI
-│   ├── requirements.txt             # Multi-model dependencies
-│   └── README.md                    # Model switcher documentation
-├── images/
-│   ├── Screenshot 2025-07-14 004105.png  # Text-to-Image UI
-│   └── Screenshot 2025-07-14 004518.png  # Deployment logs
-├── images/
-├── phase1/
-│   ├── step1_initial_project_ideas/
-│   ├── step2_data_collection/
-│   ├── step3_project_proposal/
-│   ├── step4_survey_existing_research/
-│   ├── step5_data_wrangling/
-│   └── step6_benchmark_model/
-├── phase2/
-│   ├── step7_experiment_models/
-│   ├── step8_scale_prototype/
-│   ├── step9_deployment_method/
-│   ├── step10_deployment_design/
-│   ├── step11_deployment_implementation/
-│   └── step12_share_project/
-├── gradio_demo.py                    # Image-to-Text demo app
-├── environment.yml                   # Conda environment
-├── requirements.txt                  # pip requirements
-└── README.md
+📁 **Capstone/**
+├── 📁 **extra_exploration/**
+│   ├── 📁 **data/**
+│   │   ├── README.md                # FAISS building guide  
+│   │   ├── UI1.png                  # demo screenshot of Gradio UI  
+│   │   ├── UI2.png                  # additional Gradio screenshot  
+│   │   ├── coco.png                 # MS-COCO example image  
+│   │   ├── coco2.png                # another COCO example image  
+│   │   └── terminal.png             # terminal output example  
+│   ├── 📁 **scripts/**
+│   │   ├── blip_round_trip.py       # BLIP caption-generation pipeline  
+│   │   ├── build_coco_text_index.py # builds FAISS index over COCO captions  
+│   │   └── generate_blip_caption.py # wraps BLIP model for captioning  
+│   ├── 📄 README.md                 # extra exploration overview & instructions  
+│   └── 📄 gradio_demo.py            # Image-to-Text demo app using Gradio  
+├── 📁 **extra_exploration_1/**
+│   ├── 📁 **images/**               # screenshots for Stable Diffusion demo  
+│   │   ├── bear walking in SD.png   # SD text-to-image example  
+│   │   ├── cyber punk SD.png        # SD generation example  
+│   │   └── terminal.png             # terminal output for SD demo  
+│   ├── 📄 text2image_demo.py        # Stable Diffusion Gradio demo app  
+│   ├── 📄 requirements.txt          # SD-specific Python dependencies  
+│   ├── 📄 pyaudioop.py              # shim for Python 3.13+ audioop removal  
+│   └── 📄 README.md                 # Stable Diffusion documentation & usage  
+├── 📁 **extra_exploration_2/**
+│   ├── 📄 app.py                    # Model-switcher multi-model Gradio app  
+│   ├── 📄 model_switch.png          # screenshot of model-switcher UI  
+│   ├── 📄 requirements.txt          # dependencies for model-switcher demo  
+│   └── 📄 README.md                 # documentation for model-switcher app  
+├── 📁 **phase1/**
+│   ├── 📁 **step1_initial_project_ideas/**      # brainstorming & ideation  
+│   ├── 📁 **step2_data_collection/**            # dataset gathering & prep  
+│   ├── 📁 **step3_project_proposal/**           # formal project proposal  
+│   ├── 📁 **step4_survey_existing_research/**   # literature & related work  
+│   └── 📁 **step5_data_wrangling/**             # cleaning & preprocessing  
+├── 📁 **phase2/**
+│   ├── 📁 **step7_experiment_models/**           # model prototyping & benchmarks  
+│   ├── 📁 **step8_scale_prototype/**             # performance & scalability tests  
+│   ├── 📁 **step9_deployment_method/**           # deployment architecture design  
+│   ├── 📁 **step10_deployment_design/**          # infrastructure & CI/CD layout  
+│   ├── 📁 **step11_deployment_implementation/**  # code & Docker deployment  
+│   └── 📁 **step12_share_project/**             # final presentation & artifacts  
+└── 📄 **README.md**                            # project overview, setup & run instructions
+
 ```
 
 ---
