@@ -5,10 +5,43 @@ Welcome to the Springboard MI/AI Bootcamp portfolio repository! This repo contai
 
 ## Contents
 
-### Capstone
-- Final capstone project.
+**Capstone**
+
+This repository’s capstone is a two‑part, cross‑modal retrieval and generation system that showcases modern AI pipelines end‑to‑end:
+
+-**Image-to-Text Retrieval Service**
+
+-- Uses BLIP to generate captions for any uploaded image.
+
+-- Encodes captions with CLIP into 512‑dim embeddings.
+
+-- Performs ultra‑fast nearest‑neighbor search over a pre‑built FAISS index of MS‑COCO captions.
+
+-- Exposes a FastAPI backend (```/health```, ```/search```) and a Gradio front‑end (Gallery UI) deployed on Hugging Face Spaces.
+
+- **Text-to-Image Model‑Switcher Demo**
+
+-- Wraps multiple Stable Diffusion checkpoints (v1.5, SDXL Base 1.0, SD‑Turbo) in a single Gradio app.
+
+-- Auto‑detects compute backend (CUDA, Apple MPS, or CPU).
+
+-- Uses ```DPMSolverMultistepScheduler``` for faster sampling and supports reproducible seeds.
+
+-- Live‑switch models at runtime and view results immediately.
+
+**Key Capabilities**:
+
+1. End‑to‑end pipeline from raw input (image or text) through model inference and user‑friendly UI.
+
+2. Production‑grade deployment with caching, token‑based access, and Hugging Face Space integration.
+
+3. Performance benchmarks demonstrating speed vs. quality trade‑offs across models and hardware.
+   
+> See the full capstone code, assets, Docker configurations, and benchmarking scripts under the capstone/ directory.
+
 
 ### Mini-Projects
+A collection of focused notebooks, each exploring a core ML technique:
 | Project Title | Description |
 |---------------|-------------|
 | `Mini_Project_Build_a_Machine_Learning_Model.ipynb` | Build and evaluate a supervised ML model pipeline. |
