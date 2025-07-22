@@ -1,0 +1,9 @@
+{
+  "device": "cpu",
+  "batch": 64,
+  "max_samples": 10000,
+  "model": "ViT-B-32",
+  "pretrained": "laion2b_s34b_b79k",
+  "embed_secs": 1280.8,
+  "param_count": 151277313
+}
