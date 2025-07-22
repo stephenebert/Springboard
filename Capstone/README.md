@@ -449,10 +449,8 @@ This capstone project shows:
 ![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
 
 ### Stable Diffusion Generation Examples
-1. ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/text2imageSD.png)
-   ![Text2Image SD Demo](extra_exploration_1/images/text2imageSD.png)
-2. ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/cyber%20punk%20SD.png)
- 
+1. ![Text2Image SD Demo](extra_exploration_1/images/text2imageSD.png)
+2. ![Cyber Punk SD Demo](extra_exploration_1/images/cyber%20punk%20SD.png) 
 3. ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/bear%20walking%20prompt%20with%20SD.png)
 
 ### Production API Deployment
