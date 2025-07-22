@@ -2,7 +2,7 @@
 
 [![HF Space](https://img.shields.io/badge/🤗%20Space-click%20to%20try-blue?logo=huggingface&logoColor=white)](https://huggingface.co/spaces/stephenebert/sd-text2image)
 
-Turn any prompt into a 512 × 512 image using **Stable Diffusion v1.5** (🤗 **diffusers**) wrapped in a clean **Gradio** UI.  
+Turn any prompt into a 512-by-512 image using **Stable Diffusion v1.5** (🤗 **diffusers**) wrapped in a clean **Gradio** UI.  
 Runs on CPU, CUDA, **or Apple Silicon (M-series Metal)**.
 
 ![UI](images/bear%20walking%20in%20SD.png)
