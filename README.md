@@ -1,6 +1,7 @@
 # Springboard's MI/AI Bootcamp
 
-This repository contains completed mini-projects and capstone work from the Springboard Machine Learning / Artificial Intelligence Bootcamp. Each notebook explores key machine learning concepts through hands-on projects using Python, Pandas, Scikit-learn, TensorFlow, and other libraries.
+Welcome to the Springboard MI/AI Bootcamp portfolio repository! This repo contains all my completed mini-projects and the final capstone project from the Springboard Machine Learning / Artificial Intelligence Bootcamp. Each project demonstrates key ML/AI concepts through hands-on exploration using Python, Pandas, Scikit-Learn, TensorFlow/Keras, Neural Networks, Deep Learning, Computer Vision, Natural Language Processing, Generative AI, Model Deployment, Diffusers, AWS, Gradio, and more.
+
 
 ## Contents
 
