@@ -37,7 +37,7 @@ This repository’s capstone is a two‑part, cross‑modal retrieval and genera
 
 3. Performance benchmarks demonstrating speed vs. quality trade‑offs across models and hardware.
    
-> See the full capstone code, assets, Docker configurations, and benchmarking scripts under the capstone/ directory.
+See the full capstone code, assets, Docker configurations, and benchmarking scripts under the capstone/ directory.
 
 
 ### Mini-Projects
