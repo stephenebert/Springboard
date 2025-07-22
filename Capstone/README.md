@@ -442,7 +442,6 @@ This capstone project shows:
 ## Screenshots
 
 ### Text-to-Image Gradio Interface
-![Demo UI](images/Screenshot%202025-07-14%20004105.png)
 
 ![Screenshot](phase2/step12_share_project/images/Screenshot%202025-07-14%20004105.png)
 
@@ -451,7 +450,7 @@ This capstone project shows:
 
 ### Stable Diffusion Generation Examples
 1. ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/text2imageSD.png)
- 
+   ![Text2Image SD Demo](extra_exploration_1/images/text2imageSD.png)
 2. ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/cyber%20punk%20SD.png)
  
 3. ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/bear%20walking%20prompt%20with%20SD.png)
