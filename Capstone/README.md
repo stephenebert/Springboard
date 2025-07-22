@@ -26,49 +26,55 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 ## Repository Structure
 
 ```
-📁 **Capstone/**
-├── 📁 **extra_exploration/**
-│   ├── 📁 **data/**
-│   │   ├── README.md                # FAISS building guide  
-│   │   ├── UI1.png                  # demo screenshot of Gradio UI  
-│   │   ├── UI2.png                  # additional Gradio screenshot  
-│   │   ├── coco.png                 # MS-COCO example image  
-│   │   ├── coco2.png                # another COCO example image  
-│   │   └── terminal.png             # terminal output example  
-│   ├── 📁 **scripts/**
-│   │   ├── blip_round_trip.py       # BLIP caption-generation pipeline  
-│   │   ├── build_coco_text_index.py # builds FAISS index over COCO captions  
-│   │   └── generate_blip_caption.py # wraps BLIP model for captioning  
-│   ├── 📄 README.md                 # extra exploration overview & instructions  
-│   └── 📄 gradio_demo.py            # Image-to-Text demo app using Gradio  
-├── 📁 **extra_exploration_1/**
-│   ├── 📁 **images/**               # screenshots for Stable Diffusion demo  
-│   │   ├── bear walking in SD.png   # SD text-to-image example  
-│   │   ├── cyber punk SD.png        # SD generation example  
-│   │   └── terminal.png             # terminal output for SD demo  
-│   ├── 📄 text2image_demo.py        # Stable Diffusion Gradio demo app  
-│   ├── 📄 requirements.txt          # SD-specific Python dependencies  
-│   ├── 📄 pyaudioop.py              # shim for Python 3.13+ audioop removal  
-│   └── 📄 README.md                 # Stable Diffusion documentation & usage  
-├── 📁 **extra_exploration_2/**
-│   ├── 📄 app.py                    # Model-switcher multi-model Gradio app  
-│   ├── 📄 model_switch.png          # screenshot of model-switcher UI  
-│   ├── 📄 requirements.txt          # dependencies for model-switcher demo  
-│   └── 📄 README.md                 # documentation for model-switcher app  
-├── 📁 **phase1/**
-│   ├── 📁 **step1_initial_project_ideas/**      # brainstorming & ideation  
-│   ├── 📁 **step2_data_collection/**            # dataset gathering & prep  
-│   ├── 📁 **step3_project_proposal/**           # formal project proposal  
-│   ├── 📁 **step4_survey_existing_research/**   # literature & related work  
-│   └── 📁 **step5_data_wrangling/**             # cleaning & preprocessing  
-├── 📁 **phase2/**
-│   ├── 📁 **step7_experiment_models/**           # model prototyping & benchmarks  
-│   ├── 📁 **step8_scale_prototype/**             # performance & scalability tests  
-│   ├── 📁 **step9_deployment_method/**           # deployment architecture design  
-│   ├── 📁 **step10_deployment_design/**          # infrastructure & CI/CD layout  
-│   ├── 📁 **step11_deployment_implementation/**  # code & Docker deployment  
-│   └── 📁 **step12_share_project/**             # final presentation & artifacts  
-└── 📄 **README.md**                            # project overview, setup & run instructions
+📁 **capstone-project/**
+- 📁 **extra_exploration/**
+  - 📁 **data/**
+    - **README.md** — FAISS building guide  
+    - **UI1.png** — demo screenshot of Gradio UI  
+    - **UI2.png** — additional Gradio screenshot  
+    - **coco.png** — MS-COCO example image  
+    - **coco2.png** — another COCO example image  
+    - **terminal.png** — terminal output example  
+  - 📁 **scripts/**
+    - **blip_round_trip.py** — BLIP caption-generation pipeline  
+    - **build_coco_text_index.py** — builds FAISS index over COCO captions  
+    - **generate_blip_caption.py** — wraps BLIP model for captioning  
+  - **README.md** — extra exploration overview and instructions  
+  - **gradio_demo.py** — Image-to-Text demo app using Gradio  
+
+- 📁 **extra_exploration_1/**
+  - 📁 **images/**
+    - **bear walking in SD.png** — SD text-to-image example  
+    - **cyber punk SD.png** — SD generation example  
+    - **terminal.png** — terminal output for SD demo  
+  - **text2image_demo.py** — Stable Diffusion Gradio demo app  
+  - **requirements.txt** — SD-specific Python dependencies  
+  - **pyaudioop.py** — shim for Python 3.13+ audioop removal  
+  - **README.md** — Stable Diffusion documentation and usage  
+
+- 📁 **extra_exploration_2/**
+  - **app.py** — Model-switcher multi-model Gradio app  
+  - **model_switch.png** — screenshot of model-switcher UI  
+  - **requirements.txt** — dependencies for model-switcher demo  
+  - **README.md** — documentation for model-switcher app  
+
+- 📁 **phase1/**
+  - 📁 **step1_initial_project_ideas/** — brainstorming and ideation  
+  - 📁 **step2_data_collection/** — dataset gathering and prep  
+  - 📁 **step3_project_proposal/** — formal project proposal  
+  - 📁 **step4_survey_existing_research/** — literature and related work  
+  - 📁 **step5_data_wrangling/** — cleaning and preprocessing  
+
+- 📁 **phase2/**
+  - 📁 **step7_experiment_models/** — model prototyping and benchmarks  
+  - 📁 **step8_scale_prototype/** — performance and scalability tests  
+  - 📁 **step9_deployment_method/** — deployment architecture design  
+  - 📁 **step10_deployment_design/** — infrastructure and CI/CD layout  
+  - 📁 **step11_deployment_implementation/** — code and Docker deployment  
+  - 📁 **step12_share_project/** — final presentation and artifacts  
+
+- **README.md** — project overview, setup and run instructions  
+
 
 ```
 
@@ -79,7 +85,7 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 ### Machine Learning Engineering
 - **Deep Learning Feature Extractors**: CLIP and BLIP via Hugging Face Transformers
 - **Multiple Generative Models:** Stable Diffusion v1.5 and SD-Turbo for text-to-image synthesis
-- **Vector Storage & Indexing**: Efficient cosine similarity search via FAISS IVF-Flat and IndexFlatL2
+- **Vector Storage and Indexing**: Efficient cosine similarity search via FAISS IVF-Flat and IndexFlatL2
 - **Data Preprocessing Pipelines**: HDF5, JSONL, COCO-format parsing
 - **Evaluation Metrics**: Top-K accuracy, cosine similarity thresholds
 - **Cross-Modal Understanding**: Text ↔ Image semantic matching
@@ -152,7 +158,7 @@ insert image
 
 **Technical Features**
 - Auto-detects GPU (CUDA, Apple Metal/MPS, or CPU)
-- Zero bulky assets: model pulled & cached automatically
+- Zero bulky assets: model pulled and cached automatically
 - Cross-platform compatibility
 - Two-column Gallery with download buttons
 
@@ -257,7 +263,7 @@ pip install --pre torch torchvision torchaudio --index-url https://download.pyto
 ```
 ---
 
-## Data Sources & Preprocessing
+## Data Sources and Preprocessing
 
 ### Datasets
 - **COCO Captions**: 591,753 human-written image descriptions
@@ -319,7 +325,7 @@ Provides 2-3x faster embedding generation.
 
 ---
 
-## Testing & Quality Assurance
+## Testing and Quality Assurance
 
 ### Test Suite
 ```bash
@@ -356,7 +362,7 @@ docker-compose -f docker-compose.test.yml up --build
 3. **Docker**: Containerized applications with reproducible environments
 4. **FAISS**: High-performance similarity search backend
 
-### Monitoring & Logging
+### Monitoring and Logging
 - Health check endpoints for service monitoring
 - Structured logging with request/response tracking
 - Optional Prometheus metrics collection
@@ -530,7 +536,7 @@ streamlit>=1.20           # Alternative UI
 ## Performance Notes
 ## Stable Diffusion Performance Expectations
 
-> **Speed tip & cold-start notice**  
+> **Speed tip and cold-start notice**  
 > The Hugging Face Space is hosted on the free **CPU-basic** tier (2 vCPU / 16 GB RAM).  
 > The very first prompt after a restart has to download the 4 GB SD v1.5 weights **and** warm up the UNet/VAE – expect ~60 s before the first image appears.  
 > Subsequent prompts on the same session are much faster (≈20 s @ 512²).  
@@ -544,7 +550,7 @@ streamlit>=1.20           # Alternative UI
 | ✓     | Optional deterministic seed                                |
 | ✓     | Two-column **Gallery** with download buttons               |
 | ✓     | Auto-detects GPU (CUDA or MPS)                             |
-| ✓     | Zero bulky assets – model is pulled & cached automatically |
+| ✓     | Zero bulky assets – model is pulled and cached automatically |
 | ✓     | Multiple model support (SD v1.5, SDXL, SD-Turbo) |
 
 
