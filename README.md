@@ -9,7 +9,7 @@ A comprehensive two-part, cross-modal retrieval and generation system demonstrat
 
 ## System Architecture
 
-### Part 1: Image-to-Text Retrieval Service
+### Part 1: [Image-to-Text Retrieval Service](https://huggingface.co/spaces/stephenebert/image2text-faiss-demo)
 
 **Transform images into meaningful text through intelligent search**
 
@@ -21,7 +21,7 @@ A comprehensive two-part, cross-modal retrieval and generation system demonstrat
   - Interactive Gradio frontend with gallery UI
   - Deployed and accessible via Hugging Face Spaces
 
-### Part 2: Text-to-Image Model Switcher Demo
+### Part 2: [Text-to-Image Model Switcher Demo](https://huggingface.co/spaces/stephenebert/model-switcher-sd)
 
 **Generate stunning visuals from text descriptions with multiple AI models**
 
