@@ -444,6 +444,8 @@ This capstone project shows:
 ### Text-to-Image Gradio Interface
 ![Demo UI](images/Screenshot%202025-07-14%20004105.png)
 
+![Retrieval Results](images/Screenshot%202025-07-14%20004105.png)
+
 ### Image-to-Text Demo Interface
 ![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
 
