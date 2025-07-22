@@ -173,7 +173,7 @@ Our test suite covers:
 - Performance benchmarks
 - End-to-end integration tests
 
-## 🌐 Production Deployment
+## Production Deployment
 
 ### Render.com Deployment
 
