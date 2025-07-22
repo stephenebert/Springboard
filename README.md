@@ -3,41 +3,76 @@
 Welcome to the Springboard MI/AI Bootcamp portfolio repository! This repo contains all my completed mini-projects and the final capstone project from the Springboard Machine Learning / Artificial Intelligence Bootcamp. Each project demonstrates key ML/AI concepts through hands-on exploration using Python, Pandas, Scikit-Learn, TensorFlow/Keras, Neural Networks, Deep Learning, Computer Vision, Natural Language Processing, Generative AI, Model Deployment, Diffusers, AWS, Gradio, and more.
 
 
-## Contents
+# AI Vision & Generation Capstone
 
-**Capstone**
+A comprehensive two-part, cross-modal retrieval and generation system demonstrating modern AI pipelines from end-to-end. This capstone project showcases AI capabilities through two interconnected systems that bridge the gap between visual understanding and text generation. Built with production-grade architecture and deployed on modern cloud infrastructure.
 
-This repository’s capstone is a two‑part, cross‑modal retrieval and generation system that showcases modern AI pipelines end‑to‑end:
+## System Architecture
 
--**Image-to-Text Retrieval Service**
+### Part 1: Image-to-Text Retrieval Service
 
--- Uses BLIP to generate captions for any uploaded image.
+**Transform images into meaningful text through intelligent search**
 
--- Encodes captions with CLIP into 512‑dim embeddings.
+- **Visual Understanding**: Leverages BLIP (Bootstrapped Language-Image Pre-training) to generate rich, contextual captions from any uploaded image
+- **Semantic Encoding**: Utilizes CLIP embeddings to convert captions into high-dimensional 512-vector representations
+- **Lightning-Fast Search**: Implements FAISS (Facebook AI Similarity Search) indexing over MS-COCO dataset for ultra-fast nearest-neighbor retrieval
+- **Production API**: 
+  - FastAPI backend with health monitoring (`/health`) and search endpoints (`/search`)
+  - Interactive Gradio frontend with gallery UI
+  - Deployed and accessible via Hugging Face Spaces
 
--- Performs ultra‑fast nearest‑neighbor search over a pre‑built FAISS index of MS‑COCO captions.
+### Part 2: Text-to-Image Model Switcher Demo
 
--- Exposes a FastAPI backend (```/health```, ```/search```) and a Gradio front‑end (Gallery UI) deployed on Hugging Face Spaces.
+**Generate stunning visuals from text descriptions with multiple AI models**
 
-- **Text-to-Image Model‑Switcher Demo**
+- **Multi-Model Support**: Seamlessly switch between industry-leading Stable Diffusion variants:
+  - Stable Diffusion v1.5 (balanced quality and speed)
+  - SDXL Base 1.0 (enhanced detail and resolution)
+  - SD-Turbo (optimized for rapid generation)
+- **Smart Hardware Detection**: Automatically detects and optimizes for available compute:
+  - CUDA (NVIDIA GPUs)
+  - Apple Metal Performance Shaders (Apple Silicon)
+  - CPU fallback support
+- **Advanced Sampling**: Implements `DPMSolverMultistepScheduler` for superior image quality with faster generation times
+- **Reproducible Results**: Full seed control for consistent, repeatable outputs
+- **Real-Time Switching**: Dynamic model switching without restart requirements
 
--- Wraps multiple Stable Diffusion checkpoints (v1.5, SDXL Base 1.0, SD‑Turbo) in a single Gradio app.
+## Key Features
 
--- Auto‑detects compute backend (CUDA, Apple MPS, or CPU).
+### Production-Ready Architecture
+- End-to-end pipeline processing from raw inputs to polished user interfaces
+- Robust caching mechanisms for improved performance
+- Token-based access control and security
+- Seamless Hugging Face Spaces integration
 
--- Uses ```DPMSolverMultistepScheduler``` for faster sampling and supports reproducible seeds.
+### Performance Optimization
+- Comprehensive benchmarking suite comparing speed vs. quality trade-offs
+- Hardware-specific optimizations across different compute backends
+- Efficient memory management and model loading strategies
 
--- Live‑switch models at runtime and view results immediately.
+### User Experience
+- Intuitive Gradio interfaces for both services
+- Real-time results and immediate feedback
+- Gallery view for image browsing and comparison
+- Live model performance metrics
 
-**Key Capabilities**:
+## Performance Benchmarks
 
-1. End‑to‑end pipeline from raw input (image or text) through model inference and user‑friendly UI.
+Our comprehensive benchmarking demonstrates:
+- **Speed vs Quality**: Detailed analysis across different model configurations
+- **Hardware Comparison**: Performance metrics on CUDA, MPS, and CPU backends
+- **Scalability Testing**: Response times under various load conditions
 
-2. Production‑grade deployment with caching, token‑based access, and Hugging Face Space integration.
+## Technical Stack
 
-3. Performance benchmarks demonstrating speed vs. quality trade‑offs across models and hardware.
-   
-See the full capstone code, assets, Docker configurations, and benchmarking scripts under the capstone/ directory.
+- **Deep Learning**: PyTorch, Transformers, Diffusers
+- **Computer Vision**: CLIP, BLIP, Stable Diffusion
+- **Search & Retrieval**: FAISS, MS-COCO dataset
+- **API & Frontend**: FastAPI, Gradio
+- **Deployment**: Docker, Hugging Face Spaces
+- **Performance**: DPMSolverMultistepScheduler, Hardware-specific optimizations
+
+---
 
 
 ### Mini-Projects
