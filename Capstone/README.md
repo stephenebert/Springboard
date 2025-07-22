@@ -25,7 +25,7 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 
 ## Repository Structure
 
-```
+
 📁 **capstone-project/**
 - 📁 **extra_exploration/**
   - 📁 **data/**
@@ -75,8 +75,6 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 
 - **README.md** — project overview, setup and run instructions  
 
-
-```
 
 ---
 
