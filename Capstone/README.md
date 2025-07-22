@@ -14,10 +14,10 @@
 
 This capstone project demonstrates comprehensive **cross-modal retrieval systems** with two complementary applications:
 
-1. **Text-to-Image Retrieval**: Users input text queries to retrieve matching images from a large-scale embedding database
-2. **Image-to-Text Retrieval**: Users upload images to find similar captions using BLIP → CLIP → FAISS pipeline
-3. **Stable Diffusion Text-to-Image Generation**: Users generate 512×512 images from text prompts using Stable Diffusion v1.5
-4. **Model-Switcher Stable Diffusion Demo**: Multi-model text-to-image generation with SD v1.5, SDXL Base 1.0, and SD-Turbo
+1. **Text-to-Image Retrieval**: Users input text queries to retrieve matching images from a large-scale embedding database https://huggingface.co/spaces/stephenebert/retrieval-demo
+2. **Image-to-Text Retrieval**: Users upload images to find similar captions using BLIP → CLIP → FAISS pipeline https://huggingface.co/spaces/stephenebert/image2text-faiss-demo
+3. **Stable Diffusion Text-to-Image Generation**: Users generate 512×512 images from text prompts using Stable Diffusion v1.5 https://huggingface.co/spaces/stephenebert/sd-text2image
+4. **Model-Switcher Stable Diffusion Demo**: Multi-model text-to-image generation with SD v1.5, SDXL Base 1.0, and SD-Turbo https://huggingface.co/spaces/stephenebert/model-switcher-sd
 
 All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment.
 
