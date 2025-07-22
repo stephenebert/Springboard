@@ -1,0 +1,6 @@
+torch>=2.2
+diffusers>=0.28
+transformers>=4.42
+accelerate>=0.29
+safetensors
+gradio>=4.32
