@@ -451,7 +451,7 @@ This capstone project shows:
 ### Stable Diffusion Generation Examples
 1. ![Text2Image SD Demo](extra_exploration_1/images/text2imageSD.png)
 2. ![Cyber Punk SD Demo](extra_exploration_1/images/cyber%20punk%20SD.png) 
-3. ![Extra Exploration Example](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/bear%20walking%20prompt%20with%20SD.png)
+3. ![Bear Walking Prompt with SD](extra_exploration_1/images/bear%20walking%20prompt%20with%20SD.png)
 
 ### Production API Deployment
 ![Deployment Logs](images/Screenshot%202025-07-14%20004518.png)
