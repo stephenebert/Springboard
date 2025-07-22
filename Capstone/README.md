@@ -454,10 +454,10 @@ This capstone project shows:
 3. ![Bear Walking Prompt with SD](extra_exploration_1/images/bear%20walking%20prompt%20with%20SD.png)
 
 ### Production API Deployment
-![Deployment Logs](images/Screenshot%202025-07-14%20004518.png)
+![Screenshot](phase2/step12_share_project/images/Screenshot%202025-07-14%20004518.png)
 
 ### Terminal Output Example
-![Screenshot of terminal output](https://github.com/stephenebert/Springboard/blob/main/capstone-project/extra_exploration_1/images/terminal.png)
+![Terminal Screenshot](extra_exploration_1/images/terminal.png)
 
 ---
 
