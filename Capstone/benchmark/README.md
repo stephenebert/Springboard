@@ -79,6 +79,9 @@ Finally, it prints out a table:
 | IVF\_4096 |     1.71 |  1168.31 |    0.00 | 290 183 | 0.948 | 0.981 | 0.990 |
 
 ## 3. Tail‑Latency Analysis
+
+![Latency Distribution](latency_hist.png)
+
 - FAISS will use up to 16 threads.
 - Loading captions from 'coco_caption_texts.npy' and embeddings from 'coco_caption_clip.npy' …
 - Saved latency distribution to latency_hist.png
