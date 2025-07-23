@@ -1,15 +1,11 @@
 # Capstone Project: Multi-Modal AI Platform - Retrieval, Generation, Production Deployment, and Performance Benchmarking
 
 **Author**: Stephen Ebert  <br>
-**Bootcamp**: Machine Learning Engineering - Springboard  
-
-**Model Types**: Deep Learning + Cross-Modal Retrieval + Stable Diffusion
-
-**Frontend**: Gradio
-
-**Backend**: FastAPI + FAISS
-
-**Deployment**: Docker, Hugging Face Spaces, Render.com
+**Bootcamp**: Machine Learning Engineering - Springboard  <br>
+**Model Types**: Deep Learning + Cross-Modal Retrieval + Stable Diffusion <br>
+**Frontend**: Gradio <br>
+**Backend**: FastAPI + FAISS <br>
+**Deployment**: Docker, Hugging Face Spaces, Render.com <br>
 
 ---
 
