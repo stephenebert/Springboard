@@ -1,5 +1,7 @@
 # COCO Caption ANN Benchmark
 
+Efficient similarity search at scale is the backbone of many modern AI systems—from AI‐powered image search and recommendation engines to real‐time language retrieval and conversational agents yet choosing the right ANN index often involves a trade‑off between accuracy, build time, memory footprint, and query throughput. By quantitatively benchmarking FlatL2 against IVF variants on a realistic COCO‐caption embedding workload, we can identify which index delivers near‑perfect recall at orders‑of‑magnitude faster query speeds and modest build overhead, empowering practitioners to architect production‑grade pipelines that serve millions of queries per second without sacrificing result quality.
+
 This repo contains everything you need to reproduce a quantitative comparison of FAISS approximate‑nearest‑neighbor (ANN) indices on COCO caption embeddings. We benchmark:
 
 - **IndexFlatL2** (exact L2 search)  
@@ -70,6 +72,37 @@ Finally, it prints out a table:
 | IVF\_1024 |     0.49 |  1162.29 |    0.01 | 160 486 | 0.948 | 0.981 | 0.990 |
 | IVF\_4096 |     1.71 |  1168.31 |    0.00 | 290 183 | 0.948 | 0.981 | 0.990 |
 
+## 3. Key Findings
+- Exact FlatL2 is trivial to build (0.07 s) but only ~3 k QPS.
+- IVF_1024 yields a 50 times speed‑up (~160 k QPS) with no recall loss.
+- IVF_4096 pushes throughput to ~290 k QPS—ideal for high‑QPS production.
+- Index sizes remain ~1.1 GB, and recall@k is identical across all settings.
+
+Recommendation and observation:
+
+- For max throughput, use IVF_4096.
+
+- For fast build + good speed, IVF_1024 is a sweet spot.
+
+- Use FlatL2 only for prototyping or small‐scale demos.
+
+## 4. Requirements
+``` bash
+faiss-cpu         # or faiss-gpu
+numpy
+tabulate
+tqdm
+```
+Install via:
+``` bash
+pip install faiss-cpu numpy tabulate tqdm
+```
+## 5. Reproducibility
+- All random seeds are fixed for the query sample.
+
+- Benchmarks run on 16 threads (```OMP_NUM_THREADS=16```).
+
+- Scripts accept ```--device``` flags to leverage MPS/CUDA.
 
 
 
