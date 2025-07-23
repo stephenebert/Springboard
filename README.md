@@ -93,7 +93,7 @@ Cross-platform performance analysis for text-to-image generation:
 | **CPU (16-core)** | SD v1.5 | 512×512 | 60s+ | ~8GB RAM |
 | **NVIDIA RTX 3080** | SDXL Base | 1024×1024 | 8-15s | ~8GB VRAM |
 
-![latency](Capstone/benchmark/distance_hist.png)
+![distance](Capstone/benchmark/distance_hist.png)
 
 **Optimization Highlights:**
 - **FP16 Acceleration**: 2x speedup on compatible hardware
