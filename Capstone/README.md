@@ -1,7 +1,6 @@
 # Capstone Project: Multi-Modal AI Platform - Retrieval, Generation, Production Deployment, and Performance Benchmarking
 
-**Author**: Stephen Ebert  
-
+**Author**: Stephen Ebert  <br>
 **Bootcamp**: Machine Learning Engineering - Springboard  
 
 **Model Types**: Deep Learning + Cross-Modal Retrieval + Stable Diffusion
