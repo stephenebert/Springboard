@@ -120,7 +120,7 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 ### 1. Text-to-Image Retrieval System
 
 
-![Screenshot of the Gradio demo UI](Capstone/extra_exploration/data/UI1.png)
+![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
 
 
 
