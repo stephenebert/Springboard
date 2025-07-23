@@ -11,7 +11,7 @@ Measuring for each index:
 - **Query latency** (ms/query) & **QPS** (queries/sec)  
 - **Recall@k** (k = 1, 5, 10)  
 
-All runs were performed on an Apple M4 Max (16 CPU threads).
+All runs were performed on an M4 series chip (16 CPU threads).
 
 ---
 
@@ -51,3 +51,26 @@ python benchmark_ann.py \
   --embeds   coco_caption_clip.npy \
   --out_dir  bench_indices
 ```
+This does:
+1. Load 591,753 caption strings and their 512‑dim CLIP embeddings.
+2. Build three FAISS indices:
+  - FlatL2
+  - IVF₁₀₂₄, nlist=1024
+  - IVF₄₀₉₆, nlist=4096
+3. For each index:
+   - Train (if needed) & add all vectors
+   - Measure build time & on‑disk size
+   - Query 1000 random captions and report: Mean latency (ms) --> QPS and Recall@1,5,10 against exact FlatL2
+     
+Finally, it prints out a table:
+
+| index     | build\_s | size\_MB | lat\_ms |     QPS |  R\@1 |  R\@5 | R\@10 |
+| :-------- | -------: | -------: | ------: | ------: | :---: | :---: | :---: |
+| FlatL2    |     0.07 |  1155.77 |    0.31 |   3 205 | 0.948 | 0.981 | 0.990 |
+| IVF\_1024 |     0.49 |  1162.29 |    0.01 | 160 486 | 0.948 | 0.981 | 0.990 |
+| IVF\_4096 |     1.71 |  1168.31 |    0.00 | 290 183 | 0.948 | 0.981 | 0.990 |
+
+
+
+
+
