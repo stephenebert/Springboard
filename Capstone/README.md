@@ -1,4 +1,4 @@
-# Capstone Project: Multi-Modal AI Platform - Retrieval, Generation, and Production Deployment
+# Capstone Project: Multi-Modal AI Platform - Retrieval, Generation, Production Deployment, and Performance Benchmarking
 
 **Author**: Stephen Ebert  
 **Bootcamp**: Machine Learning Engineering - Springboard  
