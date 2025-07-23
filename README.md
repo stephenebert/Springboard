@@ -3,7 +3,7 @@
 Welcome to the Springboard MI/AI Bootcamp portfolio repository! This repo contains all my completed mini-projects and the final capstone project from the Springboard Machine Learning / Artificial Intelligence Bootcamp. Each project demonstrates key ML/AI concepts through hands-on exploration using Python, Pandas, Scikit-Learn, TensorFlow/Keras, Neural Networks, Deep Learning, Computer Vision, Natural Language Processing, Generative AI, Model Deployment, Diffusers, AWS, Gradio, and more.
 
 
-# AI Vision & Generation Capstone
+# AI Vision and Generation Capstone
 
 A comprehensive two-part, cross-modal retrieval and generation system demonstrating modern AI pipelines from end-to-end. This capstone project showcases AI capabilities through two interconnected systems that bridge the gap between visual understanding and text generation. Built with production-grade architecture and deployed on modern cloud infrastructure.
 
