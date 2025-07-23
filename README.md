@@ -74,8 +74,10 @@ Comprehensive analysis of different FAISS indexing strategies for production-sca
 | **IVF_1024** | 0.49s | 1,162.29 | 0.01ms | **160,486** | 99.0% |
 | **IVF_4096** | 1.71s | 1,168.31 | 0.00ms | **290,183** | 99.0% |
 
+![latency](Capstone/benchmark/latency_hist.png)
+
 **Key Findings:**
-- **50x Speed Improvement**: IVF_1024 delivers 50× faster queries than exact search with zero recall loss
+- **50x Speed Improvement**: IVF_1024 delivers 50x faster queries than exact search with zero recall loss
 - **Production Sweet Spot**: IVF_1024 offers optimal balance of build time, memory usage, and query performance
 - **High-Concurrency Ready**: IVF_4096 achieves 290K QPS for applications requiring maximum throughput
 - **Tail Latency Analysis**: p99 latency stays under 20ms across all configurations
@@ -90,6 +92,8 @@ Cross-platform performance analysis for text-to-image generation:
 | **Apple M2 Max** | SD v1.5 | 512×512 | 12-20s | ~6GB RAM |
 | **CPU (16-core)** | SD v1.5 | 512×512 | 60s+ | ~8GB RAM |
 | **NVIDIA RTX 3080** | SDXL Base | 1024×1024 | 8-15s | ~8GB VRAM |
+
+![latency](Capstone/benchmark/distance_hist.png)
 
 **Optimization Highlights:**
 - **FP16 Acceleration**: 2x speedup on compatible hardware
