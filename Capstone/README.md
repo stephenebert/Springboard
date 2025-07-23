@@ -119,11 +119,6 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 
 ### 1. Text-to-Image Retrieval System
 
-
-![Screenshot of the Gradio demo UI](extra_exploration/data/UI1.png)
-
-
-
 **Explanations:**
 1. A **text query** is converted into a 512-dim embedding via CLIP
 2. The query is passed to a **FastAPI server**, which runs cosine similarity search against a pre-indexed FAISS database
@@ -151,7 +146,6 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 - Visual feedback with confidence scores
 
 ### 3. Stable Diffusion Text-to-Image Generation
-insert image
 
 **Explanations**
 1. **Text Prompt:** CLIP Text Encoder to Text Embedding
