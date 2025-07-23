@@ -11,6 +11,9 @@ A comprehensive two-part, cross-modal retrieval and generation system demonstrat
 
 ### Part 1: [Image-to-Text Retrieval Service](https://huggingface.co/spaces/stephenebert/image2text-faiss-demo)
 
+![Screenshot of the Gradio demo UI](Capstone/extra_exploration/data/UI1.png)
+
+
 **Transform images into meaningful text through intelligent search**
 
 - **Visual Understanding**: Leverages BLIP (Bootstrapped Language-Image Pre-training) to generate rich, contextual captions from any uploaded image
