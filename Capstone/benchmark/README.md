@@ -1,13 +1,13 @@
 # COCO Caption ANN Benchmark
 
-Efficient similarity search at scale is the backbone of many modern AI systems—from AI‑powered image search and recommendation engines to real‑time language retrieval and conversational agents. Yet choosing the right ANN index often involves a trade‑off between accuracy, build time, memory footprint, and query throughput. By quantitatively benchmarking FlatL2 against IVF variants on a realistic COCO‑caption embedding workload, we can identify which index delivers near‑perfect recall at orders‑of‑magnitude faster query speeds and modest build overhead, empowering practitioners to architect production‑grade pipelines that serve millions of queries per second without sacrificing result quality.
+Efficient similarity search at scale is the backbone of many modern AI systems. From AI‑powered image search and recommendation engines to real‑time language retrieval and conversational agents. Yet choosing the right ANN index often involves a trade‑off between accuracy, build time, memory footprint, and query throughput. By quantitatively benchmarking FlatL2 against IVF variants on a realistic COCO‑caption embedding workload, we can identify which index delivers near‑perfect recall at orders‑of‑magnitude faster query speeds and modest build overhead, empowering practitioners to architect production‑grade pipelines that serve millions of queries per second without sacrificing result quality.
 
 ---
 
 ## Index Primer
 
 1. **FlatL2**  
-   - “Flat” means no clustering or partitioning—every vector lives in one big array.  
+   - "Flat" means no clustering or partitioning—every vector lives in one big array.  
    - L2 (Euclidean) distance to every vector → exact recall, O(N) per query.  
    - **Pros**: trivial to build, 100% recall.  
    - **Cons**: very slow at scale (limited QPS), large memory bandwidth.
