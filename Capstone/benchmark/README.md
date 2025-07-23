@@ -2,6 +2,18 @@
 
 Efficient similarity search at scale is the backbone of many modern AI systems—from AI‐powered image search and recommendation engines to real‐time language retrieval and conversational agents yet choosing the right ANN index often involves a trade‑off between accuracy, build time, memory footprint, and query throughput. By quantitatively benchmarking FlatL2 against IVF variants on a realistic COCO‐caption embedding workload, we can identify which index delivers near‑perfect recall at orders‑of‑magnitude faster query speeds and modest build overhead, empowering practitioners to architect production‑grade pipelines that serve millions of queries per second without sacrificing result quality.
 
+Note:
+
+1. The "flat" index means no clustering or partitioning. All vectors are stored in a single contiguous array in memory. The "L2" refers to the usual Euclidean metric for similarity.  To answer a query, you compute the squared L2 distance between the query vector and every vector in the database, then pick the nearest neighbors. Pros: trivial to build, guaranteed exact recall, simple to implement. Cons: very high query cost (O(N) per query) and large memory bandwidth, which limits throughput at large scale.
+
+2. "IVF" is short for "Inverted File" and sometimes called ```IndexIVFFlat``` in FAISS.
+- Partitioning: First you cluster your N vectors into nlist coarse cells (e.g. via k‑means). Each vector is assigned to its nearest cell, and you build an “inverted list” of vector IDs per cell.
+- Querying: For each query, you (1) find the nearest nprobe coarse centroids, then (2) scan only the vectors in those selected lists. Then compute L2 distances within that subset—rather than the entire database.
+- Pros: drastically reduces the number of distance computations, giving much higher QPS at the cost of a small drop (or zero drop, if tuned) in recall.
+- Cons: you pay build time to run the coarse k‑means, and memory overhead to store the cluster centroids plus inverted lists. You also have to pick two hyperparameters: ```nlist``` (number of clusters) and ```nprobe``` (number of clusters to search at query time). 
+
+By moving from FlatL2 to IVF, one trades a tiny bit of build-time complexity and configuration for orders‑of‑magnitude faster nearest‑neighbor queries, while still retaining nearly perfect recall.
+
 This repo contains everything you need to reproduce a quantitative comparison of FAISS approximate‑nearest‑neighbor (ANN) indices on COCO caption embeddings. We benchmark:
 
 - **IndexFlatL2** (exact L2 search)  
