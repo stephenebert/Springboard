@@ -26,7 +26,7 @@ A comprehensive two-part, cross-modal retrieval and generation system demonstrat
 
 ### Part 2: [Text-to-Image Model Switcher Demo](https://huggingface.co/spaces/stephenebert/model-switcher-sd)
 
-![SD UI](Capstone/extra_exploration_1/bear%20walking%20in%20SD.png)
+![SD UI](Capstone/extra_exploration_1/images/bear%20walking%20in%20SD.png)
 
 
 **Generate visuals from text descriptions with multiple AI models**
