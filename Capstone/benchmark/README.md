@@ -99,7 +99,7 @@ Latency percentiles (ms):
   
 ## 4. Embedding Distance Distribution
 
-![Distance Distribution](Capstone/benchmark/distance_hist.png)
+![Distance Distribution](distance_hist.png)
 
 - Loaded 591,753 embeddings of dimension 512
 - Saved distance distribution to distance_hist.png
