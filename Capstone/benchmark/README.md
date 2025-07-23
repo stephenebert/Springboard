@@ -20,8 +20,8 @@ All runs were performed on an M4 series chip (16 CPU threads).
 ## Contents
 ``` bash
 benchmark/
-├── coco_caption_texts.npy # Extracted COCO captions (591 753 strings)
-├── coco_caption_clip.npy # CLIP embeddings for each caption
+├── coco_caption_texts.npy # Extracted COCO captions (591 753 strings; stored locally due to size)
+├── coco_caption_clip.npy # CLIP embeddings for each caption (stored locally due to size)
 ├── generate_coco_texts.py # Script to extract & save coco_caption_texts.npy
 ├── generate_coco_embeds.py # Script to encode & save coco_caption_clip.npy
 ├── benchmark_ann.py # Runs FAISS benchmarks & prints summary table
