@@ -5,18 +5,18 @@
 import os, time, numpy as np, faiss, multiprocessing
 from tabulate import tabulate
 
-# ——— File names in this folder —————————————————————————————
+# File names in this folder 
 CAPTION_ARRAY   = "coco_caption_texts.npy"
 EMBEDDING_ARRAY = "coco_caption_clip.npy"
 OUTPUT_DIR      = "bench_indices"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# ——— FAISS THREADS ——————————————————————————————————————————————
+# FAISS THREADS
 n_threads = min(16, multiprocessing.cpu_count())
 faiss.omp_set_num_threads(n_threads)
 print(f"[*] FAISS using {n_threads} threads")
 
-# ——— Load data ——————————————————————————————————————————————
+# Load data
 print(f"[*] Loading captions from '{CAPTION_ARRAY}' and embeddings from '{EMBEDDING_ARRAY}'")
 captions  = np.load(CAPTION_ARRAY, allow_pickle=True)
 embeds    = np.load(EMBEDDING_ARRAY)

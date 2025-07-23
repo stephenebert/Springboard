@@ -6,7 +6,7 @@ import json
 import numpy as np
 import os
 
-# Edit path to your COCO captions JSON:
+# Edit path to COCO captions JSON:
 ANN_PATH = (
     "/Users/steph/Library/CloudStorage/OneDrive-Personal/Desktop/"
     "Springboard/Springboard/Capstone/step2/data/coco/annotations/"
