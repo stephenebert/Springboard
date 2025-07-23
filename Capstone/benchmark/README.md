@@ -7,7 +7,7 @@ Efficient similarity search at scale is the backbone of many modern AI systems. 
 ## Index Primer
 
 1. **FlatL2**  
-   - "Flat" means no clustering or partitioning—every vector lives in one big array.  
+   - "Flat" means no clustering or partitioning. Every vector lives in one big array.  
    - L2 (Euclidean) distance to every vector → exact recall, O(N) per query.  
    - **Pros**: trivial to build, 100% recall.  
    - **Cons**: very slow at scale (limited QPS), large memory bandwidth.
@@ -146,7 +146,3 @@ pip install faiss-cpu numpy tabulate tqdm
 - Benchmarks run on 16 threads (```OMP_NUM_THREADS=16```).
 
 - Scripts accept ```--device``` flags to leverage MPS/CUDA.
-
-
-
-
