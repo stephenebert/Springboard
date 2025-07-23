@@ -119,6 +119,11 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 
 ### 1. Text-to-Image Retrieval System
 
+
+![Screenshot of the Gradio demo UI](capstone/extra_exploration/data/UI1.png)
+
+
+
 **Explanations:**
 1. A **text query** is converted into a 512-dim embedding via CLIP
 2. The query is passed to a **FastAPI server**, which runs cosine similarity search against a pre-indexed FAISS database
