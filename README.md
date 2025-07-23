@@ -26,7 +26,10 @@ A comprehensive two-part, cross-modal retrieval and generation system demonstrat
 
 ### Part 2: [Text-to-Image Model Switcher Demo](https://huggingface.co/spaces/stephenebert/model-switcher-sd)
 
-**Generate stunning visuals from text descriptions with multiple AI models**
+![SD UI](Capstone/extra_exploration_1/bear walking in SD.png)
+
+
+**Generate visuals from text descriptions with multiple AI models**
 
 - **Multi-Model Support**: Seamlessly switch between industry-leading Stable Diffusion variants:
   - Stable Diffusion v1.5 (balanced quality and speed)
