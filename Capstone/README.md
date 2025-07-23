@@ -27,6 +27,16 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
 
 
 📁 **capstone-project/**
+- 📁 **benchmark/**
+    - **coco_caption_texts.npy** — 591,753 raw captions
+    - **coco_caption_clip.npy** — 591,753 x 512 CLIP embeddings
+    - **generate_coco_texts.py** — extract and save .npy captions
+    - **generate_coco_embeds.py** — encode & save .npy embeddings
+    - **benchmark_ann.py** — build/query FAISS indices and print summary
+    - **extended_metrics.py** — compute percentiles and histograms
+    - **latency_hist.png** — query latency distribution
+    - **distance_hist.pnf** — L2 distance distribution
+    - 📁 **bench_indices/** — (output) FlatL2.index, IVF_1024.index, IVF_4096.index
 - 📁 **extra_exploration/**
   - 📁 **data/**
     - **README.md** — FAISS building guide  
@@ -175,6 +185,11 @@ Available Models:
 - **Device Auto-Detection**: CUDA GPU (FP16), Apple M-series (Metal, FP16), CPU (FP32)
 - **Deterministic Seeding**: Enter any integer seed (0 = random) to reproduce exact results
 - **Model Switching**: Switch between models without restarting the application
+
+---
+## COCO Caption ANN Benchmark
+
+Efficient similarity search at scale is the backbone of many modern AI systems. From AI‑powered image search and recommendation engines to real‑time language retrieval and conversational agents. Yet choosing the right ANN index often involves a trade‑off between accuracy, build time, memory footprint, and query throughput. By quantitatively benchmarking FlatL2 against IVF variants on a realistic COCO‑caption embedding workload, we can identify which index delivers near‑perfect recall at orders‑of‑magnitude faster query speeds and modest build overhead, empowering practitioners to architect production‑grade pipelines that serve millions of queries per second without sacrificing result quality.
 
 ---
 
