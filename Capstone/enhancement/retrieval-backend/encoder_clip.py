@@ -1,13 +1,13 @@
 # encoder_clip.py
 """
 Safe, single‑process CLIP text embedder for macOS
-------------------------------------------------
+
 * CPU‑only (avoids Metal / GPU issues)
 * Forces Torch / BLAS to single thread – fixes semaphore seg‑faults
 * Caches tokenizer & model with @lru_cache (loads once)
 """
 
-# ---------- single‑thread guards (MUST be first!) -----------------
+# single‑thread guards
 import os
 os.environ["OMP_NUM_THREADS"] = "1"     # NumPy / OpenBLAS / Accelerate
 os.environ["MKL_NUM_THREADS"] = "1"     # MKL, if linked
