@@ -7,6 +7,15 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 - **FAISS indices**: HNSW, IVF‑Flat, IVF‑PQ  
 - **Evaluation**: baseline (FAISS only) and GPT‑4o‐vision log‑prob reranker  
 
+
+## Highlights
+
+- Data to Embeddings: You take the COCO validation captions JSON and turn each caption into a high‑dimensional vector, using either OpenAI’s CLIP‐Vision text encoder or NVIDIA’s multimodal MM‑Embed (via Hugging Face).
+- Embeddings to FAISS index. Those vectors get shoved into FAISS, using either:
+ -- HNSW, a graph‑based structure that gives exact (or near‑exact) neighbors very quickly, or
+ -- IVF‑PQ, a two‑stage (inverted‐file + product quantization) scheme that trades a tiny bit of accuracy for memory and speed gains.
+
+
 ---
 ## Directory Structure
 ```bash
