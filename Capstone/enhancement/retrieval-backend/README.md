@@ -12,9 +12,18 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 
 - Data to Embeddings: You take the COCO validation captions JSON and turn each caption into a high‑dimensional vector, using either OpenAI’s CLIP‐Vision text encoder or NVIDIA’s multimodal MM‑Embed (via Hugging Face).
 - Embeddings to FAISS index. Those vectors get shoved into FAISS, using either:
- -- HNSW, a graph‑based structure that gives exact (or near‑exact) neighbors very quickly, or
- -- IVF‑PQ, a two‑stage (inverted‐file + product quantization) scheme that trades a tiny bit of accuracy for memory and speed gains.
+ 1. HNSW, a graph‑based structure that gives exact (or near‑exact) neighbors very quickly, or
+ 2. IVF‑PQ, a two‑stage (inverted‐file + product quantization) scheme that trades a tiny bit of accuracy for memory and speed gains.
+- Index to Queries to Metrics
+  You then query each caption against the index (i.e. "can I retrieve the exact same caption as its own nearest neighbor?"), measure:
+  1. Recall@1 (did the top result match the query?)
+  2. Latency per query
+  3. Estimated cost (rough token‑count x price estimate for the reranker experiments)
 
+## Takeaways
+1. For pure speed+accuracy: stick with CLIP vectors + HNSW (easy, memory‑light, perfect recall).
+2. If you want higher‑dim multi‑modal features (ImageBind/MM‑Embed) you still get excellent recall (> 0.995) at ≈ 70 ms/query—either with HNSW or the more memory‑efficient IVF‑PQ.
+3. Reranker experiments reveal how cost and latency scale as you tune how many candidates you rerank (limit, top_k).
 
 ---
 ## Directory Structure
@@ -168,7 +177,7 @@ Outputs:
 |  1000 |   15   |   0.8660  |      582.2     |       1.44      |
 |  4000 |   10   |   0.8692  |      585.8     |       5.76      |
 
-
+Recall slowly degrades as you process more candidates (```limit```) or ask the reranker to re‑score more (```top_k```), but cost is roughly linear. Sweet spot around 600-1500: you get ≈ 0.88–0.90 recall at sub‑$2 cost, with ~ 560 - 590 ms per query.
 
 ![Recall vs Cost](recallvcost.png)
 
@@ -183,6 +192,7 @@ Outputs:
 |       MM‑Embed + HNSW (ef=64)       |   0.9974  |      75.7      |     0.72    |
 | MM‑Embed + IVF‑PQ (nlist=512, m=32) |   0.9958  |      70.2      |     0.72    |
 
+CLIP+HNSW recovers every caption exactly (Recall@1 = 1.0) and is fastest (~ 65 ms). Swapping in MM‑Embed (a larger, 1 024‑dim vector) costs ~ 10 ms extra per query and drops recall by ~ 0.2–0.4 pp. Using IVF‑PQ instead of HNSW on the MM‑Embed vectors regains some speed (~ 70 ms) at only a tiny extra recall loss (~ 0.16 pp vs. HNSW).
 
 ![Pipeline](pipeline.png)
 
