@@ -19,14 +19,14 @@ from json.decoder import JSONDecodeError
 
 from encoder_clip import embed_texts  # stub you created earlier
 
-# ---------- CONFIG ----------
+# CONFIG
 JSON_PATH = (
     "/Users/steph/Desktop/Springboard/Capstone/step5/data/raw/"
     "captions_val2017.json"
 )
 LIMIT  = 4000   # how many captions/queries to evaluate  (lower => cheaper)
 TOP_K  = 10    # FAISS shortlist size for GPT‑4o to rerank
-# ----------------------------
+
 
 def gpt4o_choice(query: str, candidates: List[str]) -> int:
     """Ask GPT‑4o to pick best caption; return zero‑based index."""
