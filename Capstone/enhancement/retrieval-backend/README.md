@@ -46,7 +46,6 @@ retrieval-backend/
   - [`evaluate_reranked.py`](#evaluate_rerankedpy)  
 - [Usage Examples](#usage-examples)  
 - [Environment Variables](#environment-variables)  
-- [License](#license)  
 
 ---
 
