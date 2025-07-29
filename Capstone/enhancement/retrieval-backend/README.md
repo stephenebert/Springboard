@@ -9,8 +9,7 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 
 ---
 ## Directory Structure
-```
-bash
+```bash
 retrieval-backend/
 ├── data/
 │ ├── raw/
