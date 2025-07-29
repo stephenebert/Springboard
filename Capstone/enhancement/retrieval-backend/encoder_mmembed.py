@@ -1,5 +1,5 @@
 # encoder_mmembed.py
-# ------------------
+
 from pathlib import Path
 from sentence_transformers import SentenceTransformer
 import torch
