@@ -8,7 +8,7 @@ import numpy as np
 _MODEL_DIR = Path(__file__).parent / "models" / "mme-lite"
 _device     = "cuda" if torch.cuda.is_available() else "cpu"
 _model      = SentenceTransformer(str(_MODEL_DIR), device=_device)
-_model.eval()                # speed ↔ memory
+_model.eval()                
 
 @torch.inference_mode()
 def embed_texts(texts: list[str]) -> np.ndarray:
