@@ -8,6 +8,32 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 - **Evaluation**: baseline (FAISS only) and GPT‑4o‐vision log‑prob reranker  
 
 ---
+## Directory Structure
+```
+bash
+retrieval-backend/
+├── data/
+│ ├── raw/
+│ │ └── captions_val2017.json # COCO captions
+│ └── embeds_val2017.npy # precomputed embeddings
+├── figs/
+│ ├── cost_metrics.png # recall vs cost & scale
+│ └── pipeline_comparison.png # final pipeline bar chart
+├── models/
+│ └── … # downloaded MM‑Embed/SBERT model files
+├── embed_coco.py # caption→embedding
+├── encoder_clip.py # CLIP embedding wrapper
+├── encoder_sbert.py # SBERT embedding wrapper
+├── index_builder.py # build FAISS index
+├── evaluate_baseline.py # FAISS-only benchmark
+├── evaluate_reranked.py # two-stage + GPT‑4o reranker
+├── requirements.txt
+└── README.md
+```
+
+
+
+---
 
 ## Table of Contents
 
@@ -134,6 +160,16 @@ Outputs:
 |  1000 |    5   |   0.8970  |      563.3     |       0.72      |
 |  1000 |   15   |   0.8660  |      582.2     |       1.44      |
 |  4000 |   10   |   0.8692  |      585.8     |       5.76      |
+
+
+### Pipeline Comparison @ 5 000 captions, top_k = 1
+
+
+|               Pipeline              | Recall\@1 | Latency (ms/q) | Cost (US\$) |
+| :---------------------------------: | :-------: | :------------: | :---------: |
+|         CLIP + HNSW (ef=64)         |   1.0000  |      65.2      |     0.72    |
+|       MM‑Embed + HNSW (ef=64)       |   0.9974  |      75.7      |     0.72    |
+| MM‑Embed + IVF‑PQ (nlist=512, m=32) |   0.9958  |      70.2      |     0.72    |
 
 
 
