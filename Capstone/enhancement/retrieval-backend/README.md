@@ -62,4 +62,14 @@ python embed_coco.py \
 - ```--encoder {clip,sbert}```: which text embedder to use.
 - ```--limit / --batch```: subset size & batch size.
 ### ```encoder_clip.py / encoder_sbert.py```
+Thin wrappers exposing a single function:
+``` bash
+from encoder_clip import embed_texts
+vs.
+from encoder_sbert import embed_texts
+```
+Use whichever fits your accuracy / speed trade‑off.
+
+### ```index_builder.py```
+
 
