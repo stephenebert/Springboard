@@ -44,9 +44,9 @@ def main():
     else:
         from encoder_mmembed import embed_texts
 
-    # ── 1) Load & embed COCO captions ───────────────────────────────────────────
+    # 1) Load & embed COCO captions
     caps = load_coco_caps(args.json, limit=args.limit)
-    print(f"▶ Loaded {len(caps)} captions from {args.json}")
+    print(f"Loaded {len(caps)} captions from {args.json}")
 
     all_embs = []
     t0 = time.time()
@@ -55,13 +55,13 @@ def main():
         embs = embed_texts(batch)               # returns np.ndarray, shape=(len(batch), dim)
         all_embs.append(embs)
     X = np.vstack(all_embs)
-    print(f"✓ Embedding done in {time.time()-t0:.2f}s  (dim={X.shape[1]})")
+    print(f"Embedding done in {time.time()-t0:.2f}s  (dim={X.shape[1]})")
 
-    # ── 2) Build / load FAISS index ─────────────────────────────────────────────
+    # 2) Build / load FAISS index
     if args.engine == "ivf_flat":
         d = X.shape[1]
         index = faiss.index_factory(d, "IVF20,Flat")
-        print("▶ Training IVF‑Flat index…")
+        print("Training IVF‑Flat index...")
         index.train(X)
         index.add(X)
 
@@ -69,7 +69,7 @@ def main():
         d = X.shape[1]
         spec = f"IVF{args.nlist},PQ{args.pq_m}"
         index = faiss.index_factory(d, spec)
-        print(f"▶ Training IVF‑PQ index ({spec})…")
+        print(f"Training IVF‑PQ index ({spec})…")
         index.train(X)
         index.add(X)
 
@@ -77,10 +77,10 @@ def main():
         assert args.index, "Must pass --index for HNSW"
         index = faiss.read_index(args.index)
         index.hnsw.efSearch = args.ef_search
-        print(f"▶ Loaded HNSW index from {args.index} (efSearch={args.ef_search})")
+        print(f"Loaded HNSW index from {args.index} (efSearch={args.ef_search})")
 
-    # ── 3) Run queries & measure Recall@K ───────────────────────────────────────
-    print("▶ Running queries…")
+    # 3) Run queries & measure Recall@K
+    print("Running queries…")
     start = time.time()
     correct = 0
     for i, cap in enumerate(caps):
