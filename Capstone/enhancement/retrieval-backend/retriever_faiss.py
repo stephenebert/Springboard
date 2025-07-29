@@ -2,7 +2,7 @@
 import faiss
 import numpy as np
 
-# ---------- load HNSW index ----------
+# load HNSW index
 INDEX_PATH = "hnsw_val2017.faiss"          # relative to working dir
 index = faiss.read_index(INDEX_PATH)
 
@@ -14,7 +14,7 @@ NPROBE = getattr(index, "nprobe", None)    # HNSW ignores nprobe, IVF needs it
 
 print(f"Loaded {INDEX_PATH} | dim={DIM} | efSearch=64")
 
-# ---------- helper: search ----------
+# helper: search
 def search(query_vecs: np.ndarray, top_k: int = 10):
     """
     query_vecs:  (N, dim) float32
