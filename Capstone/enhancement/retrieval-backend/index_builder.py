@@ -12,12 +12,12 @@ python index_builder.py \
     --nlist 256             \      # IVF‑PQ / IVF‑Flat only  (optional)
     --pq_m 64                     # IVF‑PQ only (optional)
 """
-# ── index_builder.py ────────────────
+# index_builder.py 
 import argparse, pathlib, faiss, numpy as np, tqdm
 
 def load_embeds(path: str) -> np.ndarray:
     xb = np.load(path).astype("float32")
-    print(f"► Loaded {len(xb):,} vectors  (dim={xb.shape[1]})")
+    print(f"Loaded {len(xb):,} vectors  (dim={xb.shape[1]})")
     return xb
 
 def build_ivfpq(dim: int, nlist: int, pq_m: int) -> faiss.IndexIVFPQ:
@@ -38,18 +38,18 @@ def main():
     xb   = load_embeds(args.embeds)
     dim  = xb.shape[1]
 
-    # ▼ engine dispatch ----------------------------------------------------
+    # engine dispatch
     if args.engine == "hnsw":
         index = faiss.IndexHNSWFlat(dim, 32)        # M=32
         index.hnsw.efSearch = args.ef_search
 
     elif args.engine == "ivf_flat":
         index = faiss.index_factory(dim, f"IVF{args.nlist},Flat")
-        print("► Training index …"); index.train(xb)
+        print("Training index …"); index.train(xb)
 
     elif args.engine == "ivfpq":
         index = build_ivfpq(dim, args.nlist, args.pq_m)
-        print("► Training IVF‑PQ …")
+        print("Training IVF‑PQ …")
         # Faiss wants a contiguous array; tqdm for simple progress readout.
         index.train(xb)
 
