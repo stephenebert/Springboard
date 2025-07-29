@@ -10,15 +10,20 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 
 ## Highlights
 
-- Data to Embeddings: You take the COCO validation captions JSON and turn each caption into a high‑dimensional vector, using either OpenAI’s CLIP‐Vision text encoder or NVIDIA’s multimodal MM‑Embed (via Hugging Face).
-- Embeddings to FAISS index. Those vectors get shoved into FAISS, using either:
+- **Data to Embeddings**: You take the COCO validation captions JSON and turn each caption into a high‑dimensional vector, using either OpenAI’s CLIP‐Vision text encoder or NVIDIA’s multimodal MM‑Embed (via Hugging Face).
+- **Embeddings to FAISS index**: Those vectors get shoved into FAISS, using either:
  1. HNSW, a graph‑based structure that gives exact (or near‑exact) neighbors very quickly, or
  2. IVF‑PQ, a two‑stage (inverted‐file + product quantization) scheme that trades a tiny bit of accuracy for memory and speed gains.
-- Index to Queries to Metrics
+- **Index to Queries to Metrics**:
   You then query each caption against the index (i.e. "can I retrieve the exact same caption as its own nearest neighbor?"), measure:
   1. Recall@1 (did the top result match the query?)
   2. Latency per query
   3. Estimated cost (rough token‑count x price estimate for the reranker experiments)
+- **Evaluation**  
+  1. Reranker: GPT‑4o‑vision (model: `gpt-4o-instruct`). Costed at \$0.000144 per 128‑token prompt (we consumed real API credits)  
+  2. Recall@K & avg ms/query for 5000 COCO captions  
+   3. Cost bars in our plots reflect the **actual OpenAI credits** spent
+
 
 ## Takeaways
 1. For pure speed+accuracy: stick with CLIP vectors + HNSW (easy, memory‑light, perfect recall).
@@ -29,28 +34,28 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 ## Directory Structure
 ```bash
 retrieval-backend/
-├── models/                     # locally stored — **not** in Git
-│   ├── hnsw_val2017.faiss      # CLIP+HNSW index (5000 vectors)
-│   ├── ivfpq_val2017.faiss     # CLIP+IVF‑PQ index
-│   ├── hnsw_mmembed.faiss      # MM‑Embed+HNSW index
-│   └── …                       # other index files
-├── data/                       # locally stored — **not** in Git
-│   ├── captions_val2017.json   # COCO val captions
-│   ├── embeds_val2017.npy      # CLIP embeddings
-│   └── embeds_mmembed.npy      # MM‑Embed embeddings
-├── embed_coco.py               # generate & save embeddings from JSON
-├── index_builder.py            # build FAISS index (hnsw/ivf_flat/ivfpq)
-├── evaluate_baseline.py        # query FAISS & report Recall@K, latency
-├── evaluate_reranked.py        # two‑stage (FAISS→LLM) reranker eval
-├── encoder_clip.py             # CLIP text encoder wrapper
-├── encoder_sbert.py            # SBERT text encoder wrapper
-├── encoder_mmembed.py          # MM‑Embed text encoder wrapper
-├── retriever_faiss.py          # example Flask/FastAPI retriever service
-├── Cost metrics.ipynb          # Jupyter notebook with cost/scale plots
-├── pipeline.png                # pipeline diagram
-├── recallvcost.png             # Recall vs cost plot
-├── requirements.txt            # `pip install` dependencies
-└── README.md    
+├── models/ # local-only — FAISS indexes & pickles
+│ ├── hnsw_val2017.faiss # CLIP+HNSW (5 k vectors, 384‑D)
+│ ├── ivfpq_val2017.faiss # CLIP+IVF‑PQ (5 k vectors)
+│ ├── hnsw_mmembed.faiss # MM‑Embed+HNSW (5 k, 1 024‑D)
+│ └── ivfpq_mmembed.faiss # MM‑Embed+IVF‑PQ
+├── data/ # local-only — COCO captions & embeddings
+│ ├── captions_val2017.json # COCO val split
+│ ├── embeds_val2017.npy # CLIP‐based embeddings
+│ └── embeds_mmembed.npy # MM‑Embed embeddings
+├── embed_coco.py # JSON → batched .npy embeddings
+├── index_builder.py # .npy → FAISS index (hnsw / ivf_flat / ivfpq)
+├── evaluate_baseline.py # FAISS retrieval → Recall@K + latency
+├── evaluate_reranked.py # 2‑stage FAISS → GPT‑4o reranker
+├── encoder_clip.py # CLIP text encoder wrapper
+├── encoder_sbert.py # SBERT text encoder wrapper
+├── encoder_mmembed.py # MM‑Embed text encoder wrapper
+├── retriever_faiss.py # minimal Flask/FastAPI retrieval service
+├── Cost metrics.ipynb # notebook: parses logs, builds tables & plots
+├── pipeline.png # high‑level pipeline diagram
+├── recallvcost.png # recall vs. cost & scale plot
+├── requirements.txt # pip dependencies
+└── README.md
 ```
 
 
