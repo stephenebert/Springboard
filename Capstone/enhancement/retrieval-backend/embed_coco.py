@@ -3,7 +3,7 @@
 Embed COCO captions with any encoder_* module.
 
 Examples
---------
+
 python embed_coco.py \
   --json   /path/to/captions_val2017.json \
   --out    data/embeds_mmembed.npy \
@@ -17,13 +17,11 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
-# --------------------------------------------------------------------------- #
 def load_coco_caps(path: str, limit: int | None = None) -> list[str]:
     with open(path, "r") as f:
         anns = json.load(f)["annotations"]
     return [ann["caption"] for ann in anns][:limit]
 
-# --------------------------------------------------------------------------- #
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--json",   required=True, help="COCO captions JSON")
@@ -35,12 +33,11 @@ def main() -> None:
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
-    # dynamic import ---------------------------------------------------------
     try:
         enc_mod     = importlib.import_module(args.encoder)
         embed_texts = enc_mod.embed_texts
     except Exception as e:
-        sys.exit(f"❌  could not import {args.encoder}: {e}")
+        sys.exit(f"could not import {args.encoder}: {e}")
 
     caps  = load_coco_caps(args.json, args.limit)
     if args.verbose:
@@ -57,8 +54,7 @@ def main() -> None:
     if args.verbose:
         dt = time.time() - t0
         rate = len(caps) / dt
-        print(f"✓ Saved {embs.shape} → {args.out}   ({dt:0.1f}s, {rate:,.0f} cap/s)")
+        print(f"Saved {embs.shape} → {args.out}   ({dt:0.1f}s, {rate:,.0f} cap/s)")
 
-# --------------------------------------------------------------------------- #
 if __name__ == "__main__":
     main()
