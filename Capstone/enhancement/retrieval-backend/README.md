@@ -29,23 +29,28 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 ## Directory Structure
 ```bash
 retrieval-backend/
-├── data/
-│ ├── raw/
-│ │ └── captions_val2017.json # COCO captions
-│ └── embeds_val2017.npy # precomputed embeddings
-├── figs/
-│ ├── cost_metrics.png # recall vs cost & scale
-│ └── pipeline_comparison.png # final pipeline bar chart
-├── models/
-│ └── … # downloaded MM‑Embed/SBERT model files
-├── embed_coco.py # caption→embedding
-├── encoder_clip.py # CLIP embedding wrapper
-├── encoder_sbert.py # SBERT embedding wrapper
-├── index_builder.py # build FAISS index
-├── evaluate_baseline.py # FAISS-only benchmark
-├── evaluate_reranked.py # two-stage + GPT‑4o reranker
-├── requirements.txt
-└── README.md
+├── models/                     # locally stored — **not** in Git
+│   ├── hnsw_val2017.faiss      # CLIP+HNSW index (5000 vectors)
+│   ├── ivfpq_val2017.faiss     # CLIP+IVF‑PQ index
+│   ├── hnsw_mmembed.faiss      # MM‑Embed+HNSW index
+│   └── …                       # other index files
+├── data/                       # locally stored — **not** in Git
+│   ├── captions_val2017.json   # COCO val captions
+│   ├── embeds_val2017.npy      # CLIP embeddings
+│   └── embeds_mmembed.npy      # MM‑Embed embeddings
+├── embed_coco.py               # generate & save embeddings from JSON
+├── index_builder.py            # build FAISS index (hnsw/ivf_flat/ivfpq)
+├── evaluate_baseline.py        # query FAISS & report Recall@K, latency
+├── evaluate_reranked.py        # two‑stage (FAISS→LLM) reranker eval
+├── encoder_clip.py             # CLIP text encoder wrapper
+├── encoder_sbert.py            # SBERT text encoder wrapper
+├── encoder_mmembed.py          # MM‑Embed text encoder wrapper
+├── retriever_faiss.py          # example Flask/FastAPI retriever service
+├── Cost metrics.ipynb          # Jupyter notebook with cost/scale plots
+├── pipeline.png                # pipeline diagram
+├── recallvcost.png             # Recall vs cost plot
+├── requirements.txt            # `pip install` dependencies
+└── README.md    
 ```
 
 
@@ -91,7 +96,7 @@ data/raw/captions_val2017.json
 
 ### ```embed_coco.py```
 
-Load up to N COCO captions, embed them in batches, and save to a ```.npy```
+Load up to N COCO captions, ```captions_val2017.json```,  encodes with your selected encoder, embed them in batches, and save to a ```.npy```
 ``` bash
 python embed_coco.py \
   --json /path/to/captions_val2017.json \
@@ -114,27 +119,16 @@ Use whichever fits your accuracy / speed trade‑off.
 
 ### ```index_builder.py```
 
-Build a FAISS index from your precomputed ```.npy``` embeddings:
+Builds and saves a FAISS index:
 
 ``` bash
-# HNSW
 python index_builder.py \
   --embeds data/embeds_val2017.npy \
-  --out hnsw_val2017.fai \
-  --engine hnsw \
-  --ef_search 64
-
-# IVF‑PQ
-python index_builder.py \
-  --embeds data/embeds_val2017.npy \
-  --out ivfpq_val2017.fai \
-  --engine ivfpq \
-  --nlist 512 \
-  --pq_m 32
+  --out    models/hnsw_val2017.faiss \
+  --engine hnsw        # or `ivf_flat`, `ivfpq`
+  [--ef_search 64]     # for HNSW
+  [--nlist 512 --pq_m 32]  # for IVF‑PQ
 ```
-- ```--engine {hnsw, ivf_flat, ivfpq}```
-- HNSW: tune ```--ef_search```
-- IVF‑PQ: set ```--nlist, --pq_m```
 ### ```evaluate_baseline.py```
 Single-stage retrieval evaluation (Recall@K + latency):
 ``` bash
