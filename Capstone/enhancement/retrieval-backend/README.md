@@ -160,6 +160,11 @@ Outputs:
 |  4000 |   10   |   0.8692  |      585.8     |       5.76      |
 
 
+
+![Recall vs Cost](recallvcost.png)
+
+
+
 ### Pipeline Comparison @ 5 000 captions, top_k = 1
 
 
@@ -170,7 +175,7 @@ Outputs:
 | MM‑Embed + IVF‑PQ (nlist=512, m=32) |   0.9958  |      70.2      |     0.72    |
 
 
-
+![Pipeline](pipeline.png)
 
 
 ## Usage Examples
