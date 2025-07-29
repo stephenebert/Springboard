@@ -121,6 +121,24 @@ Outputs:
 - Reranked Recall@1
 - avg latency per query
 
+## Results
+### Cost vs Scale (Reranker experiments)
+| limit | top\_k | Recall\@1 | Latency (ms/q) | Cost US\$ (est) |
+| :---: | :----: | :-------: | :------------: | :-------------: |
+|  300  |   10   |   0.9033  |      616.9     |       0.35      |
+|  1000 |   10   |   0.8810  |      565.3     |       1.44      |
+|  3000 |   15   |   0.8567  |      586.8     |       5.10      |
+|  600  |   10   |   0.8767  |      591.1     |       0.86      |
+|  1500 |   10   |   0.8853  |      571.9     |       2.16      |
+|  2000 |   10   |   0.8650  |      585.0     |       2.88      |
+|  1000 |    5   |   0.8970  |      563.3     |       0.72      |
+|  1000 |   15   |   0.8660  |      582.2     |       1.44      |
+|  4000 |   10   |   0.8692  |      585.8     |       5.76      |
+
+
+
+
+
 ## Usage Examples
 All of the above get wired into Cost metrics.ipynb, which:
 
