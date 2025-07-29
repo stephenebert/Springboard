@@ -72,4 +72,69 @@ Use whichever fits your accuracy / speed trade‑off.
 
 ### ```index_builder.py```
 
+Build a FAISS index from your precomputed ```.npy``` embeddings:
+
+``` bash
+# HNSW
+python index_builder.py \
+  --embeds data/embeds_val2017.npy \
+  --out hnsw_val2017.fai \
+  --engine hnsw \
+  --ef_search 64
+
+# IVF‑PQ
+python index_builder.py \
+  --embeds data/embeds_val2017.npy \
+  --out ivfpq_val2017.fai \
+  --engine ivfpq \
+  --nlist 512 \
+  --pq_m 32
+```
+- ```--engine {hnsw, ivf_flat, ivfpq}```
+- HNSW: tune ```--ef_search```
+- IVF‑PQ: set ```--nlist, --pq_m```
+### ```evaluate_baseline.py```
+Single-stage retrieval evaluation (Recall@K + latency):
+``` bash
+python evaluate_baseline.py \
+  --json  /path/to/captions_val2017.json \
+  --engine hnsw \
+  --index  hnsw_val2017.fai \
+  --limit 5000 \
+  --top_k 1 \
+  --batch 256 \
+  --ef_search 64
+```
+Outputs:
+- Recall@K
+- average ms/query
+
+### ```evaluate_reranked.py```
+``` bash
+export OPENAI_API_KEY=sk-...
+python evaluate_reranked.py \
+  --json  /path/to/captions_val2017.json \
+  --limit 1000 \
+  --top_k 10
+```
+Outputs:
+- Reranked Recall@1
+- avg latency per query
+
+## Usage Examples
+All of the above get wired into Cost metrics.ipynb, which:
+
+1. Reads your log files
+
+2. Builds a Pandas table of (limit, top_k, recall, latency, cost)
+
+3. Plots recall vs cost curves
+
+## Environment Variables
+
+``` bash
+export OMP_NUM_THREADS=1
+export TOKENIZERS_PARALLELISM=false
+export OPENAI_API_KEY=sk-...
+```
 
