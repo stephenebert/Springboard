@@ -196,6 +196,19 @@ CLIP+HNSW recovers every caption exactly (Recall@1 = 1.0) and is fastest (~�
 ![Pipeline](pipeline.png)
 
 
+## What the numbers mean
+Here is a summary what the numbers above mean: 
+-Perfect, lightning‑fast retrieval with CLIP + HNSW: we recover every caption (Recall@1 = 1.0) in ~ 65 ms/query.
+
+- Richer, higher‑dim features (MM‑Embed) still deliver > 99.5 % recall at ≈ 70–75 ms/query—at negligible extra cost.
+
+- IVF‑PQ gives a small speed/memory win over HNSW on the 1 024‑D vectors, losing < 0.2 pp recall.
+
+- Reranker experiments (on top‑K = 1, 5, 10…) show recall degrades gradually as you scale up how many candidates you rescore, with cost scaling linearly. Sweet spot around 600–1 500 candidates for ~ 0.88–0.90 recall at sub‑$2 cost (≈ 560–590 ms/query).
+
+
+
+
 ## Usage Examples
 All of the above get wired into Cost metrics.ipynb, which:
 
@@ -212,4 +225,7 @@ export OMP_NUM_THREADS=1
 export TOKENIZERS_PARALLELISM=false
 export OPENAI_API_KEY=sk-...
 ```
+
+## Conclusion
+Here we embed COCO captions into vectors (using CLIP‑Vision or MM‑Embed). Then we indexed those vectors with FAISS (HNSW or IVF‑PQ) for evaluating retrieval quality (Recall@K) and speed (ms/query). Finally, We rerank top candidates with GPT‑4o‑vision ("gpt‑4o‑instruct"), using real API credits.
 
