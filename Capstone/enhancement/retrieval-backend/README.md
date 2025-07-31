@@ -1,99 +1,92 @@
 
 # retrieval-backend
 
-This folder contains everything needed to build, index, and benchmark text‐based retrieval pipelines over COCO captions, including:
+This folder contains everything needed to **embed → index → query → benchmark**
+COCO captions with state-of-the-art text *and* multi-modal models:
 
-- **Embeddings**: CLIP-ViT, SBERT, MM-Embed, **ImageBind**  
-- **FAISS indices**: HNSW, IVF-Flat, IVF-PQ  
-- **Evaluation**: baseline (FAISS only) and GPT‑4o‐vision log‑prob reranker  
-
-
-
-Everything to **embed → index → query → benchmark** COCO captions with state-of-the-art text / multimodal models:
 | Stage | Options |
 |-------|---------|
-| **Encoders** | <br>• CLIP-ViT/B32  (384-D)<br>• SBERT-all-MiniLM  (384-D)<br>• MM-Embed-Base  (1 024-D)<br>• **ImageBind-Huge**  (1 024-D, 8-branch multimodal) |
-| **FAISS engines** | HNSW  (exact, RAM-friendly)<br>IVF-Flat  (shards, RAM-heavy, fast)<br>IVF-PQ  (shards + product-quantisation, smallest) |
-| **Evaluation** | • Baseline Recall@K + latency<br>• GPT-4o-vision reranker † |
-| **Plots** | recall vs cost, recall vs latency, pipeline bars |
+| **Encoders** | • CLIP-ViT/B-32 (384-D)<br>• SBERT all-MiniLM (384-D)<br>• MM-Embed-Base (1 024-D)<br>• **ImageBind-Huge** (1 024-D) |
+| **FAISS engines** | HNSW (exact, RAM-friendly) · IVF-Flat · IVF-PQ |
+| **Evaluation** | Baseline Recall@K + latency · GPT-4o-vision reranker† |
+| **Plots** | recall vs cost, recall vs latency, bar chart (v2) |
 
-† *Reranker uses real GPT-4o API calls – costs shown are true token spend.*
-
-
-## Highlights 1
-
-- **Data to Embeddings**: You take the COCO validation captions JSON and turn each caption into a high‑dimensional vector, using either OpenAI’s CLIP‐Vision text encoder or NVIDIA’s multimodal MM‑Embed (via Hugging Face).
-- **Embeddings to FAISS index**: Those vectors get shoved into FAISS, using either:
- 1. HNSW, a graph‑based structure that gives exact (or near‑exact) neighbors very quickly, or
- 2. IVF‑PQ, a two‑stage (inverted‐file + product quantization) scheme that trades a tiny bit of accuracy for memory and speed gains.
-- **Index to Queries to Metrics**:
-  You then query each caption against the index (i.e. "can I retrieve the exact same caption as its own nearest neighbor?"), measure:
-  1. Recall@1 (did the top result match the query?)
-  2. Latency per query
-  3. Estimated cost (rough token‑count x price estimate for the reranker experiments)
-- **Evaluation**  
-  1. Reranker: GPT‑4o‑vision (model: `gpt-4o-instruct`). Costed at \$0.000144 per 128‑token prompt (we consumed real API credits)  
-  2. Recall@K & avg ms/query for 5000 COCO captions  
-   3. Cost bars in our plots reflect the **actual OpenAI credits** spent
-
-## Highlights 2
-
-| New | Description |
-|----|-------------|
-| **ImageBind support** | Adds a fourth encoder that fuses six modalities (text · image · audio · IMU · depth · thermal) into a single 1024-D space. |
-| **`encoder_imagebind.py`** | Minimal wrapper (`embed_texts()` and `embed_images()`). |
-| **Pipeline v2 plot** | Bar-chart now includes *ImageBind + HNSW* (32 ms/q, 0 . 9 97 Recall@1). |
-| **Updated baseline + reranker scripts** | Flag `--encoder imagebind` and automatic dimension inference. |
-
-
-
-## Takeaways
-1. For pure speed+accuracy: stick with CLIP vectors + HNSW (easy, memory‑light, perfect recall).
-2. If you want higher‑dim multi‑modal features (ImageBind/MM‑Embed) you still get excellent recall (> 0.995) at ≈ 70 ms/query—either with HNSW or the more memory‑efficient IVF‑PQ.
-3. Reranker experiments reveal how cost and latency scale as you tune how many candidates you rerank (limit, top_k).
-
-
-## TL;DR Results @ 5 k captions, top-k = 1
-
-| Pipeline                               | Dim | Recall@1 | Latency (ms/q) |
-|----------------------------------------|:---:|:--------:|:--------------:|
-| CLIP + HNSW (ef = 64)                   | 384 | **1.000 ** | **65** |
-| MM-Embed + HNSW (ef = 64)              |1024 | 0.997 4 | 76 |
-| MM-Embed + IVF-PQ (nlist = 512, m = 32) |1024 | 0.996 0 | 70 |
-| **ImageBind + HNSW (ef = 64)**         |1024 | 0.997 4 | **32** |
-
-
-- **CLIP + HNSW** is still king for pure text → text retrieval: perfect recall in 65 ms.
-- **ImageBind + HNSW** cuts latency in half (32 ms) **and** keeps recall ≥ 0.997 because ImageBind’s text branch is deeper and the vectors are already L2-normalised.
-- MM-Embed pipelines remain competitive which is handy when you need cross-modal similarity (image ↔ text).
+† Reranker uses real GPT-4o API calls — cost bars show actual \$ spend.
 
 ---
+
+## Highlights 1 (pipeline overview)
+
+- **Data → Embeddings**  
+  Feed the COCO *val* captions JSON into **one of four encoders** (CLIP, SBERT, MM-Embed, *ImageBind*).
+- **Embeddings → FAISS**  
+  Build either:  
+  1. **HNSW** (graph — exact or near-exact, tiny RAM)  
+  2. **IVF-PQ** (inverted file + PQ — smallest, slight recall loss)
+- **Query → Metrics**  
+  For each caption ask “can I retrieve myself?” and log Recall@1, latency, token-cost.
+- **Evaluation**  
+  *Reranker:* GPT-4o-vision (`gpt-4o-instruct`) at \$0.000144 per 128-token prompt.
+
+## Highlights 2 (what’s new)
+
+| 🆕 | Description |
+|----|-------------|
+| **ImageBind support** | Text ↔ six-modality encoder, 1 024-D vectors. |
+| **`encoder_imagebind.py`** | Minimal wrapper: `embed_texts()` / `embed_images()`. |
+| **Pipeline v2 plot** | Adds *ImageBind + HNSW* bar (32 ms/q, 0.997 R@1). |
+| **Script updates** | `--encoder imagebind`, automatic dim detection, new README. |
+
+---
+
+## Takeaways
+
+1. **CLIP + HNSW** → perfect recall in ≈ 65 ms on CPU/MPS.  
+2. **ImageBind + HNSW** → *same* recall (0.997) in **32 ms** — fastest pipeline.  
+3. MM-Embed pipelines remain competitive when you need cross-modal retrieval.  
+4. GPT-4o reranker sweet-spot ≈ 600-1 500 candidates at \< \$2 for 0.88-0.90 recall.
+
+---
+
+## TL;DR results @ 5 000 captions (top-k = 1)
+
+| Pipeline | Dim | Recall@1 | Latency (ms/q) |
+|----------|:--:|:--------:|:--------------:|
+| CLIP + HNSW (ef = 64) | 384 | **1.0000** | 65 |
+| MM-Embed + HNSW (ef = 64) |1024| 0.9974 | 76 |
+| MM-Embed + IVF-PQ |1024| 0.9960 | 70 |
+| **ImageBind + HNSW (ef = 64)** |1024| 0.9974 | **32** |
+
+> **ImageBind halves latency while matching CLIP-level recall.**
+
+---
+
 ## Directory Structure
 ```bash
 retrieval-backend/
-├── models/ # local-only — FAISS indexes & pickles
-│ ├── hnsw_val2017.faiss # CLIP+HNSW (5 k vectors, 384‑D)
-│ ├── ivfpq_val2017.faiss # CLIP+IVF‑PQ (5 k vectors)
-│ ├── hnsw_mmembed.faiss # MM‑Embed+HNSW (5 k, 1 024‑D)
-│ └── ivfpq_mmembed.faiss # MM‑Embed+IVF‑PQ
-├── data/ # local-only — COCO captions & embeddings
-│ ├── captions_val2017.json # COCO val split
-│ ├── embeds_val2017.npy # CLIP‐based embeddings
-│ └── embeds_mmembed.npy # MM‑Embed embeddings
-├── embed_coco.py # JSON → batched .npy embeddings
-├── index_builder.py # .npy → FAISS index (hnsw / ivf_flat / ivfpq)
-├── evaluate_baseline.py # FAISS retrieval → Recall@K + latency
-├── evaluate_reranked.py # 2‑stage FAISS → GPT‑4o reranker
-├── encoder_clip.py # CLIP text encoder wrapper
-├── encoder_sbert.py # SBERT text encoder wrapper
-├── encoder_mmembed.py # MM‑Embed text encoder wrapper
-├── retriever_faiss.py # minimal Flask/FastAPI retrieval service
-├── Cost metrics.ipynb # notebook: parses logs, builds tables & plots
-├── pipeline.png # high‑level pipeline diagram
-├── recallvcost.png # recall vs. cost & scale plot
-├── requirements.txt # pip dependencies
+├── data/
+│   ├── coco/annotations/captions_val2017.json
+│   ├── embeds_val2017.npy         # CLIP
+│   ├── embeds_mmembed.npy         # MM-Embed
+│   └── embeds_imagebind.npy       # ImageBind   
+├── models/
+│   ├── hnsw_val2017.faiss         # CLIP HNSW
+│   ├── hnsw_mmembed.faiss         # MM-Embed HNSW
+│   ├── ivfpq_mmembed.faiss        # MM-Embed IVF-PQ
+│   └── hnsw_imagebind.faiss       # ImageBind HNSW 
+├── encoder_clip.py
+├── encoder_sbert.py
+├── encoder_mmembed.py
+├── encoder_imagebind.py         
+├── embed_coco.py
+├── index_builder.py
+├── evaluate_baseline.py
+├── evaluate_reranked.py
+├── plots/
+│   └── pipeline_v2.png          
+├── Cost metrics.ipynb
+├── requirements.txt
 └── README.md
-```
 
 
 
@@ -282,5 +275,6 @@ export OPENAI_API_KEY=sk-...
 ```
 
 ## Conclusion
-Here we embed COCO captions into vectors (using CLIP‑Vision or MM‑Embed). Then we indexed those vectors with FAISS (HNSW or IVF‑PQ) for evaluating retrieval quality (Recall@K) and speed (ms/query). Finally, We rerank top candidates with GPT‑4o‑vision ("gpt‑4o‑instruct"), using real API credits.
+We embed COCO captions into vectors (CLIP, MM-Embed, ImageBind), index with FAISS (HNSW or IVF-PQ), benchmark Recall@K & latency, and (optionally) rerank with GPT-4o-vision. ImageBind delivers near-perfect recall while halving per-query latency and eliminating API token costs.
+
 
