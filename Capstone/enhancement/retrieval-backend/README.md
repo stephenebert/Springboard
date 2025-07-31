@@ -48,7 +48,7 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 
 ---
 
-## TL;DR results @ 5 000 captions (top-k = 1)
+## TL;DR results @ 5000 captions (top-k = 1)
 
 | Pipeline | Dim | Recall@1 | Latency (ms/q) |
 |----------|:--:|:--------:|:--------------:|
@@ -230,7 +230,7 @@ Recall slowly degrades as you process more candidates (```limit```) or ask the r
 
 
 
-### Pipeline Comparison @ 5 000 captions, top_k = 1
+### Pipeline Comparison @ 5000 captions, top_k = 1
 
 
 |               Pipeline              | Recall\@1 | Latency (ms/q) | Cost (US\$) |
