@@ -15,7 +15,7 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 
 ---
 
-## Highlights 1 (pipeline overview)
+## Highlights (pipeline overview)
 
 - **Data → Embeddings**  
   Feed the COCO *val* captions JSON into **one of four encoders** (CLIP, SBERT, MM-Embed, *ImageBind*).
@@ -28,7 +28,6 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 - **Evaluation**  
   *Reranker:* GPT-4o-vision (`gpt-4o-instruct`) at \$0.000144 per 128-token prompt.
 
-## Highlights 2 (what’s new)
 
 | Stage | Description |
 |----|-------------|
