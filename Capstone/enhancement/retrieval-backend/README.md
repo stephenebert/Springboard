@@ -6,7 +6,7 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 
 | Stage | Options |
 |-------|---------|
-| **Encoders** | • CLIP-ViT/B-32 (384-D)<br>• SBERT all-MiniLM (384-D)<br>• MM-Embed-Base (1 024-D)<br>• **ImageBind-Huge** (1 024-D) |
+| **Encoders** | • CLIP-ViT/B-32 (384-D)<br>• SBERT all-MiniLM (384-D)<br>• MM-Embed-Base (1024-D)<br>• **ImageBind-Huge** (1024-D) |
 | **FAISS engines** | HNSW (exact, RAM-friendly) · IVF-Flat · IVF-PQ |
 | **Evaluation** | Baseline Recall@K + latency · GPT-4o-vision reranker† |
 | **Plots** | recall vs cost, recall vs latency, bar chart (v2) |
@@ -32,7 +32,7 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 
 | Stage | Description |
 |----|-------------|
-| **ImageBind support** | Text ↔ six-modality encoder, 1 024-D vectors. |
+| **ImageBind support** | Text ↔ six-modality encoder, 1024-D vectors. |
 | **`encoder_imagebind.py`** | Minimal wrapper: `embed_texts()` / `embed_images()`. |
 | **Pipeline v2 plot** | Adds *ImageBind + HNSW* bar (32 ms/q, 0.997 R@1). |
 | **Script updates** | `--encoder imagebind`, automatic dim detection, new README. |
