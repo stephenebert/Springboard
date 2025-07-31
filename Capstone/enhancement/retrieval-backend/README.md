@@ -11,7 +11,7 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 | **Evaluation** | Baseline Recall@K + latency · GPT-4o-vision reranker† |
 | **Plots** | recall vs cost, recall vs latency, bar chart (v2) |
 
-† Reranker uses real GPT-4o API calls — cost bars show actual \$ spend.
+† Reranker uses real GPT-4o API calls. Cost bars show actual \$ spend.
 
 ---
 
@@ -21,10 +21,10 @@ COCO captions with state-of-the-art text *and* multi-modal models:
   Feed the COCO *val* captions JSON into **one of four encoders** (CLIP, SBERT, MM-Embed, *ImageBind*).
 - **Embeddings → FAISS**  
   Build either:  
-  1. **HNSW** (graph — exact or near-exact, tiny RAM)  
-  2. **IVF-PQ** (inverted file + PQ — smallest, slight recall loss)
+  1. **HNSW** (graph: exact or near-exact, tiny RAM)  
+  2. **IVF-PQ** (inverted file + PQ: smallest, slight recall loss)
 - **Query → Metrics**  
-  For each caption ask “can I retrieve myself?” and log Recall@1, latency, token-cost.
+  For each caption ask "can I retrieve myself?" and log Recall@1, latency, token-cost.
 - **Evaluation**  
   *Reranker:* GPT-4o-vision (`gpt-4o-instruct`) at \$0.000144 per 128-token prompt.
 
@@ -42,7 +42,7 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 ## Takeaways
 
 1. **CLIP + HNSW** → perfect recall in ≈ 65 ms on CPU/MPS.  
-2. **ImageBind + HNSW** → *same* recall (0.997) in **32 ms** — fastest pipeline.  
+2. **ImageBind + HNSW** → *same* recall (0.997) in **32 ms** fastest pipeline.  
 3. MM-Embed pipelines remain competitive when you need cross-modal retrieval.  
 4. GPT-4o reranker sweet-spot ≈ 600-1 500 candidates at \< \$2 for 0.88-0.90 recall.
 
@@ -248,11 +248,11 @@ CLIP+HNSW recovers every caption exactly (Recall@1 = 1.0) and is fastest (~�
 Here is a summary what the numbers above mean: 
 -Perfect, lightning‑fast retrieval with CLIP + HNSW: we recover every caption (Recall@1 = 1.0) in ~ 65 ms/query.
 
-- Richer, higher‑dim features (MM‑Embed) still deliver > 99.5 % recall at ≈ 70–75 ms/query—at negligible extra cost.
+- Richer, higher‑dim features (MM‑Embed) still deliver > 99.5 % recall at ≈ 70–75 ms/query at negligible extra cost.
 
 - IVF‑PQ gives a small speed/memory win over HNSW on the 1 024‑D vectors, losing < 0.2 pp recall.
 
-- Reranker experiments (on top‑K = 1, 5, 10…) show recall degrades gradually as you scale up how many candidates you rescore, with cost scaling linearly. Sweet spot around 600–1 500 candidates for ~ 0.88–0.90 recall at sub‑$2 cost (≈ 560–590 ms/query).
+- Reranker experiments (on top‑K = 1, 5, 10...) show recall degrades gradually as you scale up how many candidates you rescore, with cost scaling linearly. Sweet spot around 600–1 500 candidates for ~ 0.88–0.90 recall at sub‑$2 cost (≈ 560–590 ms/query).
 
 
 
