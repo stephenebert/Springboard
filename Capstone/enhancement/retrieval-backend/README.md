@@ -3,9 +3,19 @@
 
 This folder contains everything needed to build, index, and benchmark text‐based retrieval pipelines over COCO captions, including:
 
-- **Embeddings**: CLIP‐ViT or SBERT encoders  
-- **FAISS indices**: HNSW, IVF‑Flat, IVF‑PQ  
+- **Embeddings**: CLIP-ViT, SBERT, MM-Embed, **ImageBind**  
+- **FAISS indices**: HNSW, IVF-Flat, IVF-PQ  
 - **Evaluation**: baseline (FAISS only) and GPT‑4o‐vision log‑prob reranker  
+
+
+| Stage | Options |
+|-------|---------|
+| **Encoders** | <br>• CLIP-ViT/B32  (384-D)<br>• SBERT-all-MiniLM  (384-D)<br>• MM-Embed-Base  (1 024-D)<br>• **ImageBind-Huge**  (1 024-D, 8-branch multimodal) |
+| **FAISS engines** | HNSW  (exact, RAM-friendly)<br>IVF-Flat  (shards, RAM-heavy, fast)<br>IVF-PQ  (shards + product-quantisation, smallest) |
+| **Evaluation** | • Baseline Recall@K + latency<br>• GPT-4o-vision reranker † |
+| **Plots** | recall vs cost, recall vs latency, pipeline bars |
+
+† *Reranker uses real GPT-4o API calls – costs shown are true token spend.*
 
 
 ## Highlights
@@ -23,6 +33,8 @@ This folder contains everything needed to build, index, and benchmark text‐bas
   1. Reranker: GPT‑4o‑vision (model: `gpt-4o-instruct`). Costed at \$0.000144 per 128‑token prompt (we consumed real API credits)  
   2. Recall@K & avg ms/query for 5000 COCO captions  
    3. Cost bars in our plots reflect the **actual OpenAI credits** spent
+
+
 
 
 ## Takeaways
