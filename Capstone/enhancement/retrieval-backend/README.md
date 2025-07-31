@@ -8,6 +8,8 @@ This folder contains everything needed to build, index, and benchmark text‐bas
 - **Evaluation**: baseline (FAISS only) and GPT‑4o‐vision log‑prob reranker  
 
 
+
+Everything to **embed → index → query → benchmark** COCO captions with state-of-the-art text / multimodal models:
 | Stage | Options |
 |-------|---------|
 | **Encoders** | <br>• CLIP-ViT/B32  (384-D)<br>• SBERT-all-MiniLM  (384-D)<br>• MM-Embed-Base  (1 024-D)<br>• **ImageBind-Huge**  (1 024-D, 8-branch multimodal) |
