@@ -74,20 +74,20 @@ retrieval-backend/
 │   ├── hnsw_mmembed.faiss         # MM-Embed HNSW
 │   ├── ivfpq_mmembed.faiss        # MM-Embed IVF-PQ
 │   └── hnsw_imagebind.faiss       # ImageBind HNSW 
-├── encoder_clip.py
-├── encoder_sbert.py
-├── encoder_mmembed.py
-├── encoder_imagebind.py         
-├── embed_coco.py
-├── index_builder.py
-├── evaluate_baseline.py
-├── evaluate_reranked.py
-├── plots/
-│   └── pipeline_v2.png          
-├── Cost metrics.ipynb
-├── requirements.txt
+├── encoder_clip.py                # CLIP text encoder wrapper
+├── encoder_sbert.py               # SBERT text encoder wrapper
+├── encoder_mmembed.py             # MM‑Embed text encoder wrapper
+├── encoder_imagebind.py
+├── retriever_faiss.py            # minimal Flask/FastAPI retrieval service
+├── embed_coco.py                 # JSON → batched .npy embeddings
+├── index_builder.py              # .npy → FAISS index (hnsw / ivf_flat / ivfpq)
+├── evaluate_baseline.py          # FAISS retrieval → Recall@K + latency
+├── evaluate_reranked.py          # 2‑stage FAISS → GPT‑4o reranker
+├── pipeline_v2.png          
+├── Cost metrics.ipynb            # notebook: parses logs, builds tables & plots
+├── requirements.txt              # pip dependencies
 └── README.md
-
+```
 
 
 ---
