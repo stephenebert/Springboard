@@ -30,7 +30,7 @@ COCO captions with state-of-the-art text *and* multi-modal models:
 
 ## Highlights 2 (what’s new)
 
-| 🆕 | Description |
+| Stage | Description |
 |----|-------------|
 | **ImageBind support** | Text ↔ six-modality encoder, 1 024-D vectors. |
 | **`encoder_imagebind.py`** | Minimal wrapper: `embed_texts()` / `embed_images()`. |
