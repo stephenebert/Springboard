@@ -248,7 +248,7 @@ Recall slowly degrades as you process more candidates (```limit```) or ask the r
 
 CLIP+HNSW recovers every caption exactly (Recall@1 = 1.0) and is fastest (~ 65 ms). Swapping in MM‑Embed (a larger, 1 024‑dim vector) costs ~ 10 ms extra per query and drops recall by ~ 0.2–0.4 pp. Using IVF‑PQ instead of HNSW on the MM‑Embed vectors regains some speed (~ 70 ms) at only a tiny extra recall loss (~ 0.16 pp vs. HNSW).
 
-![Pipeline](pipeline.png)
+![Pipeline](pipelinev2.png)
 
 
 ## What the numbers mean
