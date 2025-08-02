@@ -6,9 +6,9 @@ Everything you need to **embed → index → query → benchmark** COCO captions
 | Stage            | Options                                                                                 |
 | ---------------- | --------------------------------------------------------------------------------------- |
 | **Encoders**     | • CLIP-ViT/B-32 (384-D) <br> • SBERT all-MiniLM (384-D) <br> • MM-Embed-Base (1024-D) <br> • **ImageBind-Huge (1024-D)** |
-| **FAISS engines**| HNSW (exact, RAM-friendly) · IVF-Flat · IVF-PQ                                           |
-| **Evaluation**   | Recall@K + latency · optional 2-stage GPT-4o-vision reranker†                            |
-| **Plots**        | recall vs. latency · recall vs. cost · pipeline bar chart v2  
+| **FAISS engines**| HNSW (exact, RAM-friendly), IVF-Flat, IVF-PQ                                           |
+| **Evaluation**   | Recall@K + latency, optional 2-stage GPT-4o-vision reranker†                            |
+| **Plots**        | recall vs. latency, recall vs. cost, pipeline bar chart v2  
 
 † Reranker uses real GPT-4o API calls at \$0.000144 per 128-token prompt.
 
