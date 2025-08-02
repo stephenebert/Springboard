@@ -341,9 +341,9 @@ export OPENAI_API_KEY=sk-...
 ## Conclusion
 We embed COCO captions into vectors (CLIP, MM-Embed, ImageBind), index with FAISS (HNSW or IVF-PQ), benchmark Recall@K & latency, and rerank with GPT-4o-vision. ImageBind delivers near-perfect recall while halving per-query latency and eliminating API token costs.
 
-- MM-Embed + HNSW is our new text-only winner: ▶ 0.9904 @ 11.6 ms
+- MM-Embed + HNSW is our new text-only winner: 0.9904 @ 11.6 ms
 
-- ImageBind + HNSW matches ~100% recall at ▶ 31.6 ms, with zero API cost
+- ImageBind + HNSW matches ~100% recall at 31.6 ms, with zero API cost
 
 - SBERT remains useful for ultra-low-memory / low-latency (< 1 ms) use-cases
 
