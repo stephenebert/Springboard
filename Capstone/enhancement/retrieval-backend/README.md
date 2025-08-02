@@ -244,6 +244,20 @@ CLIP+HNSW recovers every caption exactly (Recall@1 = 1.0) and is fastest (~�
 ![Pipeline](pipeline_v2.png)
 
 
+### Baseline Retrieval Benchmarks
+
+| Encoder + HNSW  | Recall@1 | Retrieval ms/query | Embed ms/query |
+| --------------- | -------- | ------------------ | -------------- |
+| imagebind       | 0.9903   | 31.6               | 8063           |
+| mmembed         | 0.9904   | 11.6               | 2968           |
+| sbert           | 0.1994   |  0.34              |   87.7         |
+
+
+![Pipeline2](workstream5recalllatency.png)
+
+**Conclusion:** MM-Embed + HNSW is the best default baseline.
+
+
 ## What the numbers mean
 Here is a summary what the numbers above mean: 
 -Perfect, lightning‑fast retrieval with CLIP + HNSW: we recover every caption (Recall@1 = 1.0) in ~ 65 ms/query.
