@@ -1,17 +1,17 @@
 
 # retrieval-backend
 
-This folder contains everything needed to **embed → index → query → benchmark**
-COCO captions with state-of-the-art text *and* multi-modal models:
+Everything you need to **embed → index → query → benchmark** COCO captions with both text‐ and multi‐modal encoders:
 
-| Stage | Options |
-|-------|---------|
-| **Encoders** | • CLIP-ViT/B-32 (384-D)<br>• SBERT all-MiniLM (384-D)<br>• MM-Embed-Base (1024-D)<br>• **ImageBind-Huge** (1024-D) |
-| **FAISS engines** | HNSW (exact, RAM-friendly) · IVF-Flat · IVF-PQ |
-| **Evaluation** | Baseline Recall@K + latency · GPT-4o-vision reranker† |
-| **Plots** | recall vs cost, recall vs latency, bar chart (v2) |
+| Stage            | Options                                                                                 |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| **Encoders**     | • CLIP-ViT/B-32 (384-D) <br> • SBERT all-MiniLM (384-D) <br> • MM-Embed-Base (1024-D) <br> • **ImageBind-Huge (1024-D)** |
+| **FAISS engines**| HNSW (exact, RAM-friendly) · IVF-Flat · IVF-PQ                                           |
+| **Evaluation**   | Recall@K + latency · optional 2-stage GPT-4o-vision reranker†                            |
+| **Plots**        | recall vs. latency · recall vs. cost · pipeline bar chart v2  
 
-† Reranker uses real GPT-4o API calls. Cost bars show actual \$ spend.
+† Reranker uses real GPT-4o API calls at \$0.000144 per 128-token prompt.
+
 
 ---
 
