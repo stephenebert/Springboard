@@ -11,7 +11,6 @@ import nltk
 from PIL import Image
 from transformers import BlipForConditionalGeneration, BlipProcessor
 
-# ─── ensure punkt + perceptron tagger are downloaded ──────────────────────────
 for res, subdir in [
     ("punkt", "tokenizers"),
     ("averaged_perceptron_tagger", "taggers"),
@@ -21,15 +20,13 @@ for res, subdir in [
     except LookupError:
         nltk.download(res, quiet=True)
 
-# ─── where we dump the caption+tags JSON sidecars ──────────────────────────────
 CAP_TAG_DIR = _pl.Path.home() / "Desktop" / "image_tags"
 CAP_TAG_DIR.mkdir(exist_ok=True, parents=True)
 
-# ─── load the BLIP model once ──────────────────────────────────────────────────
+# load the BLIP model
 _processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
 _model     = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
-# ─── allowed POS prefixes ──────────────────────────────────────────────────────
 _POS = {"nouns": ("NN",), "adjs": ("JJ",), "verbs": ("VB",)}
 
 def _caption_to_tags(
