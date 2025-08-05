@@ -69,7 +69,7 @@ POST /upload
 **Response:**
 If we turn everything off except for noun then
 
-![Example Input](test_image.png)
+![Example Input](test_output.png)
 ```json
 {
   "filename": "test_image.png",
