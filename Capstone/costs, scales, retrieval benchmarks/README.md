@@ -1,5 +1,5 @@
 
-# retrieval-backend
+# retrieval-backend, scales, cost metrics
 
 Everything you need to **embed → index → query → benchmark** COCO captions with both text‐ and multi‐modal encoders:
 
