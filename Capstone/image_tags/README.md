@@ -169,7 +169,7 @@ image_tags/
 ├── __init__.py          # Package initialization
 ├── main.py              # FastAPI application
 ├── tagger.py            # Core tagging functionality
-└── README.md            # This file
+└── README.md           
 ```
 
 ## Development
