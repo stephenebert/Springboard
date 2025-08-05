@@ -67,7 +67,10 @@ POST /upload
 - `verbs` (optional): Include verb tags (default: true)
 
 **Response:**
-If we turn everything off except for noun then
+If we turn everything off except for nouns in the API
+![Example Input](API.png)
+
+then the following json is outputted
 
 ![Example Input](test_output.png)
 ```json
