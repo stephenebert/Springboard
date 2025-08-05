@@ -67,7 +67,12 @@ POST /upload
 - `verbs` (optional): Include verb tags (default: true)
 
 **Response:**
-If we turn everything off except for nouns in the API
+If we upload an image, say a cat or anything,
+
+![Example Input](test_image.png)
+
+
+turn everything off except for nouns in the API
 ![Example Input](API.png)
 
 then the following json is outputted
