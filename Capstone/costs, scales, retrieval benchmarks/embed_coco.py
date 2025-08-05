@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# --------------------------------------------
 # embed_coco.py
 #
 # Usage example:
@@ -8,11 +7,11 @@
 #       --out  data/embeds_imagebind.npy \
 #       --limit 5000 --batch 128 \
 #       --encoder imagebind --verbose
-# --------------------------------------------
+
 import argparse, json, numpy as np, pathlib, time
 from tqdm import tqdm
 
-# ---------- helpers ----------------------------------------------------------
+# helpers
 def load_coco_caps(path, limit=None):
     """Return a list[str] of captions from COCO‑style JSON."""
     with open(path, "r") as f:
@@ -27,7 +26,7 @@ def save_embeds(path, arr):
     print(f"✓ wrote {path} shape={arr.shape} dtype=float32")
 
 
-# ---------- main -------------------------------------------------------------
+# main
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--json",    required=True,
@@ -42,7 +41,7 @@ def main():
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
-    # pick the encoder --------------------------------------------------------
+    # pick the encoder
     if args.encoder == "clip":
         from encoder_clip import embed_texts as embed_fn
     elif args.encoder == "sbert":
@@ -55,12 +54,12 @@ def main():
     else:                                   # pragma: no cover
         raise ValueError(f"unknown encoder: {args.encoder}")
 
-    # load captions -----------------------------------------------------------
+    # load captions
     caps = load_coco_caps(args.json, args.limit)
     if args.verbose:
-        print(f"▶ Loaded {len(caps):,} captions from {args.json}")
+        print(f"Loaded {len(caps):,} captions from {args.json}")
 
-    # embed in batches --------------------------------------------------------
+    # embed in batches
     all_vecs = []
     t0 = time.time()
     for i in tqdm(range(0, len(caps), args.batch), disable=not args.verbose):
@@ -74,7 +73,7 @@ def main():
         qps = len(caps) / dt
         print(f"✓ embedding done in {dt:,.1f}s  ({qps:,.1f} q/s)  dim={vecs.shape[1]}")
 
-    # save --------------------------------------------------------------------
+    # save
     save_embeds(args.out, vecs)
 
 
