@@ -49,12 +49,12 @@ def main():
 
     elif args.engine == "ivfpq":
         index = build_ivfpq(dim, args.nlist, args.pq_m)
-        print("Training IVF‑PQ …")
+        print("Training IVF‑PQ ...")
         # Faiss wants a contiguous array; tqdm for simple progress readout.
         index.train(xb)
 
     # Add vectors (with mini‑batches so memory stays low)
-    print("► Adding vectors …")
+    print("Adding vectors ...")
     for start in tqdm.tqdm(range(0, len(xb), 10_000)):
         index.add(xb[start:start+10_000])
 
