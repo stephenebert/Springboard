@@ -198,13 +198,6 @@ Visit `http://localhost:8000/docs` for Swagger UI documentation or `http://local
 
 This project uses the BLIP model from Salesforce Research, which is available under the BSD 3-Clause License.
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
 
 ## Troubleshooting
 
