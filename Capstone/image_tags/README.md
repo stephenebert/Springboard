@@ -67,11 +67,17 @@ POST /upload
 - `verbs` (optional): Include verb tags (default: true)
 
 **Response:**
+If we turn everything off except for noun then
+
+![Example Input](test_image.png)
 ```json
 {
-  "filename": "example.jpg",
-  "caption": "a cat sitting on a sidewalk",
-  "tags": ["cat", "sitting", "sidewalk", "orange", "furry"]
+  "filename": "test_image.png",
+  "caption": "a cat sitting on the ground",
+  "tags": [
+    "cat",
+    "ground"
+  ]
 }
 ```
 
