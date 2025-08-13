@@ -229,9 +229,10 @@ On hugging face, this looks like
 
 and uploading a sample image, say a lion,
 
-![tag](image_tags/lion.png)
+![tag2](image_tags/lion.png)
 
 it outputs
+
 ``` bash
 {
   "filename": "020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg",
@@ -813,6 +814,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
