@@ -320,6 +320,9 @@ Vision’s built-in image classifier with a Core ML fallback.
 ### Screenshots
 
 
+
+
+
 ### Troubleshooting
 
 | Symptom / Error | Likely Cause | Fix |
@@ -849,6 +852,10 @@ This capstone project shows:
 
 ## Screenshots
 
+![iphone1](images/image1.PNG)
+
+![iphone2](images/image2.jpg)
+
 ### Text-to-Image Gradio Interface
 
 ![Screenshot](phase2/step12_share_project/images/Screenshot%202025-07-14%20004105.png)
@@ -1001,4 +1008,5 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
