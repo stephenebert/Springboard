@@ -38,7 +38,23 @@ The hyperlinks reference their Hugging Face deployments for web usage, which can
     - **latency_hist.png** — query latency distribution
     - **distance_hist.pnf** — L2 distance distribution
     - 📁 **bench_indices/** — (output) FlatL2.index, IVF_1024.index, IVF_4096.index
-- 📁 **costs, scales, retrieval benchmarks/**
+- 📁 **costs, scales, retrieval benchmarks/** 
+  - 📁 **encoders/** — encoder modules and wrappers
+  - 📁 **evaluate/** — evaluation scripts and metrics  
+  - 📁 **faiss/** — FAISS index files and builders
+  - 📁 **logs/** — evaluation logs and results
+  - 📁 **models/** — model weights and configurations
+  - **Cost metrics.ipynb** — analyze logs & generate plots
+  - **README.md** — backend documentation and setup
+  - **embed_coco.py** — JSON → .npy embeddings pipeline
+  - **full_rerank.log** — reranker evaluation results
+  - **hnsw_val2017.pkl** — HNSW index pickle file
+  - **index_builder.py** — .npy → FAISS index builder
+  - **pipeline.png** — pipeline diagram v1
+  - **pipeline_v2.png** — pipeline bar chart v2
+  - **quick-bench.ipynb** — quick benchmarking notebook
+  - **recallvcost.png** — recall vs. cost analysis chart
+  - **workstream5recalllatency.png** — recall vs. latency chart
 - 📁 **extra_exploration/**
   - 📁 **data/**
     - **README.md** — FAISS building guide  
@@ -924,6 +940,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
