@@ -68,9 +68,11 @@ The hyperlinks reference their hugging face for web usage. All systems are optim
   - **requirements.txt** — dependencies for model-switcher demo  
   - **README.md** — documentation for model-switcher app  
 - 📁 **image_tags/**
-   - **main.py** - main code
-   - **tagger.py** - get the tags
-   - **README** - documentation for image tagging
+   - **__init__.py** — package initialization
+  - **main.py** — FastAPI application with Gradio integration
+  - **tagger.py** — core BLIP-based tagging functionality
+  - **requirements.txt** — image tagger dependencies
+  - **README.md** — image tagger documentation
 - 📁 **phase1/**
   - 📁 **step1_initial_project_ideas/** — brainstorming and ideation  
   - 📁 **step2_data_collection/** — dataset gathering and prep  
@@ -790,6 +792,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
