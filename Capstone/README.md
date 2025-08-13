@@ -319,8 +319,9 @@ Vision’s built-in image classifier with a Core ML fallback.
 
 ### Screenshots
 
+![iphone1](images/image1.PNG)
 
-
+![iphone2](images/image2.jpg)
 
 
 ### Troubleshooting
@@ -852,9 +853,6 @@ This capstone project shows:
 
 ## Screenshots
 
-![iphone1](images/image1.PNG)
-
-![iphone2](images/image2.jpg)
 
 ### Text-to-Image Gradio Interface
 
@@ -1008,5 +1006,6 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
