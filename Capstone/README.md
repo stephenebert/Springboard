@@ -229,7 +229,7 @@ On hugging face, this looks like
 
 and uploading a sample image, say a lion,
 
-![tag2](image_tags/lion.png)
+![tag2](image_tags/lion.jpg)
 
 it outputs
 
@@ -814,6 +814,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
