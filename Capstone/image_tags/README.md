@@ -23,7 +23,7 @@ An AI-powered image tagging API that generates captions and extracts semantic ta
 ## Live Demo (Hugging Face Space)
 Upload an image in the Space and you’ll see the caption plus tags. Example response produced in the Space (https://huggingface.co/spaces/stephenebert/Image_Tagger):
 
-![Example Input](lion.png)
+![Example Input](lion.jpg)
 
 and it outputs
 ``` bash
