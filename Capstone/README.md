@@ -19,7 +19,7 @@ This capstone project demonstrates comprehensive **cross-modal retrieval systems
 4. **[Model-Switcher Stable Diffusion Demo](https://huggingface.co/spaces/stephenebert/model-switcher-sd)**: Multi-model text-to-image generation with SD v1.5, SDXL Base 1.0, and SD-Turbo
 5. **[Image Tagger](https://huggingface.co/spaces/stephenebert/Image_Tagger)**: Automated image captioning and semantic tag extraction using BLIP model.
 
-The hyperlinks reference their hugging face for web usage. All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment. 
+The hyperlinks reference their hugging face for web usage, which can also be found on my hugging face [account](https://huggingface.co/stephenebert). All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment. 
 
 ---
 
@@ -823,6 +823,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
