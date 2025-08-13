@@ -694,9 +694,9 @@ What we input
 
 ![1123](image_tags/test_image.png)
 
-which outputs something reasonable
+which outputs
 
-![1123](image_tags/test_out.png)
+![1123](image_tags/test_output.png)
 
 ---
 
@@ -823,6 +823,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
