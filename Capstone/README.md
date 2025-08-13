@@ -319,9 +319,10 @@ Vision’s built-in image classifier with a Core ML fallback.
 
 ### Screenshots
 
-![iphone1](images/image1.PNG)
-
-![iphone2](images/image2.jpg)
+<p>
+  <img src="images/image1.PNG" alt="iPhone 1" width="320" />
+  <img src="images/image2.jpg" alt="iPhone 2" width="320" />
+</p>
 
 
 ### Troubleshooting
@@ -1006,6 +1007,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
