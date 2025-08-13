@@ -20,6 +20,10 @@ An AI-powered image tagging API that generates captions and extracts semantic ta
 - **Metadata Persistence**: Saves caption and tag data as JSON sidecars
 - **Gradio Frontend**: Drag-and-drop UI for quick testing.
 
+The API for the HF space looks like this
+
+![Example Input](APIhf.jpg)
+
 ## Live Demo (Hugging Face Space)
 Upload an image in the Space and you’ll see the caption plus tags. Example response produced in the Space (https://huggingface.co/spaces/stephenebert/Image_Tagger):
 
