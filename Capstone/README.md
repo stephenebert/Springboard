@@ -208,7 +208,7 @@ Available Models:
 - **Deterministic Seeding**: Enter any integer seed (0 = random) to reproduce exact results
 - **Model Switching**: Switch between models without restarting the application
 
-#### 5. Image Tagger API
+### 5. Image Tagger API
 ![tag](image_tags/API.png)
 **Run Locally:**
 ```bash
@@ -264,7 +264,7 @@ it outputs
 }
 ```
 
-#### 6. Multi-Service Orchestration (Docker Compose)
+### 6. Multi-Service Orchestration (Docker Compose)
 
 **Run all services together:**
 ```bash
@@ -940,6 +940,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
