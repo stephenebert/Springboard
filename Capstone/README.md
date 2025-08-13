@@ -19,6 +19,10 @@ This capstone project demonstrates comprehensive cross-modal retrieval systems w
 4. **[Model-Switcher Stable Diffusion Demo](https://huggingface.co/spaces/stephenebert/model-switcher-sd)**: Multi-model text-to-image generation with SD v1.5, SDXL Base 1.0, and SD-Turbo
 5. **[Image Tagger](https://huggingface.co/spaces/stephenebert/Image_Tagger)**: Automated image captioning and semantic tag extraction using BLIP model.
 6. **Production Retrieval Backend**: Scalable FAISS-powered API with comprehensive cost metrics and performance benchmarking.
+7. **iOS Image Tagger (SwiftUI, on-device)**: Real-time image labeling using Apple Vision
+   (`VNClassifyImageRequest`) with a Core ML MobileNet fallback. Camera + Photo Library,
+   adjustable confidence threshold and `top-K`, sort (confidence / A-Z), focus-term boost,
+   pinch-to-zoom viewer, and haptic feedback. Runs **fully offline** on device.
 
 The hyperlinks reference their Hugging Face deployments for web usage, which can also be found on my hugging face [account](https://huggingface.co/stephenebert). All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment.     
 
@@ -276,6 +280,63 @@ docker-compose up --build
 - Image Tagger API: http://localhost:8001
 - Stable Diffusion Demo: http://localhost:8002
 - Model-Switcher Demo: http://localhost:8003
+
+
+## 7. iOS Image Tagger (SwiftUI + Vision/Core ML)
+
+A native iOS app that tags images **completely on device**—no network calls—using Apple
+Vision’s built-in image classifier with a Core ML fallback.
+
+### Features
+- **Inputs**: Camera capture or Photo Library (PhotosPicker)
+- **Controls**: `top-K` tag count, confidence threshold slider, sort by **Confidence** or **A–Z**
+- **Focus/Boost**: Soft-boost specific terms (e.g., “denim, hat, sunglasses”)
+- **UX**: Chip UI with color-coded confidences, haptics, pinch-to-zoom fullscreen viewer
+- **Offline**: All inference happens on the device (Vision → Core ML fallback)
+- **Speed**: Typical latency in the ~50–150 ms range on recent iPhones
+
+### How it works
+1. Try **Vision**: `VNClassifyImageRequest` returns `VNClassificationObservation`s  
+2. Map to app’s `TagResult` (label, confidence)  
+3. *(Fallback)* If Vision isn’t available or errors, run a small **MobileNetV2** Core ML model  
+4. Apply optional **focus-term boost** (a small +ε to confidences for target words)  
+5. Filter by threshold, take `top-K`, and present nicely in SwiftUI
+
+### Build & Run
+
+**Requirements**
+- Xcode 15+ (Swift 5.9+), iOS 16/17+
+- Real device recommended for camera tests
+
+**Steps**
+1. `File → Open…` the `ImageTagger.xcodeproj` (or workspace)
+2. Select the **ImageTagger** target → **Signing & Capabilities** → set your Team
+3. Add these to **Info.plist**:
+   - `NSCameraUsageDescription` — “We use the camera to classify captured photos.”
+   - `NSPhotoLibraryUsageDescription` — “We access your library to classify photos.”
+4. Build & run on device  
+5. Tap **Select Image** (Photos) or **Analyze** (after capture/pick)
+
+### Screenshots
+
+
+### Troubleshooting
+
+| Symptom / Error | Likely Cause | Fix |
+|---|---|---|
+| *“Type ‘ZeroShotTagger’ has no member ‘shared’”* | File not in target | In Xcode, select **ZeroShotTagger.swift** → “Target Membership” → check **ImageTagger** |
+| *Undefined symbol: TagResult* | Duplicate or missing `TagResult` | Ensure there is **one** `TagResult.swift` in the app target; delete duplicates |
+| *“Failed to create espresso context.”* | Core ML engine couldn’t allocate an Espresso context | Use Vision path first (already default). If you keep fallback, set `MLModelConfiguration.computeUnits = .cpuAndNeuralEngine`, quit background apps, or reboot device |
+| Camera button disabled | Simulator or no camera available | Test on a real iPhone; guard with `UIImagePickerController.isSourceTypeAvailable(.camera)` |
+
+### File Notes
+- **ContentView.swift**: SwiftUI layout (header, card, actions, chips, settings, zoom viewer)
+- **ZeroShotTagger.swift**: `predictTags(from:topK:threshold:focusTerms:applyBoost:)`
+- **TagResult.swift**: `public struct TagResult: Identifiable, Hashable { id, label, confidence }`
+
+> The app’s tagging is complementary to your web **Image Tagger API** (BLIP).  
+> iOS gives you fast, private, offline tagging; the API covers server workflows.
+
 
 
 ---
@@ -940,13 +1001,3 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
-
-
-
-
-
-
-
-
-
-
