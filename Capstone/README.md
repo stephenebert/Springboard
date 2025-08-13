@@ -11,14 +11,15 @@
 
 ## Overview
 
-This capstone project demonstrates comprehensive **cross-modal retrieval systems** with two complementary applications:
+This capstone project demonstrates comprehensive **cross-modal retrieval systems** with complementary applications:
 
 1. **[Text-to-Image Retrieval](https://huggingface.co/spaces/stephenebert/retrieval-demo)**: Users input text queries to retrieve matching images from a large-scale embedding database
 2. **[Image-to-Text Retrieval](https://huggingface.co/spaces/stephenebert/image2text-faiss-demo)**: Users upload images to find similar captions using BLIP → CLIP → FAISS pipeline
 3. **[Stable Diffusion Text-to-Image Generation](https://huggingface.co/spaces/stephenebert/sd-text2image)**: Users generate 512×512 images from text prompts using Stable Diffusion v1.5
 4. **[Model-Switcher Stable Diffusion Demo](https://huggingface.co/spaces/stephenebert/model-switcher-sd)**: Multi-model text-to-image generation with SD v1.5, SDXL Base 1.0, and SD-Turbo
+5. **[Image Tagger][https://huggingface.co/spaces/stephenebert/Image_Tagger]**: Automated image captioning and semantic tag extraction using BLIP model.
 
-All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment.
+The hyperlinks reference their hugging face for web usage. All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment. 
 
 ---
 
@@ -66,7 +67,10 @@ All systems are optimized for performance (via FAISS ANN search and GPU accelera
   - **model_switch.png** — screenshot of model-switcher UI  
   - **requirements.txt** — dependencies for model-switcher demo  
   - **README.md** — documentation for model-switcher app  
-
+- 📁 **image_tags/**
+   - **main.py** - main code
+   - **tagger.py** - get the tags
+   - **README** - documentation for image tagging
 - 📁 **phase1/**
   - 📁 **step1_initial_project_ideas/** — brainstorming and ideation  
   - 📁 **step2_data_collection/** — dataset gathering and prep  
@@ -183,6 +187,53 @@ Available Models:
 - **Device Auto-Detection**: CUDA GPU (FP16), Apple M-series (Metal, FP16), CPU (FP32)
 - **Deterministic Seeding**: Enter any integer seed (0 = random) to reproduce exact results
 - **Model Switching**: Switch between models without restarting the application
+
+#### 5. Image Tagger API
+
+**Run Locally:**
+```bash
+cd image_tagger
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+```
+
+**Access Points:**
+- **Gradio UI**: http://localhost:8001/
+- **API Docs**: http://localhost:8001/docs
+- **Health Check**: http://localhost:8001/healthz
+
+**Run with Docker:**
+```bash
+cd image_tagger
+docker build -t image-tagger-api .
+docker run -p 8001:8001 image-tagger-api
+```
+
+**API Usage Examples:**
+```bash
+# Upload image with default settings
+curl -X POST "http://localhost:8001/upload" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@test_image.jpg"
+
+# Custom filtering (nouns only, max 10 tags)
+curl -X POST "http://localhost:8001/upload?top_k=10&nouns=true&adjs=false&verbs=false" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@cat.jpg"
+```
+
+#### 6. Multi-Service Orchestration (Docker Compose)
+
+**Run all services together:**
+```bash
+docker-compose up --build
+```
+
+**Services will be available at:**
+- Text-to-Image Retrieval: http://localhost:8000
+- Image Tagger API: http://localhost:8001
+- Stable Diffusion Demo: http://localhost:8002
+- Model-Switcher Demo: http://localhost:8003
 
 ---
 ## COCO Caption ANN Benchmark
@@ -430,11 +481,17 @@ Provides 2-3x faster embedding generation.
 - **Apple Silicon**: Metal acceleration (12-20s per image)
 - **CPU**: Still functional but slower (60s+ per image)
 
+### Image Tagger Performance
+- **Caption Generation**: ~1-2 seconds per image (BLIP model)
+- **Tag Extraction**: ~0.1 seconds (NLTK processing)
+- **Memory Usage**: ~1GB for BLIP model weights
+- **Concurrent Requests**: FastAPI async support for multiple simultaneous uploads
 
 ### Memory Management
 - **Text-to-Image**: ~4GB for production index
 - **Image-to-Text**: ~2GB for demo with full COCO corpus
 - **Stable Diffusion**: ~4GB for model weights
+- **Image Tagger**: ~1GB for BLIP model
 - **Inference**: 1-2 seconds per query on modern hardware
 
 ### Scalability Features
@@ -457,6 +514,10 @@ python scripts/smoke_test.py
 
 # Integration tests
 docker-compose -f docker-compose.test.yml up --build
+
+# Image tagger specific tests
+cd image_tagger
+python -m pytest tests/
 ```
 
 ### Evaluation Metrics
@@ -481,6 +542,25 @@ docker-compose -f docker-compose.test.yml up --build
 2. **Hugging Face Spaces**: Gradio demo interfaces
 3. **Docker**: Containerized applications with reproducible environments
 4. **FAISS**: High-performance similarity search backend
+
+### Service Architecture
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Text→Image     │    │  Image→Text     │    │  Image Tagger   │
+│  Retrieval API  │    │  Retrieval UI   │    │  API + UI       │
+│  Port: 8000     │    │  Port: 7860     │    │  Port: 8001     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 │
+                    ┌─────────────────┐
+                    │   Load Balancer │
+                    │   / API Gateway │
+                    └─────────────────┘
+```
+
+
+
 
 ### Monitoring and Logging
 - Health check endpoints for service monitoring
@@ -530,6 +610,13 @@ print(f'PyTorch: {torch.__version__} | Transformers: {transformers.__version__}'
 python -c "
 from diffusers import StableDiffusionPipeline
 print('Diffusers installation verified')
+"
+
+# Image Tagger check
+python -c "
+from transformers import BlipProcessor, BlipForConditionalGeneration
+import nltk
+print('BLIP and NLTK installation verified')
 "
 ```
 
@@ -703,4 +790,5 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
