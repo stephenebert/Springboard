@@ -284,7 +284,7 @@ docker-compose up --build
 
 ## 7. iOS Image Tagger (SwiftUI + Vision/Core ML)
 
-A native iOS app that tags images **completely on device**—no network calls—using Apple
+A native iOS app that tags images **completely on device** using Apple
 Vision’s built-in image classifier with a Core ML fallback.
 
 ### Features
@@ -309,11 +309,11 @@ Vision’s built-in image classifier with a Core ML fallback.
 - Real device recommended for camera tests
 
 **Steps**
-1. `File → Open…` the `ImageTagger.xcodeproj` (or workspace)
+1. `File → Open...` the `ImageTagger.xcodeproj` (or workspace)
 2. Select the **ImageTagger** target → **Signing & Capabilities** → set your Team
 3. Add these to **Info.plist**:
-   - `NSCameraUsageDescription` — “We use the camera to classify captured photos.”
-   - `NSPhotoLibraryUsageDescription` — “We access your library to classify photos.”
+   - `NSCameraUsageDescription`: “We use the camera to classify captured photos.”
+   - `NSPhotoLibraryUsageDescription`: “We access your library to classify photos.”
 4. Build & run on device  
 5. Tap **Select Image** (Photos) or **Analyze** (after capture/pick)
 
@@ -1001,3 +1001,4 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
