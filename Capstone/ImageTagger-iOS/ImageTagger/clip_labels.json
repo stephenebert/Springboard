@@ -1,0 +1,9 @@
+{
+  "items": [
+    { "label": "skeleton", "embedding": [ /* 512 or 768 floats from CLIP text encoder */ ] },
+    { "label": "halloween decoration", "embedding": [ /* ... */ ] },
+    { "label": "yard", "embedding": [ /* ... */ ] },
+    { "label": "house", "embedding": [ /* ... */ ] },
+    { "label": "tree", "embedding": [ /* ... */ ] }
+  ]
+}
