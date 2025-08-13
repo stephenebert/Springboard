@@ -191,7 +191,7 @@ Available Models:
 - **Model Switching**: Switch between models without restarting the application
 
 #### 5. Image Tagger API
-![tag](image_tag/API.png)
+![tag](image_tags/API.png)
 **Run Locally:**
 ```bash
 cd image_tagger
@@ -225,7 +225,7 @@ curl -X POST "http://localhost:8001/upload?top_k=10&nouns=true&adjs=false&verbs=
 ```
 On hugging face, this looks like
 
-![tag](image_tag/APIhf.png)
+![tag](image_tags/APIhf.png)
 
 #### 6. Multi-Service Orchestration (Docker Compose)
 
@@ -795,6 +795,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
