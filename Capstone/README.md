@@ -689,6 +689,15 @@ This capstone project shows:
 ### Terminal Output Example
 ![Terminal Screenshot](extra_exploration_1/images/terminal.png)
 
+### Image Tagger API Example 
+What we input
+
+![1123](image_tags/test_image.png)
+
+which outputs something reasonable
+
+![1123](image_tags/test_out.png)
+
 ---
 
 ## Future Enhancements/Applications
@@ -814,6 +823,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
