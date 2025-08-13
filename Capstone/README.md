@@ -17,7 +17,7 @@ This capstone project demonstrates comprehensive **cross-modal retrieval systems
 2. **[Image-to-Text Retrieval](https://huggingface.co/spaces/stephenebert/image2text-faiss-demo)**: Users upload images to find similar captions using BLIP → CLIP → FAISS pipeline
 3. **[Stable Diffusion Text-to-Image Generation](https://huggingface.co/spaces/stephenebert/sd-text2image)**: Users generate 512×512 images from text prompts using Stable Diffusion v1.5
 4. **[Model-Switcher Stable Diffusion Demo](https://huggingface.co/spaces/stephenebert/model-switcher-sd)**: Multi-model text-to-image generation with SD v1.5, SDXL Base 1.0, and SD-Turbo
-5. **[Image Tagger][https://huggingface.co/spaces/stephenebert/Image_Tagger]**: Automated image captioning and semantic tag extraction using BLIP model.
+5. **[Image Tagger](https://huggingface.co/spaces/stephenebert/Image_Tagger)**: Automated image captioning and semantic tag extraction using BLIP model.
 
 The hyperlinks reference their hugging face for web usage. All systems are optimized for performance (via FAISS ANN search and GPU acceleration) and usability (via Gradio interfaces), demonstrating full-stack ML engineering competencies from data collection to production deployment. 
 
@@ -790,5 +790,6 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
