@@ -2,6 +2,14 @@
 
 An AI-powered image tagging API that generates captions and extracts semantic tags from images using the BLIP (Bootstrapping Language-Image Pre-training) model.
 
+- Live demo (Gradio UI): https://stephenebert-image-tagger.hf.space/
+
+- REST API docs (Swagger): https://stephenebert-image-tagger.hf.space/docs
+
+- Health check: https://stephenebert-image-tagger.hf.space/healthz
+
+- The Space serves both a friendly Gradio interface and a FastAPI backend.
+
 ## Features
 
 - **Image Captioning**: Automatically generates descriptive captions for uploaded images
@@ -10,6 +18,22 @@ An AI-powered image tagging API that generates captions and extracts semantic ta
 - **FastAPI Backend**: RESTful API with automatic documentation
 - **Multiple Image Formats**: Supports PNG and JPEG images
 - **Metadata Persistence**: Saves caption and tag data as JSON sidecars
+- **Gradio Frontend**: Drag-and-drop UI for quick testing.
+
+## Live Demo (Hugging Face Space)
+Upload an image in the Space and you’ll see the caption plus tags. Example response produced in the Space (https://huggingface.co/spaces/stephenebert/Image_Tagger):
+``` bash
+{
+  "filename": "020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg",
+  "caption": "a lion rests on a rock in the wild",
+  "tags": [
+    "lion",
+    "rests",
+    "rock",
+    "wild"
+  ]
+}
+```
 
 ## Installation
 
