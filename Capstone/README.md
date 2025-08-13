@@ -231,6 +231,20 @@ and uploading a sample image, say a lion,
 
 ![tag](image_tags/lion.png)
 
+it outputs
+``` bash
+{
+  "filename": "020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg",
+  "caption": "a lion rests on a rock in the wild",
+  "tags": [
+    "lion",
+    "rests",
+    "rock",
+    "wild"
+  ]
+}
+```
+
 #### 6. Multi-Service Orchestration (Docker Compose)
 
 **Run all services together:**
@@ -799,6 +813,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
