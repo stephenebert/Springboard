@@ -227,6 +227,10 @@ On hugging face, this looks like
 
 ![tag](image_tags/APIhf.png)
 
+and uploading a sample image, say a lion,
+
+![tag](image_tags/lion.png)
+
 #### 6. Multi-Service Orchestration (Docker Compose)
 
 **Run all services together:**
@@ -795,6 +799,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
