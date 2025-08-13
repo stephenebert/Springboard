@@ -442,8 +442,6 @@ GPT-4o-vision reranker experiments show cost scaling patterns:
 |  1500 |   10  |   0.8853  |      571.9     |      2.16      |
 |  2000 |   10  |   0.8650  |      585.0     |      2.88      |
 
-![Recall vs Cost](costs_scales_retrieval_benchmarks/recallvcost.png)
-
 
 **Sweet Spot**: 600-1500 candidates achieve ≈0.88–0.90 recall at sub-$2 cost with ~560-590ms per query.
 
@@ -926,6 +924,7 @@ This project was completed as part of the **Springboard Machine Learning Enginee
 - **Springboard Program**: For providing the structured learning environment
 
 ---
+
 
 
 
